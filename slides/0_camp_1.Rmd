@@ -1,0 +1,57 @@
+---
+title: "Stats camp day 1"
+author: "Frank Edwards"
+date: "8/28/2019"
+output:
+  ioslides_presentation: default
+---
+
+# Welcome to PhD statistics training!
+
+## Stats camp goals
+
+1. Get your software set up
+2. Remind you what these things mean:
+
+ \[log(x)\]
+ \[y = 2 + 3x\]
+ \[\frac{d}{dx}x^3  = 3x^2 \]
+ \[\sum_{x=1}^{10} x \]
+
+## Today: Let's install software
+
+**Step 1**
+
+Install R. https://cran.r-project.org/
+
+**Step 2**
+
+Install RStudio. https://www.rstudio.com/
+
+# Problems?
+
+## Getting started in RStudio
+
+- Make it pretty! (You will be spending lots of time here...)
+  - Themes
+  - Pane layouts
+
+## Getting started in RStudio: packages
+
+- Install packages (tidyverse, devtools, swirl)
+- Install QSS package: 
+
+```{r eval = FALSE}
+library(devtools)
+install_github("kosukeimai/qss-package", build_vignettes = TRUE)
+library(swirl)
+install_course_github("kosukeimai", "qss-swirl")
+```
+
+## Getting communication set up
+
+- Slack
+  - Invites
+  - Tour
+
+## 

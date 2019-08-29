@@ -84,15 +84,15 @@ Late homeworks without a requested extension are penalized at 5 points per day l
 |9/4| Introduction | Imai 1 (all); Wickham 2, 5, 6, 8, 9-11|
 |9/11| Causality (1) | Imai 2.1-2.5 |
 |9/18| Causality (2) | Imai 2.5 -2.7; Wickham 12| 
-|9/25| Measurement (1) |
-|10/2| Measurement (2) |  
-|10/9| Prediction (1) | 
-|10/16| Prediction (2) |  
-|10/23| Discovery (1) |  
-|10/30| Discovery (2) | 
-|11/6| Probability (1) |  
-|11/13| No class, ASC |
-|11/20| Probability (2) | 
-|11/27| No class, University break | 
-|12/4| Uncertainty (1) | 
-|12/11| Uncertainty (2) | 
+|9/25| Measurement (1) | |
+|10/2| Measurement (2) |  |
+|10/9| Prediction (1) | |
+|10/16| Prediction (2) | | 
+|10/23| Discovery (1) |  |
+|10/30| Discovery (2) | |
+|11/6| Probability (1) |  |
+|11/13| No class, ASC ||
+|11/20| Probability (2) || 
+|11/27| No class, University break | |
+|12/4| Uncertainty (1) | |
+|12/11| Uncertainty (2) | |
