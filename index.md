@@ -1,7 +1,3 @@
----
-layout: default
----
-
 |Intermediate Statistics   | 27:202:542  |  
 |Wednesday, 10:00-12:40   | Room: CLJ-025  |
 |frank.edwards@rutgers.edu | Office hours: TBD|
