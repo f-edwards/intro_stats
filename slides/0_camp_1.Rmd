@@ -2,8 +2,7 @@
 title: "Stats camp day 1"
 author: "Frank Edwards"
 date: "8/28/2019"
-output:
-  ioslides_presentation: default
+output: binb::metropolis
 ---
 
 # Welcome to PhD statistics training!
@@ -42,11 +41,14 @@ Install RStudio. https://www.rstudio.com/
 - Install QSS package: 
 
 ```{r eval = FALSE}
+install.packages(c("tidyverse", "devtools", "swirl"))
 library(devtools)
 install_github("kosukeimai/qss-package", build_vignettes = TRUE)
 library(swirl)
 install_course_github("kosukeimai", "qss-swirl")
 ```
+
+# Problems?
 
 ## Getting communication set up
 
@@ -54,4 +56,35 @@ install_course_github("kosukeimai", "qss-swirl")
   - Invites
   - Tour
 
-## 
+## Setting up Git
+
+- Install Git: https://git-scm.com/downloads
+- (Optional) Register for a GitHub account: https://github.com/
+- Clone course repository
+
+## Cloning the course gets you slides
+
+First, choose a folder you want intro_stats to live in
+
+```{r eval = FALSE}
+git clone https://github.com/f-edwards/intro_stats.git
+```
+
+Then, to get updates as I push them up to the server
+
+```{r eval = FALSE}
+cd intro_stats
+git pull
+```
+
+# Problems?
+
+# A very brief introduction to markdown
+
+## Why markdown?
+
+1. It is pretty
+2. It makes your workflow simpler
+3. It is reproducible
+
+# Let's play with it

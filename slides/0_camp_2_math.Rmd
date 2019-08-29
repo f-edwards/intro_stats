@@ -1,0 +1,86 @@
+---
+title: "Stats camp day 2"
+author: "Frank Edwards"
+date: "8/29/2019"
+output: binb::metropolis
+---
+
+# Welcome back: math time!
+
+## Agenda today
+
+1. Math notation and concepts
+2. Functions, limits, algebra
+3. Linear algebra
+4. Calculus
+
+# Notation and concepts
+
+## Real numbers and integers
+
+**Real numbers (doubles)**
+
+- Any continuous number
+- E.g. 4, 4.189, 2/3, $\pi$
+- In programming, we often use the variable type double for real numbers
+
+**Integers**
+
+- Any whole number
+- 10, -10, 24, 87
+- In programming, we may use the integer variable type
+
+## Variables
+
+- May take on any value
+- May be explicitly defined as a type in programming
+- Represented by letters, generally $x, y, z$
+
+## Functions
+
+**Perform a specified operation to a variable**
+
+$$f(x) = 2x^2 + 12$$
+
+What is $f(x)$ for $x = 3$? For $x=-2$? 
+
+# Some common functions
+
+
+##Summation
+
+Represented as $\sum$, with integer begin and end points 
+
+$$\sum_{k=1}^3 2(k+2) = 2(1 + 2) + 2(2+2) + 2(3+2) = 24$$
+
+In R, we can calculate a sum using the sum() function
+
+```{r}
+i<-1:3
+sum(2*(i+2))
+```
+
+
+##Products
+
+Represetened as $\prod$, with integer begin and end points 
+
+
+
+# Limits
+
+# Algebra
+
+# Coordinates and lines
+
+# Matrices
+
+# Matrix operations
+
+# Derivatives
+
+# Integrals
+
+## Acknowledgments
+
+These slides borrow heavily from Laina Mercer's math camp slides for University of Washington CSSS doctoral students. That course is available here: https://www.csss.washington.edu/academics/math-camp/lectures

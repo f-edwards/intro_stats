@@ -29,6 +29,10 @@ We will work primarily from two books.
 - Imai, Kosuke. Quantitative Social Science: An Introduction. Princeton: Princeton University Press, 2017.
 - Wickham, Hadley, and Garrett Grolemund. R for Data Science: Import, Tidy, Transform, Visualize, and Model Data. First edition. Sebastopol, CA: O’Reilly, 2016.
 
+And one companion website:
+
+- Arnold, Jeff: Quantitative Social Science: The R Tidyverse https://jrnold.github.io/qss-tidy/
+
 Note that the Wickham and Grolemund text is available for free as an [e-book](https://r4ds.had.co.nz/).
 
 ## Communication
@@ -81,18 +85,18 @@ Late homeworks without a requested extension are penalized at 5 points per day l
 
 ## Course schedule, topics, and readings
 
-|9/4| Introduction | Imai 1 (all); Wickham 2, 5, 6, 8, 9-11|
-|9/11| Causality (1) | Imai 2.1-2.5 |
+|9/4| Introduction | Imai 1 (all); Wickham 2, 5, 6, 8, 9-11; Arnold 1|
+|9/11| Causality (1) | Imai 2.1-2.5; Arnold 2 |
 |9/18| Causality (2) | Imai 2.5 -2.7; Wickham 12| 
-|9/25| Measurement (1) | |
-|10/2| Measurement (2) |  |
-|10/9| Prediction (1) | |
-|10/16| Prediction (2) | | 
-|10/23| Discovery (1) |  |
-|10/30| Discovery (2) | |
-|11/6| Probability (1) |  |
-|11/13| No class, ASC ||
-|11/20| Probability (2) || 
-|11/27| No class, University break | |
-|12/4| Uncertainty (1) | |
-|12/11| Uncertainty (2) | |
+|9/25| Measurement (1) | Imai 3.1-3.4; Wickham 3, 7; Arnold 3.1-3.4 |
+|10/2| Measurement (2) | Imai 3.5-3.8; Arnold 3.5-3.6 |
+|10/9| Prediction (1) | Imai 4.1-4.2; Arnold 4.1-4.2|
+|10/16| Prediction (2) | Imai 4.3-4.4; Arnold 4.3 | 
+|10/23| Discovery (1) | Imai 5.1-5.2; Arnold 5.1-5.2 |
+|10/30| Discovery (2) | Imai 5.3-5.4; Arnold 5.3|
+|11/6| Probability (1) | Imai 6.1-6.2; Arnold 6.1-6.2 |
+|11/13| No class, ASC |  |
+|11/20| Probability (2) | Imai 6.3-6.5; Arnold 6.3-6.4 | 
+|11/27| No class, University break |  |
+|12/4| Uncertainty (1) | Imai 7.1-7.2; Arnold 7.1-7.2 |
+|12/11| Uncertainty (2) | Imai 7.3-7.4; Arnold 7.3 |
