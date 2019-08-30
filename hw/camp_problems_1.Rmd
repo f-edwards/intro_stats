@@ -12,12 +12,29 @@ Solve all problems by hand, and using R code. Simplify where possible using rule
 
 1. $\sum_{k=1}^4(k-1)^2$
 
+```{r}
+## THIS IS A COMMENT
+#### SOLUTION FOR QUESTION 1
+
+### define k
+k<-1:4
+### sum with the function (k-1)^2
+sum((k-1)^2)
+```
+
+
 \bigskip
 \bigskip
 \bigskip
 \bigskip
 
 2. $\prod_{i=2}^{10}\frac{i+1}{i}$
+
+```{r}
+i<-2:10
+prod((i+1)/i)
+```
+
 
 \bigskip
 \bigskip
@@ -26,12 +43,23 @@ Solve all problems by hand, and using R code. Simplify where possible using rule
 
 3. $\log(e^2)$
 
+```{r}
+log(exp(2))
+```
+
+
 \bigskip
 \bigskip
 \bigskip
 \bigskip
 
 4. $e^4e^{10}$
+
+```{r}
+exp(4) * exp(10)
+exp(4 + 10)
+```
+
 
 \bigskip
 \bigskip
@@ -40,12 +68,24 @@ Solve all problems by hand, and using R code. Simplify where possible using rule
 
 5. $10^3 10^{-2}$
 
+```{r}
+10^3 * 10^(-2)
+10^(1)
+10^3 * (1/10^2)
+```
+
 \bigskip
 \bigskip
 \bigskip
 \bigskip
 
 6. $400^{1/2}$
+
+```{r}
+400^(1/2)
+sqrt(400)
+```
+
 
 \bigskip
 \bigskip
@@ -54,9 +94,33 @@ Solve all problems by hand, and using R code. Simplify where possible using rule
 
 7. $f(x) = 2x^2 + 3x - 7$. Solve for $x = 12$. For $x = -2$
 
+```{r}
+whateveriwant<-function(x){
+  2*x^2 + 3*x -7
+}
+whateveriwant(12)
+whateveriwant(-2)
+
+2*12^2 + 3*12 -7
+2*(-2)^2 + 3*(-2) -7 
+```
+
+
 \bigskip
 \bigskip
 \bigskip
 \bigskip
 
 8. Find the slope and y-intercept of the line that passes through (1,7) and (4,2) 
+
+```{r}
+x1<-1
+x2<-4
+y1<-7
+y2<-2
+m<-(y2-y1)/(x2-x1)
+b<-y1-m*x1
+m
+b
+```
+
