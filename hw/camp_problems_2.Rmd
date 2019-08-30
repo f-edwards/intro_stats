@@ -1,0 +1,70 @@
+---
+title: "Math camp problem set 1"
+author: "Frank Edwards"
+date: "8/30/2019"
+output: pdf_document
+---
+
+Solve all problems by hand, and using R code. Some problems may not have solutions.
+
+$$\mathbf{A} = \left[\begin{array}{rr}
+2 & 7  \\
+1 & 8  \\ \end{array}\right]
+\mathbf{B} = \left[\begin{array}{rrr}
+1 & 3 & 7\\
+4 & 2 & 6 \\ \end{array}\right]
+\mathbf{C} = \left[\begin{array}{rrr}
+1 & 3 & 7\\
+4 & 2 & 6 \\
+3 & 9 & 2 \\ \end{array}\right]
+\mathbf{D} = \left[\begin{array}{rr}
+1 & 3  \\
+4 & 5  \\
+\end{array}\right]$$
+
+\bigskip
+\bigskip
+
+1. $B^T$
+
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+2. $A^T$
+
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+3. $A + D$
+
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+4. $A - C$
+
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+5. $D-A$
+
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+6. $4B$
+
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+7. $2A$

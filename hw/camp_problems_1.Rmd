@@ -1,0 +1,62 @@
+---
+title: "Math camp problem set 1"
+author: "Frank Edwards"
+date: "8/30/2019"
+output: pdf_document
+---
+
+Solve all problems by hand, and using R code. Simplify where possible using rules of exponents and logarithms.
+
+\bigskip
+\bigskip
+
+1. $\sum_{k=1}^4(k-1)^2$
+
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+2. $\prod_{i=2}^{10}\frac{i+1}{i}$
+
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+3. $\log(e^2)$
+
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+4. $e^4e^{10}$
+
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+5. $10^3 10^{-2}$
+
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+6. $400^{1/2}$
+
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+7. $f(x) = 2x^2 + 3x - 7$. Solve for $x = 12$. For $x = -2$
+
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+8. Find the slope and y-intercept of the line that passes through (1,7) and (4,2) 
