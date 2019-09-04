@@ -22,6 +22,26 @@ $$\mathbf{A} = \left[\begin{array}{rr}
 4 & 5  \\
 \end{array}\right]$$
 
+```{r}
+a_1<-c(2,7)
+a_2<-c(1,8)
+rbind(a_1,a_2)
+
+A<-matrix(data = c(2,1,7,8), 
+          nrow = 2,
+          ncol =2)
+
+B<-matrix(data = c(1,4,3,2,7,6),
+          nrow = 2)
+
+C<-matrix(c(1,4,3,3,2,9,7,6,2),
+          3)
+
+D<-matrix(data = c(1,4,3,5),
+          nrow = 2)
+```
+
+
 \bigskip
 \bigskip
 
