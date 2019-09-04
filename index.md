@@ -2,15 +2,16 @@
 layout: default
 ---
 
-| Intermediate Statistics   | 27:202:542  |  
-| Wednesday, 10:00-12:40   | Room: CLJ-025  |
-| frank.edwards@rutgers.edu | Office hours: TBD|
+| Intermediate Statistics   | 27:202:542 |  
+| Wednesday, 10:00-12:40   | Room: CLJ-025 |
+| Lab: Wed, 1:30-3:00 | Room: CLJ Computer lab |
+| frank.edwards@rutgers.edu | Office hours: Monday, 10-2PM|
+| TA: christiane.schwarz@rutgers.edu | Office hours: TBA| 
 
 ## Quick links
 
 [Lecture slides](https://github.com/f-edwards/intro_stats/tree/master/slides)
-
-[Homeworks](https://github.com/f-edwards/intermediate_stats/tree/master/HW)
+[Course Slack](https://scj-introstats.slack.com)
 
 ## Course description
 
@@ -38,8 +39,6 @@ Note that the Wickham and Grolemund text is available for free as an [e-book](ht
 ## Communication
 
 I've set up a Slack page for us to communicate about the course. This can be a resource for you to collaborate and ask me questions about homework, and will also be a spot where course announcements are posted. Invites will be circulated before the course begins.
-
-[Course Slack](https://scj-introstats.slack.com)
 
 ## Expectations
 
@@ -75,7 +74,7 @@ Course grading is based on course participation (20 percent) and homework assign
 
 Problem sets provide you an opportunity to directly apply what we've learned to real-world data analysis and statistical problems. 
 
-I will assign homework each week. Assignments are due on the following Tuesday. So for the first week of class, the homework assigned on 9/4 will be due on 9/10.
+I will assign homework each week. Assignments are due on the following Tuesday at 12pm. So for the first week of class, the homework assigned on 9/4 will be due on 9/10.
 
 Homework should be submitted to me via email (frank.edwards@rutgers.edu) by 6PM on the due date. Each student is allowed two 3-day extensions without penalty for a homework due-date over the semester. 
 

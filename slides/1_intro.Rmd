@@ -262,10 +262,29 @@ UNpop %>%
 
 ## Common tidyverse functions
 
+We'll experiment with these in lab
+
 - select() selects columns by name
 - filter() filters rows by condition
 - mutate() creates new columns based on arguments
 - rename() renames columns
 - arrange() reorders rows based on value
 
-# We'll experiment with these in lab
+## Homework 1
+
+- Complete Exercise 1.5.1, Bias in self-reported turnout
+
+- Due Tuesday, September 10 at 12pm 
+
+- Submit homework as .Rmd and .html to frank.edwards@rutgers.edu
+
+- I encourage you to work in groups, but make sure you submit your own code and write-up
+
+- You can access the data through the QSS package
+
+```{r}
+library(qss)
+data(turnout)
+names(turnout)
+```
+
