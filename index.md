@@ -76,7 +76,7 @@ Problem sets provide you an opportunity to directly apply what we've learned to 
 
 I will assign homework each week. Assignments are due on the following Tuesday at 12pm. So for the first week of class, the homework assigned on 9/4 will be due on 9/10.
 
-Homework should be submitted to me via email (frank.edwards@rutgers.edu) by 6PM on the due date. Each student is allowed two 3-day extensions without penalty for a homework due-date over the semester. 
+Homework should be submitted to me via email (frank.edwards@rutgers.edu). Each student is allowed two 3-day extensions without penalty for a homework due-date over the semester. 
 
 I expect to see your code, code output, and your interpretations of the results for each question. You will submit your homeworks as compiled RMarkdown documents. I will instruct you on how to use this software during the first week of class. You can submit your compiled homeworks in either .html or .pdf format.
 
