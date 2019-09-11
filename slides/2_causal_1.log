@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.12.18)  10 SEP 2019 21:57
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.12.18)  11 SEP 2019 10:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1736,7 +1736,12 @@ Overfull \vbox (10.97377pt too high) detected at line 922
 
 (./2_causal_1.vrb) [41
 
-] [42
+]
+\openout4 = `2_causal_1.vrb'.
+
+(./2_causal_1.vrb) [42
+
+] [43
 
 ]
 \tf@nav=\write7
@@ -1748,11 +1753,11 @@ Overfull \vbox (10.97377pt too high) detected at line 922
 \tf@snm=\write9
 \openout9 = `2_causal_1.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1001.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1001.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1025.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1025.
 (./2_causal_1.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1001.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1001.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1025.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1025.
 
 Package rerunfilecheck Info: File `2_causal_1.out' has not changed.
 (rerunfilecheck)             Checksum: 08C5AB16243AB78F640A7F6F7A7728DD.
@@ -1761,12 +1766,12 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 37796 strings out of 492933
- 767577 string characters out of 6133144
- 878678 words of memory out of 5000000
- 41176 multiletter control sequences out of 15000+600000
+ 37800 strings out of 492933
+ 767624 string characters out of 6133144
+ 878734 words of memory out of 5000000
+ 41178 multiletter control sequences out of 15000+600000
  537266 words of font info for 70 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  71i,13n,145p,1813b,726s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on 2_causal_1.pdf (42 pages).
+Output written on 2_causal_1.pdf (43 pages).

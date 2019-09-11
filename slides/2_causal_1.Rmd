@@ -348,6 +348,15 @@ dat_crimrecF <- dat %>%
 dat_crimrecT$callback - dat_crimrecF$callback
 ```
 
+## Final results of the analysis
+
+```{r}
+dat %>% 
+  group_by(black, crimrec) %>% 
+  summarise(callback = mean(callback))
+```
+
+
 ## Next week
 
 - Homework: More data frame practice. Use tidyverse commands like mutate(), filter() and summarise() to complete exercise 1.5.2. Ignore instructions to store objects as vectors if you like. Due 9/17 at noon.
