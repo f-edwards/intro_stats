@@ -1,0 +1,117 @@
+---
+title: "Lab 3"
+author: "Frank Edwards"
+date: "9/18/2019"
+output: html_document
+---
+
+```{r echo = FALSE, message = FALSE}
+library(qss)
+library(tidyverse)
+data(leaders)
+```
+
+# 2.8.3
+
+## Question 1
+
+```{r}
+attempts<-nrow(leaders)
+nyears<-max(leaders$year) - min(leaders$year)
+## attempts per year
+attempts_yr<-attempts/nyears
+```
+
+There are `r nrow(leaders)` assassination attempts recorded in the data. There are `r length(unique(leaders$country))` countries that experienced an assassination attempt between `r min(leaders$year)` and `r max(leaders$year)`. In the average year in these countries, there were `r round(attempts_yr,2)` assassination attempts.
+
+## Question 2
+
+```{r}
+## two ways to do this
+# results<-unique(leaders$result)
+
+# THIS IS FINE, BUT MAYBE HARDER TO READ
+# leaders<-leaders %>%
+#   mutate(success = FALSE,
+#          success = case_when(
+#            result == results[2]
+#            ...
+#          )
+
+## RECODE USING CASE_WHEN()
+leaders<-leaders %>%
+  mutate(success = case_when(
+           result == "dies within a day after the attack" ~ TRUE,
+           result == "dies between a day and a week" ~ TRUE,
+           result == "dies, timing unknown" ~ TRUE,
+           result == "dies between a week and a month" ~ TRUE,
+           TRUE ~ FALSE)
+  )
+
+# ### THIS IS THE SAME THING USING IFELSE
+# leaders2<-leaders %>%
+#   mutate(success = ifelse(result=="dies within a day after the attack", TRUE,
+#                           ifelse(result=="dies between a day and a week", TRUE,
+#                                  ifelse(result=="dies, timing unknown", TRUE,
+#                                         ifelse(result=="dies between a week and a month", TRUE, FALSE)))))
+
+success_mean<-mean(leaders$success)
+
+```
+
+
+Assassination attempts in these data are successful `r mean(leaders$success) * 100` percent of the time. That is, when attempted, assassination are not routinely successful. 
+
+## Question 3
+
+```{r}
+polity_before_summary<-leaders %>% 
+  group_by(success) %>% 
+  summarise(politybefore = mean(politybefore))
+```
+
+We see that countries with successful assassination attempts had an average polity score of `r polity_before_summary$politybefore[2]` while countries with unsuccessful assassination attempts had an average polity score of `r polity_before_summary$politybefore[1]`. 
+
+```{r}
+age_before_summary<-leaders %>% 
+  group_by(success) %>% 
+  summarise(age = mean(age))
+```
+
+The average age of a successfully assassinated leader is `r age_before_summary$age[2]` while unsuccessful assassination targets were, on average, `r age_before_summary$age[1]`.
+
+```{r}
+leaders<-leaders %>% 
+  mutate(warbefore = (interwarbefore + civilwarbefore)>0)
+
+war_summary<- leaders %>% 
+  group_by(success) %>% 
+  summarise(warbefore = mean(warbefore))
+```
+
+INTERPRET ME HERE
+
+## Question 5
+
+```{r}
+leaders<-leaders %>% 
+  mutate(polity_change = polityafter - politybefore)
+
+estimates<-leaders %>% 
+  group_by(success) %>% 
+  summarise(polity_change = mean(polity_change))
+
+estimates$polity_change[2]-estimates$polity_change[1]
+```
+
+```{r}
+leaders<-leaders %>% 
+  mutate(warafter = (interwarafter + civilwarafter)>0)
+
+estimates<-leaders %>% 
+  group_by(success) %>% 
+  summarise(warafter = mean(warafter))
+
+estimates$warafter[2]-estimates$warafter[1]
+```
+
