@@ -346,7 +346,7 @@ quantile(minwage$wageBefore, c(0.05, 0.25, 0.5, .75, 0.95))
 - You can use the sd() function in R
 - The variance (var() function) is the square of the standard deviation
 
-$$\sigma = \sqrt{\frac{1}{n} \sum_{i=1}^n (x_i - \bar{x}^2)}$$ 
+$$\sigma = \sqrt{\frac{1}{n} \sum_{i=1}^n (x_i - \bar{x})^2}$$ 
 $$variance = \sigma^2$$
 
 ## Calculate an SD for these variables
