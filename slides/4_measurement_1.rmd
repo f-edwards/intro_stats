@@ -1,0 +1,305 @@
+---
+title: "Measurement and visualization, 1"
+author: "Frank Edwards"
+date: "9/17/2019"
+output: binb::metropolis
+---
+
+```{r setup, include=FALSE}
+rm(list=ls())
+library(tidyverse)
+library(qss)
+set.seed(1)
+ipv<-read_csv("./data/dhs_ipv.csv")
+
+options(xtable.comment = FALSE)
+theme_set(theme_bw())
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, tidy = TRUE, size = "small")
+```
+
+## Data:Attitudes on Intimate Partner Violence
+
+![](./vis/abstract.png)
+
+## Reading in the data
+
+```{r eval = FALSE}
+ipv<-read_csv("./slides/data/dhs_ipv.csv")
+```
+
+## The Data: USAID Demographic and Health Surveys
+
+
+-------------------------------------------------------------------------------
+Name             Description
+---------------- ---------------------------------------------------------
+`beat_goesout`   Percentage of women in each country that think a husband is justified to beat his wife if she goes out without telling him. 
+
+`beat_burnfood`  Percentage of women in each country that think a husband is justified to beat his wife if she burns his food.  
+
+`no_media`       Percentage of women in each country that rarely encounter a newspaper, radio, or television. 
+
+`sec_school`     Percentage of women in each country with secondary or higher education.
+
+`year`           Year of the survey
+
+`region`         Region of the world
+
+`country`        Country
+-------------------------------------------------------------------------------
+
+## Describing the data: country
+
+```{r size = "tiny"}
+unique(ipv$country)
+```
+
+## Describing the data: country
+
+```{r}
+length(unique(ipv$country))
+nrow(ipv)
+```
+
+## Describing the data: region
+
+```{r}
+table(ipv$region)
+```
+
+
+## Describing the data: time
+
+```{r size = "scriptsize"}
+table(ipv$year)
+```
+
+## Describing continuous measures: what do these measures show?
+
+```{r size = "scriptsize"}
+ipv %>% 
+  select(beat_burnfood, beat_goesout,
+         sec_school, no_media) %>% 
+  summary()
+```
+
+# Missing data in R
+
+## Missing data as a single value
+
+```{r size = "scriptsize"}
+a<-NA
+a+a
+a*2
+a==TRUE
+is.na(a)
+!(is.na(a))
+```
+
+## Missing data in vectors
+
+```{r}
+my_cool_vector<-c(2, 3, NA, 4)
+mean(my_cool_vector)
+min(my_cool_vector)
+```
+
+## Dealing with missing data in vectors
+
+```{r}
+mean(my_cool_vector, na.rm=TRUE)
+min(my_cool_vector, na.rm=TRUE)
+sd(my_cool_vector, na.rm=TRUE)
+```
+
+## Dealing with missing data in practice
+
+```{r}
+ipv %>% 
+  summarise(beat_burnfood_mn_bad = 
+              mean(beat_burnfood),
+            beat_burnfood_mn_good = 
+              mean(beat_burnfood, na.rm = TRUE))
+```
+
+## Counting missing values
+
+```{r}
+ipv %>% 
+  summarise(beat_burnfood_missing = 
+              sum(is.na(beat_burnfood))/n())
+
+table(is.na(ipv$beat_burnfood))
+```
+
+## Filtering out missing values
+
+```{r}
+ipv_no_missing<-na.omit(ipv)
+
+ipv_no_missing_onevar<-ipv %>% 
+  filter(!(is.na(beat_burnfood)))
+
+nrow(ipv_no_missing)
+
+nrow(ipv_no_missing_onevar)
+```
+
+# Visualiing the distribution of single variables (univariate visuals)
+
+# Visuals for categorical variables
+
+## Barplots
+
+Show the count of rows in each value of a category
+
+```{r fig.height = 3.5}
+ggplot(ipv, 
+       aes(x = region)) + 
+  geom_bar()
+```
+
+## The anatomy of a basic ggplot() call
+
+```{r eval = FALSE, size = "scriptsize"}
+ggplot(ipv, ## object, usually a data.frame 
+       aes(x = region)) + ## aesthetic variables, generally x, y, color, etc
+  geom_bar() ## a geom to plot the aesthetics
+
+## Note that + in ggplot() works the same way as %>% in tidyverse:
+## It strings together commands, evaluated in sequence
+```
+
+## Adding to our call
+
+```{r fig.height = 3.5}
+ggplot(ipv, 
+       aes(x = region, fill = region)) + 
+  geom_bar() + 
+  xlab("My cool new axis label")
+```
+
+# Visuals for continuous variables
+
+## Histograms
+
+Histograms show the density of cases that fall within a given range
+```{r fig.height = 3.5}
+ggplot(ipv,
+       aes(x = year)) + 
+  geom_histogram()
+```
+
+## Histograms in base R
+
+```{r}
+hist(ipv$year)
+```
+
+## Density plots
+
+Densities are smoothed continuous histograms (with binwidth=0)
+```{r fig.height = 3.5}
+ggplot(ipv,
+       aes(x = year)) + 
+  geom_density()
+```
+
+## Another set of histograms/densities
+
+```{r fig.height = 2}
+ggplot(ipv, aes(x = beat_burnfood)) + 
+  geom_histogram()
+```
+
+```{r fig.height = 2}
+ggplot(ipv, aes(x = beat_burnfood)) + 
+  geom_density()
+```
+
+## Boxplots
+
+Show the distribution of a continuous variable with the median, quartiles, and outliers
+
+```{r fig.height = 3.5}
+ggplot(ipv, aes(y = beat_burnfood)) + 
+  geom_boxplot() 
+```
+
+# Bivariate (two variable) data visuals 
+
+# One continuous, one categorical variable
+
+## Boxplots of a continuous by a categorical 
+
+```{r fig.height = 3.5}
+ggplot(ipv, aes(y = beat_burnfood, x = region)) + 
+  geom_boxplot() + 
+  coord_flip()
+```
+
+## Violin plots
+
+Like a boxplot + densityplot
+
+```{r fig.height = 3.5}
+ggplot(ipv, aes(y = beat_burnfood, x = region)) + 
+  geom_violin() + 
+  coord_flip()
+```
+
+## Faceting
+
+Create separate plots (facet) by some categorical variable 
+
+```{r fig.height = 3.5}
+ggplot(ipv, aes(x = beat_burnfood)) + 
+  geom_histogram() + 
+  facet_wrap(~region)
+```
+
+# Two continuous variables 
+
+## Scatterplots
+
+Plot points on an x,y plane based on two continuous variables
+
+```{r fig.height = 4}
+ggplot(ipv, aes(x = beat_burnfood, y = beat_goesout)) + 
+  geom_point()
+```
+
+## Scatterplots, continued
+
+```{r fig.height = 4}
+ggplot(ipv, aes(y = beat_burnfood, x = sec_school)) + 
+  geom_point()
+```
+
+## Adding a third variable to the plot
+
+```{r fig.height = 4}
+ggplot(ipv, aes(y = beat_burnfood, x = sec_school,
+                color = region)) + 
+  geom_point()
+```
+
+## Another way to present three variables
+
+```{r fig.height = 4}
+ggplot(ipv, aes(y = beat_burnfood, x = sec_school)) + 
+  geom_point() + 
+  facet_wrap(~region)
+```
+
+# HW 2 Solutions review
+
+## No homework this week
+
+- You've been doing great - take a break!
+- Lab today, practice with univariate visuals in ggplot()
