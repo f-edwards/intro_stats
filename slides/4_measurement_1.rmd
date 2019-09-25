@@ -150,7 +150,7 @@ nrow(ipv_no_missing)
 nrow(ipv_no_missing_onevar)
 ```
 
-# Visualiing the distribution of single variables (univariate visuals)
+# Visualizing the distribution of single variables (univariate visuals)
 
 # Visuals for categorical variables
 
