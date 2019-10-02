@@ -22,7 +22,7 @@ knitr::knit_hooks$set(chunk = function(x, options) {
 knitr::opts_chunk$set(warning=FALSE, message=FALSE, tidy = TRUE, size = "small")
 ```
 
-## Data:Attitudes on Intimate Partner Violence
+## Data: Attitudes on Intimate Partner Violence
 
 ![](./vis/abstract.png)
 
@@ -179,8 +179,8 @@ ggplot(ipv, ## object, usually a data.frame
 
 ```{r fig.height = 3.5}
 ggplot(ipv, 
-       aes(x = region, fill = region)) + 
-  geom_bar() + 
+       aes(x = region)) + 
+  geom_bar(aes(fill = region)) + 
   xlab("My cool new axis label")
 ```
 
@@ -271,7 +271,8 @@ Plot points on an x,y plane based on two continuous variables
 
 ```{r fig.height = 4}
 ggplot(ipv, aes(x = beat_burnfood, y = beat_goesout)) + 
-  geom_point()
+  geom_point() + 
+  geom_smooth(method = "lm")
 ```
 
 ## Scatterplots, continued

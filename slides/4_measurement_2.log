@@ -1,9 +1,9 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.12.18)  18 SEP 2019 12:37
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.12.18)  2 OCT 2019 09:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**3_causal_2.tex
-(./3_causal_2.tex
+**4_measurement_2.tex
+(./4_measurement_2.tex
 LaTeX2e <2018-12-01>
 (/usr/local/texlive/2018/texmf-dist/tex/latex/beamer/beamer.cls
 Document Class: beamer 2018/12/02 v3.55 A class for typesetting presentations
@@ -1203,8 +1203,8 @@ Package grffile Info: Option `multidot' is set to `true'.
 Package grffile Info: Option `extendedchars' is set to `false'.
 Package grffile Info: Option `space' is set to `true'.
 Package grffile Info: \Gin@ii of package `graphicx' fixed on input line 494.
-) (./3_causal_2.aux)
-\openout1 = `3_causal_2.aux'.
+) (./4_measurement_2.aux)
+\openout1 = `4_measurement_2.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 162.
 LaTeX Font Info:    ... okay on input line 162.
@@ -1278,9 +1278,9 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 162.
 LaTeX Info: Redefining \pageref on input line 162.
 LaTeX Info: Redefining \nameref on input line 162.
-(./3_causal_2.out) (./3_causal_2.out)
+(./4_measurement_2.out) (./4_measurement_2.out)
 \@outlinefile=\write6
-\openout6 = `3_causal_2.out'.
+\openout6 = `4_measurement_2.out'.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
 (Font)                  OT1/lmr/m/n --> OT1/cmss/m/n on input line 162.
@@ -1378,7 +1378,7 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `FiraSansLight' (encoding: TU).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-(./3_causal_2.nav)
+(./4_measurement_2.nav)
 LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/m/n' will be
 (Font)              scaled to size 4.94458pt on input line 162.
 LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/m/n' will be
@@ -1396,379 +1396,487 @@ Overfull \vbox (15.63992pt too high) detected at line 167
 [1
 
 ]
+\openout4 = `4_measurement_2.vrb'.
+
+(./4_measurement_2.vrb
+LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/m/it' will be
+(Font)              scaled to size 9.02385pt on input line 4.
+LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <8> not available
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 16.
 LaTeX Font Info:    Try loading font information for OT1+FiraSansLight(0) on in
-put line 173.
-LaTeX Font Info:    No file OT1FiraSansLight(0).fd. on input line 173.
+put line 36.
+LaTeX Font Info:    No file OT1FiraSansLight(0).fd. on input line 36.
 
 LaTeX Font Warning: Font shape `OT1/FiraSansLight(0)/m/n' undefined
-(Font)              using `OT1/cmr/m/n' instead on input line 173.
+(Font)              using `OT1/cmr/m/n' instead on input line 36.
 
 (/usr/local/texlive/2018/texmf-dist/tex/latex/microtype/mt-cmr.cfg
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
 )
-LaTeX Font Info:    Try loading font information for OML+lmm on input line 173.
-
+LaTeX Font Info:    Try loading font information for OML+lmm on input line 36.
 (/usr/local/texlive/2018/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 173
-.
+LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 36.
+
 (/usr/local/texlive/2018/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMX+lmex on input line 173
-.
+LaTeX Font Info:    Try loading font information for OMX+lmex on input line 36.
+
 (/usr/local/texlive/2018/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 173.
+(Font)              <10.95> on input line 36.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 173.
+(Font)              <8> on input line 36.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 173.
-LaTeX Font Info:    Try loading font information for U+msa on input line 173.
+(Font)              <6> on input line 36.
+LaTeX Font Info:    Try loading font information for U+msa on input line 36.
 (/usr/local/texlive/2018/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 ) (/usr/local/texlive/2018/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 173.
+LaTeX Font Info:    Try loading font information for U+msb on input line 36.
 (/usr/local/texlive/2018/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (/usr/local/texlive/2018/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/m/it' will be
-(Font)              scaled to size 9.02385pt on input line 173.
+(Font)              scaled to size 6.59277pt on input line 36.
 LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/m/it' will be
-(Font)              scaled to size 6.59277pt on input line 173.
-LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/m/it' will be
-(Font)              scaled to size 4.94458pt on input line 173.
+(Font)              scaled to size 4.94458pt on input line 36.
+)
 LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/m/n' will be
-(Font)              scaled to size 3.29639pt on input line 173.
+(Font)              scaled to size 9.88916pt on input line 214.
+LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/bx/n' will be
+(Font)              scaled to size 9.81409pt on input line 214.
+
+Overfull \vbox (18.92923pt too high) detected at line 214
+ []
+
+LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/m/n' will be
+(Font)              scaled to size 3.29639pt on input line 214.
 [2
 
-]
-LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/m/n' will be
-(Font)              scaled to size 9.88916pt on input line 184.
-LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/bx/n' will be
-(Font)              scaled to size 9.81409pt on input line 184.
-[3
+] [3
+
+] [4
 
 ]
-\openout4 = `3_causal_2.vrb'.
+\openout4 = `4_measurement_2.vrb'.
 
-(./3_causal_2.vrb) [4
-
-] [5
-
-]
-(/usr/local/texlive/2018/texmf-dist/tex/latex/microtype/mt-LatinModernRoman.cfg
-File: mt-LatinModernRoman.cfg 2013/03/13 v1.0 microtype config. file: Latin Mod
-ern Roman (RS)
-) [6
-
-] [7
-
-]
-\openout4 = `3_causal_2.vrb'.
-
-(./3_causal_2.vrb
+(./4_measurement_2.vrb
 LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 8.
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 9.
+) [5
 
-Overfull \hbox (91.71013pt too wide) in paragraph at lines 22--22
-[]\TU/lmtt/m/n/10 ## $ sex         <chr> "male", "female", "male", "female", "f
-emale", "mal...[] 
- []
-
-
-Overfull \hbox (91.71013pt too wide) in paragraph at lines 22--22
-[]\TU/lmtt/m/n/10 ## $ yearofbirth <int> 1941, 1947, 1951, 1950, 1982, 1981, 19
-59, 1956, 19...[] 
- []
-
-
-Overfull \hbox (91.71013pt too wide) in paragraph at lines 22--22
-[]\TU/lmtt/m/n/10 ## $ primary2004 <int> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0,
- 1, 1, 1, 0,...[] 
- []
-
-
-Overfull \hbox (91.71013pt too wide) in paragraph at lines 22--22
-[]\TU/lmtt/m/n/10 ## $ messages    <chr> "Civic Duty", "Civic Duty", "Hawthorne
-", "Hawthorn...[] 
- []
-
-
-Overfull \hbox (91.71013pt too wide) in paragraph at lines 22--22
-[]\TU/lmtt/m/n/10 ## $ primary2006 <int> 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1,
- 0, 1, 1, 1,...[] 
- []
-
-
-Overfull \hbox (91.71013pt too wide) in paragraph at lines 22--22
-[]\TU/lmtt/m/n/10 ## $ hhsize      <int> 2, 2, 3, 3, 3, 3, 3, 3, 2, 2, 1, 2, 2,
- 1, 2, 2, 1,...[] 
- []
-
-) [8
+] [6
 
 ]
-\openout4 = `3_causal_2.vrb'.
+\openout4 = `4_measurement_2.vrb'.
 
-(./3_causal_2.vrb)
-Overfull \vbox (25.9632pt too high) detected at line 307
- []
-
-[9
-
-]
-\openout4 = `3_causal_2.vrb'.
-
-(./3_causal_2.vrb) [10
+(./4_measurement_2.vrb
+File: 4_measurement_2_files/figure-beamer/unnamed-chunk-3-1.pdf Graphic file (t
+ype pdf)
+<use 4_measurement_2_files/figure-beamer/unnamed-chunk-3-1.pdf>
+) [7
 
 ]
-File: 3_causal_2_files/figure-beamer/unnamed-chunk-5-1.pdf Graphic file (type p
-df)
-<use 3_causal_2_files/figure-beamer/unnamed-chunk-5-1.pdf>
-[11
+File: 4_measurement_2_files/figure-beamer/unnamed-chunk-4-1.pdf Graphic file (t
+ype pdf)
+<use 4_measurement_2_files/figure-beamer/unnamed-chunk-4-1.pdf>
+[8
 
-]
-File: 3_causal_2_files/figure-beamer/unnamed-chunk-6-1.pdf Graphic file (type p
-df)
-<use 3_causal_2_files/figure-beamer/unnamed-chunk-6-1.pdf>
-[12
+] [9
+
+] [10
+
+] [11
+
+] [12
 
 ] [13
 
 ] [14
 
+] [15
+
+] [16
+
+] [17
+
 ]
-\openout4 = `3_causal_2.vrb'.
+\openout4 = `4_measurement_2.vrb'.
 
-(./3_causal_2.vrb
-Overfull \hbox (91.71013pt too wide) in paragraph at lines 27--27
-[]\TU/lmtt/m/n/10 ## $ chain      <chr> "wendys", "wendys", "burgerking", "burg
-erking", "kf...[] 
- []
+(./4_measurement_2.vrb) [18
 
+]
+\openout4 = `4_measurement_2.vrb'.
 
-Overfull \hbox (91.71013pt too wide) in paragraph at lines 27--27
-[]\TU/lmtt/m/n/10 ## $ location   <chr> "PA", "PA", "PA", "PA", "PA", "PA", "PA
-", "PA", "PA...[] 
- []
+(./4_measurement_2.vrb
+LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <6> not available
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 8.
+) [19
 
+]
+\openout4 = `4_measurement_2.vrb'.
 
-Overfull \hbox (91.71013pt too wide) in paragraph at lines 27--27
-[]\TU/lmtt/m/n/10 ## $ wageBefore <dbl> 5.00, 5.50, 5.00, 5.00, 5.25, 5.00, 5.0
-0, 5.00, 5.0...[] 
- []
-
-
-Overfull \hbox (91.71013pt too wide) in paragraph at lines 27--27
-[]\TU/lmtt/m/n/10 ## $ wageAfter  <dbl> 5.25, 4.75, 4.75, 5.00, 5.00, 5.00, 4.7
-5, 5.00, 4.5...[] 
- []
-
-
-Overfull \hbox (91.71013pt too wide) in paragraph at lines 27--27
-[]\TU/lmtt/m/n/10 ## $ fullBefore <dbl> 20.0, 6.0, 50.0, 10.0, 2.0, 2.0, 2.5, 4
-0.0, 8.0, 10...[] 
- []
-
-
-Overfull \hbox (91.71013pt too wide) in paragraph at lines 27--27
-[]\TU/lmtt/m/n/10 ## $ fullAfter  <dbl> 0.0, 28.0, 15.0, 26.0, 3.0, 2.0, 1.0, 9
-.0, 7.0, 18....[] 
- []
-
-
-Overfull \hbox (91.71013pt too wide) in paragraph at lines 27--27
-[]\TU/lmtt/m/n/10 ## $ partBefore <dbl> 20.0, 26.0, 35.0, 17.0, 8.0, 10.0, 20.0
-, 30.0, 27.0...[] 
- []
-
-
-Overfull \hbox (91.71013pt too wide) in paragraph at lines 27--27
-[]\TU/lmtt/m/n/10 ## $ partAfter  <dbl> 36, 3, 18, 9, 12, 9, 25, 32, 39, 10, 20
-, 4, 13, 20,...[] 
- []
-
+(./4_measurement_2.vrb
+File: 4_measurement_2_files/figure-beamer/unnamed-chunk-7-1.pdf Graphic file (t
+ype pdf)
+<use 4_measurement_2_files/figure-beamer/unnamed-chunk-7-1.pdf>
 )
-Overfull \vbox (9.22334pt too high) detected at line 416
+Overfull \vbox (13.13446pt too high) detected at line 513
  []
 
-[15
+[20
 
 ]
-\openout4 = `3_causal_2.vrb'.
+\openout4 = `4_measurement_2.vrb'.
 
-(./3_causal_2.vrb) [16
-
-]
-\openout4 = `3_causal_2.vrb'.
-
-(./3_causal_2.vrb) [17
-
-]
-\openout4 = `3_causal_2.vrb'.
-
-(./3_causal_2.vrb) [18
-
-]
-\openout4 = `3_causal_2.vrb'.
-
-(./3_causal_2.vrb)
-Overfull \vbox (25.9432pt too high) detected at line 541
+(./4_measurement_2.vrb
+File: 4_measurement_2_files/figure-beamer/unnamed-chunk-8-1.pdf Graphic file (t
+ype pdf)
+<use 4_measurement_2_files/figure-beamer/unnamed-chunk-8-1.pdf>
+)
+Overfull \vbox (13.13446pt too high) detected at line 530
  []
 
-[19
+[21
 
 ]
-\openout4 = `3_causal_2.vrb'.
+\openout4 = `4_measurement_2.vrb'.
 
-(./3_causal_2.vrb) [20
-
-] [21
+(./4_measurement_2.vrb) [22
 
 ]
-LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/bx/n' will be
-(Font)              scaled to size 8.95534pt on input line 591.
-[22
+\openout4 = `4_measurement_2.vrb'.
 
-] [23
-
-] [24
-
-] [25
-
-] [26
-
-] [27
-
-] [28
+(./4_measurement_2.vrb) [23
 
 ]
-\openout4 = `3_causal_2.vrb'.
+\openout4 = `4_measurement_2.vrb'.
 
-(./3_causal_2.vrb
-Overfull \hbox (18.21013pt too wide) in paragraph at lines 23--23
-[]\TU/lmtt/m/n/10 ##   []location == "PA"[] prop_wendys prop_bk prop_kfc prop_r
-oys[] 
- []
-
-
-Overfull \hbox (18.21013pt too wide) in paragraph at lines 23--23
-[]\TU/lmtt/m/n/10 ##   <lgl>                    <dbl>   <dbl>    <dbl>     <dbl
->[] 
- []
-
-
-Overfull \hbox (18.21013pt too wide) in paragraph at lines 23--23
-[]\TU/lmtt/m/n/10 ## 1 FALSE                    0.120   0.405    0.223     0.25
-1[] 
- []
-
-
-Overfull \hbox (18.21013pt too wide) in paragraph at lines 23--23
-[]\TU/lmtt/m/n/10 ## 2 TRUE                     0.164   0.463    0.149     0.22
-4[] 
- []
-
-) [29
+(./4_measurement_2.vrb) [24
 
 ]
-\openout4 = `3_causal_2.vrb'.
+\openout4 = `4_measurement_2.vrb'.
 
-(./3_causal_2.vrb)
-Overfull \vbox (14.31328pt too high) detected at line 669
+(./4_measurement_2.vrb) [25
+
+]
+\openout4 = `4_measurement_2.vrb'.
+
+(./4_measurement_2.vrb
+File: 4_measurement_2_files/figure-beamer/unnamed-chunk-13-1.pdf Graphic file (
+type pdf)
+<use 4_measurement_2_files/figure-beamer/unnamed-chunk-13-1.pdf>
+)
+Overfull \vbox (13.13478pt too high) detected at line 667
+ []
+
+[26
+
+]
+\openout4 = `4_measurement_2.vrb'.
+
+(./4_measurement_2.vrb
+File: 4_measurement_2_files/figure-beamer/unnamed-chunk-14-1.pdf Graphic file (
+type pdf)
+<use 4_measurement_2_files/figure-beamer/unnamed-chunk-14-1.pdf>
+)
+Overfull \vbox (13.13446pt too high) detected at line 684
+ []
+
+[27
+
+]
+\openout4 = `4_measurement_2.vrb'.
+
+(./4_measurement_2.vrb
+File: 4_measurement_2_files/figure-beamer/unnamed-chunk-15-1.pdf Graphic file (
+type pdf)
+<use 4_measurement_2_files/figure-beamer/unnamed-chunk-15-1.pdf>
+)
+Overfull \vbox (13.13446pt too high) detected at line 702
+ []
+
+[28
+
+]
+\openout4 = `4_measurement_2.vrb'.
+
+(./4_measurement_2.vrb) [29
+
+]
+\openout4 = `4_measurement_2.vrb'.
+
+(./4_measurement_2.vrb
+File: 4_measurement_2_files/figure-beamer/unnamed-chunk-17-1.pdf Graphic file (
+type pdf)
+<use 4_measurement_2_files/figure-beamer/unnamed-chunk-17-1.pdf>
+)
+Overfull \vbox (26.87936pt too high) detected at line 739
  []
 
 [30
 
 ]
-\openout4 = `3_causal_2.vrb'.
+\openout4 = `4_measurement_2.vrb'.
 
-(./3_causal_2.vrb)
-Overfull \vbox (12.14328pt too high) detected at line 702
+(./4_measurement_2.vrb
+File: 4_measurement_2_files/figure-beamer/unnamed-chunk-18-1.pdf Graphic file (
+type pdf)
+<use 4_measurement_2_files/figure-beamer/unnamed-chunk-18-1.pdf>
+)
+Overfull \vbox (26.87936pt too high) detected at line 757
  []
 
 [31
 
-] [32
-
 ]
-File: 3_causal_2_files/figure-beamer/unnamed-chunk-16-1.pdf Graphic file (type 
-pdf)
-<use 3_causal_2_files/figure-beamer/unnamed-chunk-16-1.pdf>
-[33
+File: 4_measurement_2_files/figure-beamer/unnamed-chunk-19-1.pdf Graphic file (
+type pdf)
+<use 4_measurement_2_files/figure-beamer/unnamed-chunk-19-1.pdf>
+[32
+
+] [33
 
 ] [34
 
 ]
-File: 3_causal_2_files/figure-beamer/unnamed-chunk-17-1.pdf Graphic file (type 
-pdf)
-<use 3_causal_2_files/figure-beamer/unnamed-chunk-17-1.pdf>
-[35
+\openout4 = `4_measurement_2.vrb'.
 
-] [36
+(./4_measurement_2.vrb
+Overfull \hbox (102.21013pt too wide) in paragraph at lines 24--24
+[]\TU/lmtt/m/n/10 ##      X1 beat_burnfood beat_goesout sec_school no_media cou
+ntry  year region[] 
+ []
+
+
+Overfull \hbox (96.96013pt too wide) in paragraph at lines 24--24
+[]\TU/lmtt/m/n/10 ##   <dbl>         <dbl>        <dbl>      <dbl>    <dbl> <ch
+r>   <dbl> <chr>[] 
+ []
+
+
+Overfull \hbox (102.21013pt too wide) in paragraph at lines 24--24
+[]\TU/lmtt/m/n/10 ## 1     1           4.4         18.6       25.2      1.5 Alb
+ania  2008 Middl~[] 
+ []
+
+
+Overfull \hbox (102.21013pt too wide) in paragraph at lines 24--24
+[]\TU/lmtt/m/n/10 ## 2     4           4.9         19.9       67.7      8.7 Arm
+enia  2000 Middl~[] 
+ []
+
+
+Overfull \hbox (102.21013pt too wide) in paragraph at lines 24--24
+[]\TU/lmtt/m/n/10 ## 3     5           2.1         10.3       67.6      2.2 Arm
+enia  2005 Middl~[] 
+ []
+
+
+Overfull \hbox (102.21013pt too wide) in paragraph at lines 24--24
+[]\TU/lmtt/m/n/10 ## 4     6           0.3          3.1       46        6.4 Arm
+enia  2010 Middl~[] 
+ []
+
+
+Overfull \hbox (102.21013pt too wide) in paragraph at lines 24--24
+[]\TU/lmtt/m/n/10 ## 5     7          12.1         42.5       74.6      7.4 Aze
+rba~  2006 Middl~[] 
+ []
+
+
+Overfull \hbox (91.71013pt too wide) in paragraph at lines 24--24
+[]\TU/lmtt/m/n/10 ## 6     8          NA           NA         24       41.9 Ban
+gla~  2004 Asia[] 
+ []
+
+) [35
 
 ]
-\openout4 = `3_causal_2.vrb'.
+\openout4 = `4_measurement_2.vrb'.
 
-(./3_causal_2.vrb) [37
+(./4_measurement_2.vrb
+File: 4_measurement_2_files/figure-beamer/unnamed-chunk-21-1.pdf Graphic file (
+type pdf)
+<use 4_measurement_2_files/figure-beamer/unnamed-chunk-21-1.pdf>
+)
+Overfull \vbox (3.68747pt too high) detected at line 837
+ []
 
-] [38
-
-] [39
-
-] [40
-
-]
-\openout4 = `3_causal_2.vrb'.
-
-(./3_causal_2.vrb) [41
-
-] [42
+[36
 
 ]
-\openout4 = `3_causal_2.vrb'.
+\openout4 = `4_measurement_2.vrb'.
 
-(./3_causal_2.vrb) [43
+(./4_measurement_2.vrb
+File: 4_measurement_2_files/figure-beamer/unnamed-chunk-22-1.pdf Graphic file (
+type pdf)
+<use 4_measurement_2_files/figure-beamer/unnamed-chunk-22-1.pdf>
+) [37
 
-] [44
+]
+File: 4_measurement_2_files/figure-beamer/unnamed-chunk-23-1.pdf Graphic file (
+type pdf)
+<use 4_measurement_2_files/figure-beamer/unnamed-chunk-23-1.pdf>
+[38
+
+]
+File: 4_measurement_2_files/figure-beamer/unnamed-chunk-24-1.pdf Graphic file (
+type pdf)
+<use 4_measurement_2_files/figure-beamer/unnamed-chunk-24-1.pdf>
+[39
+
+]
+(/usr/local/texlive/2018/texmf-dist/tex/latex/microtype/mt-LatinModernRoman.cfg
+File: mt-LatinModernRoman.cfg 2013/03/13 v1.0 microtype config. file: Latin Mod
+ern Roman (RS)
+)
+Overfull \vbox (3.23203pt too high) detected at line 905
+ []
+
+[40
+
+]
+\openout4 = `4_measurement_2.vrb'.
+
+(./4_measurement_2.vrb) [41
+
+]
+\openout4 = `4_measurement_2.vrb'.
+
+(./4_measurement_2.vrb
+File: 4_measurement_2_files/figure-beamer/unnamed-chunk-26-1.pdf Graphic file (
+type pdf)
+<use 4_measurement_2_files/figure-beamer/unnamed-chunk-26-1.pdf>
+)
+Overfull \vbox (3.68147pt too high) detected at line 951
+ []
+
+[42
+
+] [43
+
+]
+File: 4_measurement_2_files/figure-beamer/unnamed-chunk-27-1.pdf Graphic file (
+type pdf)
+<use 4_measurement_2_files/figure-beamer/unnamed-chunk-27-1.pdf>
+[44
+
+]
+\openout4 = `4_measurement_2.vrb'.
+
+(./4_measurement_2.vrb) [45
+
+] [46
+
+] [47
+
+]
+File: ./vis/kmeans.jpg Graphic file (type bmp)
+<./vis/kmeans.jpg>
+[48
+
+]
+\openout4 = `4_measurement_2.vrb'.
+
+(./4_measurement_2.vrb)
+Overfull \vbox (51.42505pt too high) detected at line 1101
+ []
+
+[49
+
+]
+\openout4 = `4_measurement_2.vrb'.
+
+(./4_measurement_2.vrb) [50
+
+]
+\openout4 = `4_measurement_2.vrb'.
+
+(./4_measurement_2.vrb) [51
+
+]
+\openout4 = `4_measurement_2.vrb'.
+
+(./4_measurement_2.vrb
+File: 4_measurement_2_files/figure-beamer/unnamed-chunk-32-1.pdf Graphic file (
+type pdf)
+<use 4_measurement_2_files/figure-beamer/unnamed-chunk-32-1.pdf>
+)
+Overfull \vbox (43.90028pt too high) detected at line 1185
+ []
+
+[52
+
+]
+\openout4 = `4_measurement_2.vrb'.
+
+(./4_measurement_2.vrb
+File: 4_measurement_2_files/figure-beamer/unnamed-chunk-33-1.pdf Graphic file (
+type pdf)
+<use 4_measurement_2_files/figure-beamer/unnamed-chunk-33-1.pdf>
+)
+Overfull \vbox (91.81403pt too high) detected at line 1206
+ []
+
+[53
+
+]
+\openout4 = `4_measurement_2.vrb'.
+
+(./4_measurement_2.vrb
+File: 4_measurement_2_files/figure-beamer/unnamed-chunk-34-1.pdf Graphic file (
+type pdf)
+<use 4_measurement_2_files/figure-beamer/unnamed-chunk-34-1.pdf>
+)
+Overfull \vbox (174.61359pt too high) detected at line 1233
+ []
+
+[54
+
+] [55
+
+] [56
 
 ]
 \tf@nav=\write7
-\openout7 = `3_causal_2.nav'.
+\openout7 = `4_measurement_2.nav'.
 
 \tf@toc=\write8
-\openout8 = `3_causal_2.toc'.
+\openout8 = `4_measurement_2.toc'.
 
 \tf@snm=\write9
-\openout9 = `3_causal_2.snm'.
+\openout9 = `4_measurement_2.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 954.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 954.
-(./3_causal_2.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 954.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 954.
-Package rerunfilecheck Info: File `3_causal_2.out' has not changed.
-(rerunfilecheck)             Checksum: E9395BBC865AD64D51B961BCC0E85FE2.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1282.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1282.
+(./4_measurement_2.aux)
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1282.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1282.
+
+Package rerunfilecheck Info: File `4_measurement_2.out' has not changed.
+(rerunfilecheck)             Checksum: B0411EA13C5BC44B9FAECDEA3723671F.
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 37838 strings out of 492933
- 770285 string characters out of 6133144
- 878912 words of memory out of 5000000
- 41207 multiletter control sequences out of 15000+600000
- 537282 words of font info for 72 fonts, out of 8000000 for 9000
+ 38013 strings out of 492933
+ 776228 string characters out of 6133144
+ 882414 words of memory out of 5000000
+ 41329 multiletter control sequences out of 15000+600000
+ 537338 words of font info for 79 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 71i,13n,145p,1813b,726s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 71i,13n,145p,1818b,726s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on 3_causal_2.pdf (44 pages).
+Output written on 4_measurement_2.pdf (56 pages).
