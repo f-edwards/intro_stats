@@ -3,14 +3,15 @@ layout: default
 ---
 
 | Intermediate Statistics   | 27:202:542 |  
-| Wednesday, 10:00-12:40   | Room: CLJ-025 |
-| Lab: Wed, 1:30-3:00 | Room: CLJ Computer lab |
-| frank.edwards@rutgers.edu | Office hours: Monday, 10-2PM|
-| TA: christiane.schwarz@rutgers.edu | Office hours: TBA| 
+| Wednesday, 10:00-12:40   | Room: CLJ 571 |
+| Lab: Wed, 1:30-3:00 | Room: CLJ 571 |
+| frank.edwards@rutgers.edu | Office hours: Friday, 10-2PM|
+| TA: christiane.schwarz@rutgers.edu | Office hours: Tuesday 10-2| 
 
 ## Quick links
 
 [Lecture slides](https://github.com/f-edwards/intro_stats/tree/master/slides)
+
 [Course Slack](https://scj-introstats.slack.com)
 
 ## Course description

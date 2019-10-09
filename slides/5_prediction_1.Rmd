@@ -1,5 +1,5 @@
 ---
-title: "Measurement and visualization, 2"
+title: "Prediction, 1"
 author: "Frank Edwards"
 date: "9/17/2019"
 output: binb::metropolis
@@ -361,7 +361,7 @@ table(polls_classify$clinton_wins_pred)
 
 ## What percent of electoral college votes does our prediction yield for Clinton
 
-```{r}
+```{r size =  "tiny"}
 polls_classify %>% 
   left_join(polls %>% 
               select(state_po, electoral_votes) %>% 
