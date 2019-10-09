@@ -25,6 +25,14 @@ knitr::knit_hooks$set(chunk = function(x, options) {
 knitr::opts_chunk$set(warning=FALSE, message=FALSE, tidy = TRUE, size = "small")
 ```
 
+## Announcements
+
+- Christiane's office hours are now Tuesday 10-2
+- My office hours are now Friday 10-2
+- Homework is now due by 10AM on Wednesdays
+- Homework this week: no problem set, but read (or re-read) Wickham Chapter 1-13 and Arnold 1-4. 
+
+
 # Prediction
 
 ## Why predict?
@@ -421,7 +429,5 @@ What kind of classification error is this?
 - Prediction and classification are core practices in statistics
 - We can make predictions, then compare them to actual outcomes to evaluate our performance
 - The best test of a theory is prediction. Keep predictive validation in mind when designing research and assessing theory.
-
-**NO HOMEWORK THIS WEEK** 
 
 In lab, we will practice loops, joins, gathers and spreads
