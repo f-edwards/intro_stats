@@ -40,7 +40,7 @@ ggplot(ipv, ## object, usually a data.frame
 ## It strings together commands, evaluated in sequence
 ```
 
-- \texttt{geom_bar()}, \texttt{geom_histogram()}, \texttt{geom_boxplot()}, \texttt{geom_point()}
+- geom_bar(), geom_histogram(), geom_boxplot(), geom_point()
 - Wickham Chapter 3: https://r4ds.had.co.nz/data-visualisation.html
 - Recommended reading: Kieran Healy, *Data Visualization*. Available free at socviz.co
 - Available workshops on tidyverse, ggplot, rmarkdown at New Brunswick
@@ -385,7 +385,7 @@ ggplot(ipv_scale, aes(x=sec_school, y=sec_scale)) + geom_point()
 
 Correlation measures the degree to which two variables are associated with each other. We often use the letter $r$ to denote a correlation.
 
-\[r(x,y) = \frac{1}{n}\sum_{i=1}^{n} = \frac{x_i-\bar{x}}{S_x} - \frac{y_i-\bar{y}}{S_y}\]
+\[r(x,y) = \frac{1}{n}\sum_{i=1}^{n} \frac{x_i-\bar{x}}{S_x} \times \frac{y_i-\bar{y}}{S_y}\]
 
 Note that this is equal to the average of the product of the $z-scores$ of $x$ and $y$
 
@@ -461,7 +461,7 @@ centers
 
 ## Plot it!
 
-```{r size = "tiny"}
+```{r size = "tiny", fig.height = 3}
 ggplot(ipv_clusters, aes(x = scale(sec_school), 
                          y =scale(no_media), 
                          color = cluster)) +
@@ -473,7 +473,7 @@ ggplot(ipv_clusters, aes(x = scale(sec_school),
 
 ## What if we thought there were 4 clusters?
 
-```{r echo = FALSE}
+```{r echo = FALSE, fig.height = 3}
 ipv_kmeans<-ipv %>% 
   select(sec_school, no_media) %>% 
   mutate(sec_school = scale(sec_school),
@@ -487,8 +487,6 @@ ipv_clusters<-ipv %>%
 
 library(broom)
 centers<-tidy(ipv_kmeans)
-centers
-
 
 ggplot(ipv_clusters, aes(x = scale(sec_school), 
                          y =scale(no_media), 
@@ -500,7 +498,7 @@ ggplot(ipv_clusters, aes(x = scale(sec_school),
 
 ## What if we thought there were 10 clusters?
 
-```{r echo = FALSE}
+```{r echo = FALSE, fig.height = 3}
 ipv_kmeans<-ipv %>% 
   select(sec_school, no_media) %>% 
   mutate(sec_school = scale(sec_school),
@@ -514,8 +512,6 @@ ipv_clusters<-ipv %>%
 
 library(broom)
 centers<-tidy(ipv_kmeans)
-centers
-
 
 ggplot(ipv_clusters, aes(x = scale(sec_school), 
                          y =scale(no_media), 

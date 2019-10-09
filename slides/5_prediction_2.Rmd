@@ -1,0 +1,45 @@
+---
+title: "Measurement and visualization, 2"
+author: "Frank Edwards"
+date: "9/17/2019"
+output: binb::metropolis
+---
+
+```{r setup, include=FALSE}
+rm(list=ls())
+library(tidyverse)
+library(qss)
+library(MASS)
+select<-dplyr::select
+set.seed(1)
+data(afghan)
+data(afghan.village)
+
+options(xtable.comment = FALSE)
+theme_set(theme_bw())
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, tidy = TRUE, size = "small")
+```
+
+# Prediction 2
+
+## Joins
+
+## Model fit
+
+## Regression and causation
+
+## RCTs
+
+## Regression with multiple predictors
+
+## Heterogeneous treatment effects
+
+## Interactions
+
+## Regression discontinuity
+

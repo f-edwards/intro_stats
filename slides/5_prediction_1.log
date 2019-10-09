@@ -1,9 +1,9 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.12.18)  2 OCT 2019 14:27
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.12.18)  8 OCT 2019 21:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**4_measurement_2.tex
-(./4_measurement_2.tex
+**5_prediction_1.tex
+(./5_prediction_1.tex
 LaTeX2e <2018-12-01>
 (/usr/local/texlive/2018/texmf-dist/tex/latex/beamer/beamer.cls
 Document Class: beamer 2018/12/02 v3.55 A class for typesetting presentations
@@ -1197,40 +1197,98 @@ Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
 \fb@frh=\dimen295
 \FrameRule=\dimen296
 \FrameSep=\dimen297
-) (/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/grffile.sty
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/tools/longtable.sty
+Package: longtable 2014/10/28 v4.11 Multi-page Table package (DPC)+ FMi change
+\LTleft=\skip76
+\LTright=\skip77
+\LTpre=\skip78
+\LTpost=\skip79
+\LTchunksize=\count350
+\LTcapwidth=\dimen298
+\LT@head=\box80
+\LT@firsthead=\box81
+\LT@foot=\box82
+\LT@lastfoot=\box83
+\LT@cols=\count351
+\LT@rows=\count352
+\c@LT@tables=\count353
+\c@LT@chunks=\count354
+\LT@p@ftn=\toks50
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/booktabs/booktabs.sty
+Package: booktabs 2016/04/27 v1.618033 publication quality tables
+\heavyrulewidth=\dimen299
+\lightrulewidth=\dimen300
+\cmidrulewidth=\dimen301
+\belowrulesep=\dimen302
+\belowbottomsep=\dimen303
+\aboverulesep=\dimen304
+\abovetopsep=\dimen305
+\cmidrulesep=\dimen306
+\cmidrulekern=\dimen307
+\defaultaddspace=\dimen308
+\@cmidla=\count355
+\@cmidlb=\count356
+\@aboverulesep=\dimen309
+\@belowrulesep=\dimen310
+\@thisruleclass=\count357
+\@lastruleclass=\count358
+\@thisrulewidth=\dimen311
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2018/10/06 v3.3-154 Customizing captions (AR)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2018/09/12 v1.8c caption3 kernel (AR)
+Package caption3 Info: TeX engine: e-TeX on input line 64.
+\captionmargin=\dimen312
+\captionmargin@=\dimen313
+\captionwidth=\dimen314
+\caption@tempdima=\dimen315
+\caption@indent=\dimen316
+\caption@parindent=\dimen317
+\caption@hangindent=\dimen318
+)
+\c@caption@flags=\count359
+\c@ContinuedFloat=\count360
+Package caption Info: beamer document class.
+Package caption Info: hyperref package is loaded.
+Package caption Info: Hyperref support is turned off
+(caption)             because hyperref has stopped early.
+Package caption Info: longtable package is loaded.
+(/usr/local/texlive/2018/texmf-dist/tex/latex/caption/ltcaption.sty
+Package: ltcaption 2018/08/26 v1.4-95 longtable captions (AR)
+)) (/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/grffile.sty
 Package: grffile 2017/06/30 v1.18 Extended file name support for graphics (HO)
 Package grffile Info: Option `multidot' is set to `true'.
 Package grffile Info: Option `extendedchars' is set to `false'.
 Package grffile Info: Option `space' is set to `true'.
 Package grffile Info: \Gin@ii of package `graphicx' fixed on input line 494.
-) (./4_measurement_2.aux)
-\openout1 = `4_measurement_2.aux'.
+) (./5_prediction_1.aux)
+\openout1 = `5_prediction_1.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 162.
-LaTeX Font Info:    ... okay on input line 162.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 162.
-LaTeX Font Info:    ... okay on input line 162.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 162.
-LaTeX Font Info:    ... okay on input line 162.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 162.
-LaTeX Font Info:    ... okay on input line 162.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 162.
-LaTeX Font Info:    ... okay on input line 162.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 162.
-LaTeX Font Info:    ... okay on input line 162.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 162.
-LaTeX Font Info:    ... okay on input line 162.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 162.
-LaTeX Font Info:    ... okay on input line 162.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 162.
-LaTeX Font Info:    ... okay on input line 162.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 162.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 162.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 168.
+LaTeX Font Info:    ... okay on input line 168.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 168.
+LaTeX Font Info:    ... okay on input line 168.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 168.
+LaTeX Font Info:    ... okay on input line 168.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 168.
+LaTeX Font Info:    ... okay on input line 168.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 168.
+LaTeX Font Info:    ... okay on input line 168.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 168.
+LaTeX Font Info:    ... okay on input line 168.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 168.
+LaTeX Font Info:    ... okay on input line 168.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 168.
+LaTeX Font Info:    ... okay on input line 168.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 168.
+LaTeX Font Info:    ... okay on input line 168.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 168.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 168.
 
 (/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 162.
+LaTeX Font Info:    ... okay on input line 168.
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
 *geometry* verbose mode - [ preamble ] result:
@@ -1266,83 +1324,83 @@ LaTeX Font Info:    ... okay on input line 162.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 ABD: EveryShipout initializing macros
-\AtBeginShipoutBox=\box80
-Package hyperref Info: Link coloring OFF on input line 162.
+\AtBeginShipoutBox=\box84
+Package hyperref Info: Link coloring OFF on input line 168.
 (/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 (/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count350
+\c@section@level=\count361
 )
-LaTeX Info: Redefining \ref on input line 162.
-LaTeX Info: Redefining \pageref on input line 162.
-LaTeX Info: Redefining \nameref on input line 162.
-(./4_measurement_2.out) (./4_measurement_2.out)
+LaTeX Info: Redefining \ref on input line 168.
+LaTeX Info: Redefining \pageref on input line 168.
+LaTeX Info: Redefining \nameref on input line 168.
+(./5_prediction_1.out) (./5_prediction_1.out)
 \@outlinefile=\write6
-\openout6 = `4_measurement_2.out'.
+\openout6 = `5_prediction_1.out'.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/lmr/m/n --> OT1/cmss/m/n on input line 162.
+(Font)                  OT1/lmr/m/n --> OT1/cmss/m/n on input line 168.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/lmr/bx/n --> OT1/cmss/bx/n on input line 162.
+(Font)                  OT1/lmr/bx/n --> OT1/cmss/bx/n on input line 168.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
 (Font)                  OT1/cmss/m/n --> OT1/FiraSansLight(0)/m/n on input line
- 162.
+ 168.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
 (Font)                  OT1/cmss/bx/n --> OT1/FiraSansLight(0)/bx/n on input li
-ne 162.
+ne 168.
 \symnumbers=\mathgroup6
 \sympureletters=\mathgroup7
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
 (Font)                  OT1/FiraSansLight(0)/m/n --> TU/lmr/m/n on input line 1
-62.
-LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 162.
+68.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 168.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
 (Font)                  OT1/lmr/bx/n --> TU/FiraSansLight(0)/bx/n on input line
- 162.
+ 168.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
 (Font)                  OT1/lmr/bx/n --> TU/FiraSansLight(0)/bx/n on input line
- 162.
-LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 162.
+ 168.
+LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 168.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
 (Font)                  OT1/lmss/m/n --> TU/FiraSansLight(0)/m/n on input line 
-162.
+168.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
 (Font)                  OT1/lmss/bx/n --> TU/FiraSansLight(0)/m/n on input line
- 162.
-LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 162.
+ 168.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 168.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
 (Font)                  OT1/lmr/m/it --> TU/FiraSansLight(0)/m/it on input line
- 162.
+ 168.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
 (Font)                  OT1/lmr/bx/it --> TU/FiraSansLight(0)/m/it on input lin
-e 162.
-LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 162.
+e 168.
+LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 168.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/lmtt/m/n --> TU/lmtt/m/n on input line 162.
+(Font)                  OT1/lmtt/m/n --> TU/lmtt/m/n on input line 168.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/lmtt/m/n --> TU/lmtt/m/n on input line 162.
+(Font)                  OT1/lmtt/m/n --> TU/lmtt/m/n on input line 168.
 LaTeX Font Info:    Overwriting symbol font `numbers' in version `bold'
 (Font)                  TU/FiraSansLight(0)/m/n --> TU/FiraSansLight(0)/bx/n on
- input line 162.
+ input line 168.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
 (Font)                  TU/FiraSansLight(0)/m/it --> TU/FiraSansLight(0)/bx/it 
-on input line 162.
+on input line 168.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `bold'
 (Font)                  OT1/FiraSansLight(0)/bx/n --> TU/lmr/bx/n on input line
- 162.
+ 168.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
 (Font)                  TU/FiraSansLight(0)/bx/n --> TU/FiraSansLight(0)/bx/n o
-n input line 162.
+n input line 168.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
 (Font)                  TU/FiraSansLight(0)/m/n --> TU/FiraSansLight(0)/bx/n on
- input line 162.
+ input line 168.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
 (Font)                  TU/FiraSansLight(0)/m/it --> TU/FiraSansLight(0)/bx/it 
-on input line 162.
+on input line 168.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  TU/lmtt/m/n --> TU/lmtt/bx/n on input line 162.
+(Font)                  TU/lmtt/m/n --> TU/lmtt/bx/n on input line 168.
 
 (/usr/local/texlive/2018/texmf-dist/tex/latex/translator/translator-basic-dicti
 onary-English.dict
@@ -1368,7 +1426,7 @@ Dictionary: translator-numbers-dictionary, Language: English
 tionary-English.dict
 Dictionary: translator-theorem-dictionary, Language: English 
 )
-LaTeX Info: Redefining \microtypecontext on input line 162.
+LaTeX Info: Redefining \microtypecontext on input line 168.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using protrusion set `basicmath'.
 Package microtype Info: No adjustment of tracking.
@@ -1378,129 +1436,195 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `FiraSansLight' (encoding: TU).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-(./4_measurement_2.nav)
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: End \AtBeginDocument code.
+(./5_prediction_1.nav)
 LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/m/n' will be
-(Font)              scaled to size 4.94458pt on input line 162.
+(Font)              scaled to size 4.94458pt on input line 168.
 LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/m/n' will be
-(Font)              scaled to size 6.59277pt on input line 162.
+(Font)              scaled to size 6.59277pt on input line 168.
 LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/m/n' will be
-(Font)              scaled to size 11.86697pt on input line 167.
+(Font)              scaled to size 11.86697pt on input line 173.
 LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/bx/n' will be
-(Font)              scaled to size 11.77689pt on input line 167.
+(Font)              scaled to size 11.77689pt on input line 173.
 LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/m/n' will be
-(Font)              scaled to size 8.24097pt on input line 167.
+(Font)              scaled to size 8.24097pt on input line 173.
 
-Overfull \vbox (15.63992pt too high) detected at line 167
+Overfull \vbox (15.63992pt too high) detected at line 173
  []
 
 [1
 
 ]
-\openout4 = `4_measurement_2.vrb'.
-
-(./4_measurement_2.vrb
-LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/m/it' will be
-(Font)              scaled to size 9.02385pt on input line 4.
-LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <8> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 16.
 LaTeX Font Info:    Try loading font information for OT1+FiraSansLight(0) on in
-put line 33.
-LaTeX Font Info:    No file OT1FiraSansLight(0).fd. on input line 33.
+put line 178.
+LaTeX Font Info:    No file OT1FiraSansLight(0).fd. on input line 178.
 
 LaTeX Font Warning: Font shape `OT1/FiraSansLight(0)/m/n' undefined
-(Font)              using `OT1/cmr/m/n' instead on input line 33.
+(Font)              using `OT1/cmr/m/n' instead on input line 178.
 
 (/usr/local/texlive/2018/texmf-dist/tex/latex/microtype/mt-cmr.cfg
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
 )
-LaTeX Font Info:    Try loading font information for OML+lmm on input line 33.
+LaTeX Font Info:    Try loading font information for OML+lmm on input line 178.
+
 (/usr/local/texlive/2018/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 33.
-
+LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 178
+.
 (/usr/local/texlive/2018/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMX+lmex on input line 33.
-
+LaTeX Font Info:    Try loading font information for OMX+lmex on input line 178
+.
 (/usr/local/texlive/2018/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 33.
+(Font)              <10.95> on input line 178.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 33.
+(Font)              <8> on input line 178.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 33.
-LaTeX Font Info:    Try loading font information for U+msa on input line 33.
+(Font)              <6> on input line 178.
+LaTeX Font Info:    Try loading font information for U+msa on input line 178.
 (/usr/local/texlive/2018/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 ) (/usr/local/texlive/2018/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 33.
+LaTeX Font Info:    Try loading font information for U+msb on input line 178.
 (/usr/local/texlive/2018/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (/usr/local/texlive/2018/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/m/it' will be
-(Font)              scaled to size 6.59277pt on input line 33.
+(Font)              scaled to size 9.02385pt on input line 178.
 LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/m/it' will be
-(Font)              scaled to size 4.94458pt on input line 33.
-)
+(Font)              scaled to size 6.59277pt on input line 178.
+LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/m/it' will be
+(Font)              scaled to size 4.94458pt on input line 178.
 LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/m/n' will be
-(Font)              scaled to size 9.88916pt on input line 211.
-LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/bx/n' will be
-(Font)              scaled to size 9.81409pt on input line 211.
-
-Overfull \vbox (3.2893pt too high) detected at line 211
- []
-
-LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/m/n' will be
-(Font)              scaled to size 3.29639pt on input line 211.
+(Font)              scaled to size 3.29639pt on input line 178.
 [2
 
-] [3
+]
+LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/m/n' will be
+(Font)              scaled to size 9.88916pt on input line 201.
+LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/bx/n' will be
+(Font)              scaled to size 9.81409pt on input line 201.
+[3
 
 ] [4
 
 ]
-\openout4 = `4_measurement_2.vrb'.
+\openout4 = `5_prediction_1.vrb'.
 
-(./4_measurement_2.vrb
+(./5_prediction_1.vrb
 LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 9.
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 8.
 ) [5
 
 ] [6
 
 ]
-\openout4 = `4_measurement_2.vrb'.
+\openout4 = `5_prediction_1.vrb'.
 
-(./4_measurement_2.vrb
-File: 4_measurement_2_files/figure-beamer/unnamed-chunk-3-1.pdf Graphic file (t
-ype pdf)
-<use 4_measurement_2_files/figure-beamer/unnamed-chunk-3-1.pdf>
-) [7
+(./5_prediction_1.vrb) [7
 
 ]
-File: 4_measurement_2_files/figure-beamer/unnamed-chunk-4-1.pdf Graphic file (t
-ype pdf)
-<use 4_measurement_2_files/figure-beamer/unnamed-chunk-4-1.pdf>
-[8
+\openout4 = `5_prediction_1.vrb'.
 
-] [9
+(./5_prediction_1.vrb
+LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <6> not available
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 19.
+) [8
 
-] [10
+]
+\openout4 = `5_prediction_1.vrb'.
 
-] [11
+(./5_prediction_1.vrb)
+Overfull \vbox (15.11525pt too high) detected at line 367
+ []
 
-] [12
+[9
 
-] [13
+]
+\openout4 = `5_prediction_1.vrb'.
+
+(./5_prediction_1.vrb
+Overfull \hbox (81.21013pt too wide) in paragraph at lines 25--25
+[]\TU/lmtt/m/n/10 ##      id state Clinton Trump days_to_election electoral_vot
+es population[] 
+ []
+
+
+Overfull \hbox (54.96013pt too wide) in paragraph at lines 25--25
+[]\TU/lmtt/m/n/10 ##   <dbl> <chr>   <dbl> <dbl>            <dbl>           <db
+l> <chr>[] 
+ []
+
+
+Overfull \hbox (96.96013pt too wide) in paragraph at lines 25--25
+[]\TU/lmtt/m/n/10 ## 1 26255 TX         38    41               24              
+38 Likely Voters[] 
+ []
+
+
+Overfull \hbox (96.96013pt too wide) in paragraph at lines 25--25
+[]\TU/lmtt/m/n/10 ## 2 26253 WI         48    44               23              
+10 Likely Voters[] 
+ []
+
+
+Overfull \hbox (96.96013pt too wide) in paragraph at lines 25--25
+[]\TU/lmtt/m/n/10 ## 3 26252 VA         54    41               23              
+13 Likely Voters[] 
+ []
+
+
+Overfull \hbox (96.96013pt too wide) in paragraph at lines 25--25
+[]\TU/lmtt/m/n/10 ## 4 26251 NV         47    40               19              
+ 6 Likely Voters[] 
+ []
+
+
+Overfull \hbox (96.96013pt too wide) in paragraph at lines 25--25
+[]\TU/lmtt/m/n/10 ## 5 26250 TX         46    48               23              
+38 Likely Voters[] 
+ []
+
+
+Overfull \hbox (96.96013pt too wide) in paragraph at lines 25--25
+[]\TU/lmtt/m/n/10 ## 6 26249 NH         50    43               23              
+ 4 Likely Voters[] 
+ []
+
+)
+Overfull \vbox (39.0532pt too high) detected at line 405
+ []
+
+[10
+
+]
+\openout4 = `5_prediction_1.vrb'.
+
+(./5_prediction_1.vrb) [11
+
+]
+\openout4 = `5_prediction_1.vrb'.
+
+(./5_prediction_1.vrb
+LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <8> not available
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 9.
+) [12
+
+]
+\openout4 = `5_prediction_1.vrb'.
+
+(./5_prediction_1.vrb) [13
 
 ] [14
 
@@ -1508,357 +1632,147 @@ ype pdf)
 
 ] [16
 
-] [17
+]
+\openout4 = `5_prediction_1.vrb'.
+
+(./5_prediction_1.vrb) [17
 
 ]
-\openout4 = `4_measurement_2.vrb'.
+\openout4 = `5_prediction_1.vrb'.
 
-(./4_measurement_2.vrb) [18
+(./5_prediction_1.vrb) [18
 
-]
-\openout4 = `4_measurement_2.vrb'.
-
-(./4_measurement_2.vrb
-LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <6> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 8.
-) [19
+] [19
 
 ]
-\openout4 = `4_measurement_2.vrb'.
+\openout4 = `5_prediction_1.vrb'.
 
-(./4_measurement_2.vrb
-File: 4_measurement_2_files/figure-beamer/unnamed-chunk-7-1.pdf Graphic file (t
-ype pdf)
-<use 4_measurement_2_files/figure-beamer/unnamed-chunk-7-1.pdf>
-)
-Overfull \vbox (13.13446pt too high) detected at line 510
+(./5_prediction_1.vrb) [20
+
+] [21
+
+]
+\openout4 = `5_prediction_1.vrb'.
+
+(./5_prediction_1.vrb) [22
+
+]
+\openout4 = `5_prediction_1.vrb'.
+
+(./5_prediction_1.vrb)
+Overfull \vbox (14.32329pt too high) detected at line 759
  []
 
-[20
+[23
 
 ]
-\openout4 = `4_measurement_2.vrb'.
+\openout4 = `5_prediction_1.vrb'.
 
-(./4_measurement_2.vrb
-File: 4_measurement_2_files/figure-beamer/unnamed-chunk-8-1.pdf Graphic file (t
-ype pdf)
-<use 4_measurement_2_files/figure-beamer/unnamed-chunk-8-1.pdf>
-)
-Overfull \vbox (13.13446pt too high) detected at line 527
- []
-
-[21
+(./5_prediction_1.vrb) [24
 
 ]
-\openout4 = `4_measurement_2.vrb'.
+\openout4 = `5_prediction_1.vrb'.
 
-(./4_measurement_2.vrb) [22
-
-]
-\openout4 = `4_measurement_2.vrb'.
-
-(./4_measurement_2.vrb) [23
+(./5_prediction_1.vrb) [25
 
 ]
-\openout4 = `4_measurement_2.vrb'.
+\openout4 = `5_prediction_1.vrb'.
 
-(./4_measurement_2.vrb) [24
-
-]
-\openout4 = `4_measurement_2.vrb'.
-
-(./4_measurement_2.vrb) [25
-
-]
-\openout4 = `4_measurement_2.vrb'.
-
-(./4_measurement_2.vrb
-File: 4_measurement_2_files/figure-beamer/unnamed-chunk-13-1.pdf Graphic file (
-type pdf)
-<use 4_measurement_2_files/figure-beamer/unnamed-chunk-13-1.pdf>
-)
-Overfull \vbox (13.13478pt too high) detected at line 664
+(./5_prediction_1.vrb)
+Overfull \vbox (30.95322pt too high) detected at line 880
  []
 
 [26
 
 ]
-\openout4 = `4_measurement_2.vrb'.
+\openout4 = `5_prediction_1.vrb'.
 
-(./4_measurement_2.vrb
-File: 4_measurement_2_files/figure-beamer/unnamed-chunk-14-1.pdf Graphic file (
-type pdf)
-<use 4_measurement_2_files/figure-beamer/unnamed-chunk-14-1.pdf>
-)
-Overfull \vbox (13.13446pt too high) detected at line 681
- []
-
-[27
+(./5_prediction_1.vrb
+File: 5_prediction_1_files/figure-beamer/unnamed-chunk-17-1.pdf Graphic file (t
+ype pdf)
+<use 5_prediction_1_files/figure-beamer/unnamed-chunk-17-1.pdf>
+) [27
 
 ]
-\openout4 = `4_measurement_2.vrb'.
+\openout4 = `5_prediction_1.vrb'.
 
-(./4_measurement_2.vrb
-File: 4_measurement_2_files/figure-beamer/unnamed-chunk-15-1.pdf Graphic file (
-type pdf)
-<use 4_measurement_2_files/figure-beamer/unnamed-chunk-15-1.pdf>
-)
-Overfull \vbox (13.13446pt too high) detected at line 699
- []
-
-[28
+(./5_prediction_1.vrb) [28
 
 ]
-\openout4 = `4_measurement_2.vrb'.
+\openout4 = `5_prediction_1.vrb'.
 
-(./4_measurement_2.vrb) [29
+(./5_prediction_1.vrb) [29
 
-]
-\openout4 = `4_measurement_2.vrb'.
+] [30
 
-(./4_measurement_2.vrb
-File: 4_measurement_2_files/figure-beamer/unnamed-chunk-17-1.pdf Graphic file (
-type pdf)
-<use 4_measurement_2_files/figure-beamer/unnamed-chunk-17-1.pdf>
-)
-Overfull \vbox (26.87936pt too high) detected at line 736
- []
-
-[30
+] [31
 
 ]
-\openout4 = `4_measurement_2.vrb'.
+\openout4 = `5_prediction_1.vrb'.
 
-(./4_measurement_2.vrb
-File: 4_measurement_2_files/figure-beamer/unnamed-chunk-18-1.pdf Graphic file (
-type pdf)
-<use 4_measurement_2_files/figure-beamer/unnamed-chunk-18-1.pdf>
-)
-Overfull \vbox (26.87936pt too high) detected at line 754
- []
-
-[31
+(./5_prediction_1.vrb) [32
 
 ]
-File: 4_measurement_2_files/figure-beamer/unnamed-chunk-19-1.pdf Graphic file (
-type pdf)
-<use 4_measurement_2_files/figure-beamer/unnamed-chunk-19-1.pdf>
-[32
+\openout4 = `5_prediction_1.vrb'.
 
-] [33
-
-] [34
+(./5_prediction_1.vrb) [33
 
 ]
-\openout4 = `4_measurement_2.vrb'.
-
-(./4_measurement_2.vrb
-Overfull \hbox (102.21013pt too wide) in paragraph at lines 24--24
-[]\TU/lmtt/m/n/10 ##      X1 beat_burnfood beat_goesout sec_school no_media cou
-ntry  year region[] 
- []
-
-
-Overfull \hbox (96.96013pt too wide) in paragraph at lines 24--24
-[]\TU/lmtt/m/n/10 ##   <dbl>         <dbl>        <dbl>      <dbl>    <dbl> <ch
-r>   <dbl> <chr>[] 
- []
-
-
-Overfull \hbox (102.21013pt too wide) in paragraph at lines 24--24
-[]\TU/lmtt/m/n/10 ## 1     1           4.4         18.6       25.2      1.5 Alb
-ania  2008 Middl~[] 
- []
-
-
-Overfull \hbox (102.21013pt too wide) in paragraph at lines 24--24
-[]\TU/lmtt/m/n/10 ## 2     4           4.9         19.9       67.7      8.7 Arm
-enia  2000 Middl~[] 
- []
-
-
-Overfull \hbox (102.21013pt too wide) in paragraph at lines 24--24
-[]\TU/lmtt/m/n/10 ## 3     5           2.1         10.3       67.6      2.2 Arm
-enia  2005 Middl~[] 
- []
-
-
-Overfull \hbox (102.21013pt too wide) in paragraph at lines 24--24
-[]\TU/lmtt/m/n/10 ## 4     6           0.3          3.1       46        6.4 Arm
-enia  2010 Middl~[] 
- []
-
-
-Overfull \hbox (102.21013pt too wide) in paragraph at lines 24--24
-[]\TU/lmtt/m/n/10 ## 5     7          12.1         42.5       74.6      7.4 Aze
-rba~  2006 Middl~[] 
- []
-
-
-Overfull \hbox (91.71013pt too wide) in paragraph at lines 24--24
-[]\TU/lmtt/m/n/10 ## 6     8          NA           NA         24       41.9 Ban
-gla~  2004 Asia[] 
- []
-
-) [35
+LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/bx/n' will be
+(Font)              scaled to size 8.95534pt on input line 1066.
+[34
 
 ]
-\openout4 = `4_measurement_2.vrb'.
+\openout4 = `5_prediction_1.vrb'.
 
-(./4_measurement_2.vrb
-File: 4_measurement_2_files/figure-beamer/unnamed-chunk-21-1.pdf Graphic file (
-type pdf)
-<use 4_measurement_2_files/figure-beamer/unnamed-chunk-21-1.pdf>
-)
-Overfull \vbox (3.68747pt too high) detected at line 834
- []
-
-[36
+(./5_prediction_1.vrb) [35
 
 ]
-\openout4 = `4_measurement_2.vrb'.
+\openout4 = `5_prediction_1.vrb'.
 
-(./4_measurement_2.vrb
-File: 4_measurement_2_files/figure-beamer/unnamed-chunk-22-1.pdf Graphic file (
-type pdf)
-<use 4_measurement_2_files/figure-beamer/unnamed-chunk-22-1.pdf>
-) [37
+(./5_prediction_1.vrb) [36
 
 ]
-File: 4_measurement_2_files/figure-beamer/unnamed-chunk-23-1.pdf Graphic file (
-type pdf)
-<use 4_measurement_2_files/figure-beamer/unnamed-chunk-23-1.pdf>
-[38
+\openout4 = `5_prediction_1.vrb'.
+
+(./5_prediction_1.vrb) [37
 
 ]
-File: 4_measurement_2_files/figure-beamer/unnamed-chunk-24-1.pdf Graphic file (
-type pdf)
-<use 4_measurement_2_files/figure-beamer/unnamed-chunk-24-1.pdf>
-[39
+\openout4 = `5_prediction_1.vrb'.
 
-]
-(/usr/local/texlive/2018/texmf-dist/tex/latex/microtype/mt-LatinModernRoman.cfg
-File: mt-LatinModernRoman.cfg 2013/03/13 v1.0 microtype config. file: Latin Mod
-ern Roman (RS)
-)
-Overfull \vbox (3.23203pt too high) detected at line 902
- []
+(./5_prediction_1.vrb) [38
 
-[40
-
-]
-\openout4 = `4_measurement_2.vrb'.
-
-(./4_measurement_2.vrb) [41
-
-]
-\openout4 = `4_measurement_2.vrb'.
-
-(./4_measurement_2.vrb
-File: 4_measurement_2_files/figure-beamer/unnamed-chunk-26-1.pdf Graphic file (
-type pdf)
-<use 4_measurement_2_files/figure-beamer/unnamed-chunk-26-1.pdf>
-)
-Overfull \vbox (3.68147pt too high) detected at line 948
- []
-
-[42
-
-] [43
-
-]
-File: 4_measurement_2_files/figure-beamer/unnamed-chunk-27-1.pdf Graphic file (
-type pdf)
-<use 4_measurement_2_files/figure-beamer/unnamed-chunk-27-1.pdf>
-[44
-
-]
-\openout4 = `4_measurement_2.vrb'.
-
-(./4_measurement_2.vrb) [45
-
-] [46
-
-] [47
-
-]
-File: ./vis/kmeans.jpg Graphic file (type bmp)
-<./vis/kmeans.jpg>
-[48
-
-]
-\openout4 = `4_measurement_2.vrb'.
-
-(./4_measurement_2.vrb)
-Overfull \vbox (51.42505pt too high) detected at line 1098
- []
-
-[49
-
-]
-\openout4 = `4_measurement_2.vrb'.
-
-(./4_measurement_2.vrb) [50
-
-]
-\openout4 = `4_measurement_2.vrb'.
-
-(./4_measurement_2.vrb) [51
-
-]
-\openout4 = `4_measurement_2.vrb'.
-
-(./4_measurement_2.vrb
-File: 4_measurement_2_files/figure-beamer/unnamed-chunk-32-1.pdf Graphic file (
-type pdf)
-<use 4_measurement_2_files/figure-beamer/unnamed-chunk-32-1.pdf>
-) [52
-
-]
-File: 4_measurement_2_files/figure-beamer/unnamed-chunk-33-1.pdf Graphic file (
-type pdf)
-<use 4_measurement_2_files/figure-beamer/unnamed-chunk-33-1.pdf>
-[53
-
-]
-File: 4_measurement_2_files/figure-beamer/unnamed-chunk-34-1.pdf Graphic file (
-type pdf)
-<use 4_measurement_2_files/figure-beamer/unnamed-chunk-34-1.pdf>
-[54
-
-] [55
-
-] [56
+] [39
 
 ]
 \tf@nav=\write7
-\openout7 = `4_measurement_2.nav'.
+\openout7 = `5_prediction_1.nav'.
 
 \tf@toc=\write8
-\openout8 = `4_measurement_2.toc'.
+\openout8 = `5_prediction_1.toc'.
 
 \tf@snm=\write9
-\openout9 = `4_measurement_2.snm'.
+\openout9 = `5_prediction_1.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1253.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1253.
-(./4_measurement_2.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1253.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1253.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1200.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1200.
+(./5_prediction_1.aux)
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1200.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1200.
 
-Package rerunfilecheck Info: File `4_measurement_2.out' has not changed.
-(rerunfilecheck)             Checksum: B0411EA13C5BC44B9FAECDEA3723671F.
+Package rerunfilecheck Info: File `5_prediction_1.out' has not changed.
+(rerunfilecheck)             Checksum: 9CB41E1D7FEF80178F89DF4178ED4DD7.
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 38009 strings out of 492933
- 776148 string characters out of 6133144
- 882414 words of memory out of 5000000
- 41329 multiletter control sequences out of 15000+600000
- 537338 words of font info for 79 fonts, out of 8000000 for 9000
+ 39070 strings out of 492933
+ 790266 string characters out of 6133144
+ 905306 words of memory out of 5000000
+ 42417 multiletter control sequences out of 15000+600000
+ 537330 words of font info for 78 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 71i,13n,145p,1818b,726s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 71i,13n,145p,1817b,726s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on 4_measurement_2.pdf (56 pages).
+Output written on 5_prediction_1.pdf (39 pages).
