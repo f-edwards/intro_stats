@@ -1,0 +1,215 @@
+---
+title: "HW 3 solutions"
+author: "Frank Edwards"
+date: "9/23/2019"
+output: html_document
+---
+
+**Efficacy of Small Class Size in early Education**
+```{r setup, include=FALSE}
+library(qss)
+library(tidyverse)
+data(STAR)
+star<-STAR
+```
+
+## Question 1
+
+```{r}
+star<-star %>% 
+  mutate(kinder = case_when(
+    classtype == 1 ~ "small",
+    classtype == 2 ~ "regular",
+    classtype == 3 ~ "regular with aid"
+  ))
+
+star<-star %>% 
+  mutate(race = case_when(
+    race == 1 ~ "white",
+    race == 2 ~ "black",
+    race == 4 ~ "hispanic",
+    race %in% c(3, 5, 6) ~ "other"
+  ))
+
+table(star$kinder)
+table(star$race)
+```
+The Dataset STAR (Student-Teacher Achievment Score) consists of six variables and 6325 observations. Over a period of four years (1985-1989), researchers examined the relationship between class size and educational performance and personal development. Before commencing an analysis with this dataset, the categories within two variables *classtype* and *race* were labeled. While race was originally coded into six groups, we recoded the variable into four categories. The following three categories were combined into one: *Others, Native American* and *Asian*. By doing so, the number of observations in "others" increased from 9 to 25. Majority of the sample was white (67%) or black (33%). 
+The three categories in the variable *classtype* were labeled to "regular" (=1), "regular with aid" (=2) and small (=3). Descriptive statistics of this variable show that participants were fairly evenly assigned to one of these three classtypes, according to 35% of the sample to a *small* classroom, another 35% to a *regular class with aid* and 30% to a  *regular* sized classroom. 
+
+
+## Question 2
+
+```{r}
+control<-star %>% 
+  filter(kinder == "regular") %>% 
+  summarise(g4reading = mean(g4reading, na.rm=TRUE),
+            g4math = mean(g4math, na.rm=TRUE))
+
+treatment<-star %>% 
+  group_by(kinder) %>% 
+  summarise(g4reading = mean(g4reading, na.rm=TRUE),
+            g4math = mean(g4math, na.rm=TRUE)) %>% 
+  ungroup() %>% 
+  mutate(effect_reading = g4reading - control$g4reading,
+         effect_math = g4math - control$g4math)
+
+sd_reading<-sd(star$g4reading, na.rm=TRUE)
+sd_math<-sd(star$g4math, na.rm=TRUE)
+
+treatment_scaled<-treatment %>% 
+  mutate(effect_reading = effect_reading / sd_reading,
+         effect_math = effect_math / sd_math)
+
+treatment
+
+treatment_scaled
+```
+
+In order to understand whether performance in maths and reading differed among those assigned to a regular-sized or small-sized classroom, we calculated the mean of the sample's math scores and reading scores. First, we assigned the *regular* class-size to be the **control group** and *regular with aid* and *small* sized classrooms as the **treatment group**. The means of math and reading scores of the control group were then subtracted from the treatment group. Overall, it is observable that class size did not create a considerable discrepancy on educational performance on the math and reading scores in fourth-grade. Especially once the standard deviation of both test scores were considered, the estimated effect on the reading score was positive and very small, according to 0.06. The performance on the 4th grade math test was on average hardly (if not even negligble) worse among the sample in small-sized classrooms, according to -0.007. We therefore can conclude that students in the smaller classes did not perform better than in regular-sized classrooms. 
+
+
+## Question 3
+
+```{r}
+control<-star %>% 
+  filter(kinder == "regular") %>% 
+  summarise(g4reading_hi = quantile(g4reading, 0.66, na.rm=TRUE),
+            g4math_hi = quantile(g4math, 0.66, na.rm=TRUE),
+            g4reading_lo = quantile(g4reading, 0.33, na.rm=TRUE),
+            g4math_lo = quantile(g4math, 0.33, na.rm=TRUE))
+
+treatment<-star %>% 
+  group_by(kinder) %>% 
+  summarise(g4reading_hi = quantile(g4reading, 0.66, na.rm=TRUE),
+            g4math_hi = quantile(g4math, 0.66, na.rm=TRUE),
+            g4reading_lo = quantile(g4reading, 0.33, na.rm=TRUE),
+            g4math_lo = quantile(g4math, 0.33, na.rm=TRUE)) %>% 
+  ungroup() %>% 
+  mutate(effect_reading_hi = g4reading_hi - control$g4reading_hi,
+         effect_math_hi = g4math_hi - control$g4math_hi,
+         effect_reading_lo = g4reading_lo - control$g4reading_lo,
+         effect_math_lo = g4math_lo - control$g4math_lo) %>% 
+  select(kinder,
+         effect_reading_hi, effect_reading_lo, 
+         effect_math_hi, effect_math_lo)
+treatment
+```
+
+From earlier analysis we know that the comparison of mean math and reading scores across classtypes did not yield any difference. When calculating the quantile treatment effects, we can observe that high scores (66th percentile) in reading and math tests were only slightly greater among the sample in small-sized classrooms compared to regular-sized classrooms, according to 1 and 2 point respectively.
+Regarding low grades in math scores, we can see that it was 2 points lower among students in small-sized classrooms compared to in regular-sized classrooms. No difference was observed among students in regular-sized, regular-sized with aid or small-sized classrooms who had low reading scores. The quantile treatment effect underlined the same findings from previous exercise and we can assume that class size did not have a great impact on low as well as high grades among the sample. 
+
+
+## Question 4
+
+```{r}
+star %>% 
+  group_by(kinder, yearssmall) %>% 
+  summarise(n = n()) %>% 
+  mutate(prop = n/sum(n))
+
+control<-star %>% 
+  filter(yearssmall == 0) %>% 
+  summarise(g4reading_mean = mean(g4reading, na.rm=TRUE),
+            g4reading_median = median(g4reading, na.rm=TRUE),
+            g4math_mean = mean(g4math, na.rm=TRUE),
+            g4math_median = median(g4math, na.rm=TRUE))
+
+treatment<-star %>% 
+  group_by(yearssmall) %>% 
+  summarise(g4reading_mean = mean(g4reading, na.rm=TRUE),
+            g4reading_median = median(g4reading, na.rm=TRUE),
+            g4math_mean = mean(g4math, na.rm=TRUE),
+            g4math_median = median(g4math, na.rm=TRUE)) %>% 
+  mutate(g4reading_mean = g4reading_mean - control$g4reading_mean,
+         g4reading_median = g4reading_median - control$g4reading_median,
+         g4math_mean = g4math_mean - control$g4math_mean,
+         g4math_median = g4math_median - control$g4math_median)
+
+treatment
+```
+
+The variable *yearssmall* consists of five ordered categories ranging from 0-4, which represent the years spent in a small-sized classroom. Again, we used students who had spent 0 years in a small-sized classroom as the control group, and everyone else in the treatment group. We calculated the mean and median score of the reading and math test across students who 1) spent one year, 2) two years, 3) three years and 4) four years in a small-sized classroom. Based on the findings, we can conclude that participation in more years of small classes made a difference in test scores. However, the difference was most prominant when comparing results of the reading test among students who spent four years in a small-sized class. These students (n=857) had an average reading score that was approximately 5 points higher than students who were placed in regular-sized classes for the entire study period. The reading score was also higher among students who had spent only one year in a small-sized classroom. Yet the same cannot be concluded from students who were assigned to a small-sized classroom for 2 or 3 years. In fact, the average reading scores of individuals who spent two years in a small-sized classroom was 2 points lower than those who spent in a regular sized classroom. 
+
+When comparing the math test scores among students in regular-sized and those who spent some time in small-sized classroom, the highest average and median math score was found among students who spent at least two years in a small-sized classroom. Findings show that the mean math score was roughly 4 points higher among students who spent two years in a small-sized classroom. Interestingly, the average and median math score amongst students who spent the entire study duration in a small classroom (4 years), did not show as great of a difference to students in regular-sized classrooms, according to a mean that is 2 points higher. Regarding maths scores across students who spent different numbers of years in small classes, it can be concluding that two or more years inside a small-classroom contributed to higher math scores. 
+
+## Question 5
+
+```{r}
+star_poc<-star %>% 
+  mutate(race = case_when(
+    race=="white" ~ "white",
+    race!="white" ~ "poc"
+  ))
+
+white<-star_poc %>% 
+  filter(race=="white") %>% 
+  group_by(kinder) %>% 
+  summarise(g4reading_mean = mean(g4reading, na.rm=TRUE),
+            g4math_mean = mean(g4math, na.rm=TRUE))
+  
+poc<-star_poc %>% 
+  filter(race!="white") %>% 
+  group_by(kinder) %>% 
+  summarise(g4reading_mean = mean(g4reading, na.rm=TRUE),
+            g4math_mean = mean(g4math, na.rm=TRUE))
+
+poc %>% 
+  mutate(g4reading_mean = g4reading_mean - white$g4reading_mean,
+         g4math_mean = g4math_mean - white$g4math_mean)
+
+```
+
+To see whether the STAR program reduced achievement gaps accross different races, we assigned all "white" students to the control group. All other races ("black", "Hispanic" and "other") were combined into the treatment group. Similar to previous exercises, we subtracted the mean reading and math score of the control group from the treatment group. It was discovered, that -particulalry among math scores- the racial achievement gap was not reduced in smaller classes. The average math score for minorities was 12 points lower than the average score of white students in both classroom sizes (regular as well as small). Regarding the reading test, the average score was slightly higher among minority students in a small sized-classroom compared to minority students in regular sized classes. Nontheless, compared to the average score of white students, the mean reading score of minorities was lower within both classroom sizes, according to a 27.4 lower average score in small-sized classrooms and 34.1 lower score in regular-sized classrooms. 
+
+## Question 6
+
+```{r}
+control<-star %>% 
+  filter(kinder == "regular") %>% 
+  summarise(hsgrad = mean(hsgrad, na.rm=TRUE))
+
+treatment<-star %>% 
+  group_by(kinder) %>% 
+  summarise(hsgrad = mean(hsgrad, na.rm=TRUE)) %>% 
+  mutate(hsgrad_effect = hsgrad - control$hsgrad )
+
+treatment
+
+control<-star %>% 
+  filter(yearssmall == 0) %>% 
+  summarise(hsgrad = mean(hsgrad, na.rm=TRUE))
+
+treatment<-star %>% 
+  group_by(yearssmall) %>% 
+  summarise(hsgrad = mean(hsgrad, na.rm=TRUE)) %>% 
+  mutate(hsgrad_effect = hsgrad - control$hsgrad )
+
+treatment
+
+star_poc<-star %>% 
+  mutate(race = case_when(
+    race=="white" ~ "white",
+    race!="white" ~ "poc"
+  ))
+
+white<-star_poc %>% 
+  filter(race=="white") %>% 
+  group_by(kinder) %>% 
+  summarise(hsgrad = mean(hsgrad, na.rm=TRUE))%>% 
+  ungroup()
+  
+poc<-star_poc %>% 
+  filter(race!="white") %>% 
+  group_by(kinder) %>% 
+  summarise(hsgrad = mean(hsgrad, na.rm=TRUE)) %>% 
+  ungroup()
+
+poc %>% 
+  mutate(hsgrad_bw_gap_effect = hsgrad - white$hsgrad)
+
+```
+
+So far, we looked into the effect of classroom sizes on the scores achieved in reading and math tests in fourth-grade. Now, we are curious about the long-term effects of small-sized classrooms by considering high school graduation rates. The variable "hsgrad" is a dummy variable with "1" representing a graduation and "0" no graduation. Before conducting any analysis, we see that majority of the sample graduated (n= 2539), compared to people who did not graduate from high school (n=508). First, we looked whether high school graduation rate is higher in any particular class-size within this sample. We found no difference, according to a graduation rate of 0.82 among respondents in a regular-sized classroom, and a 0.85 rate in a small-sized classroom. Graduation rate was also not impacted by the number of years spent in small classes. The highest difference was found between those who spent 4 years compared to 0 years in a small-sized class. The difference was 0.05 and is therefore negligible. Furthermore, the STAR program did not reduce the racial gap between white and minority student's graduation rates. According to the results, the graduation rate among non-white students was 0.11 lower among respondents who were in a small-sized and regular-sized class. 
+
+
