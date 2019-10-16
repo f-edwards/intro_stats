@@ -127,7 +127,9 @@ Where $\beta_0$ is the y-intercept of the line, $\beta_1$ is the slope of the li
 \[ Y = \beta_0 + \beta_1 X + \varepsilon \]
 
 $\beta_0$: The value of $y$ when $x$ is equal to zero
+
 $\beta_1$: The average increase in $y$ when $x$ increases by one unit
+
 $\varepsilon$: The distance between the line $y = \beta_0 + \beta_1 X$ and the actual observed values of $y$. Allows us to estimate the line, even when x and y do not fall exactly on a line.
 
 The line $y = \beta_0 + \beta_1 X$ provides a prediction for the values of $y$ based on the values of $x$.
@@ -307,7 +309,7 @@ ggplot(ipv %>%
 coef(ipv_model)
 ```
 
-\begin{scriptsize} On average, women in countries where women have higher levels of secondary seduction have lower levels of acceptance of domestic violence. For example, the model predicts that $\hat{y}=\beta_0 =$ `r round(coef(ipv_model)[1],2)` percent of women in a country in which zero percent of women have a secondary education approve of a husband beating a wife if she goes out without telling him. In a country where 20 percent of women have a secondary education, by contrast, this model predicts that $\hat{y} = \beta_0 + \beta_1 \times 20 =$ `r round(coef(ipv_model)[1] + 20 * coef(ipv_model)[2] ,2)` percent of women approve of intimate partner violence for a women going out without notifying her husband, a clear decline. 
+\begin{scriptsize} On average, women in countries where women have higher levels of secondary education have lower levels of acceptance of domestic violence. For example, the model predicts that $\hat{y}=\beta_0 =$ `r round(coef(ipv_model)[1],2)` percent of women in a country in which zero percent of women have a secondary education approve of a husband beating a wife if she goes out without telling him. In a country where 20 percent of women have a secondary education, by contrast, this model predicts that $\hat{y} = \beta_0 + \beta_1 \times 20 =$ `r round(coef(ipv_model)[1] + 20 * coef(ipv_model)[2] ,2)` percent of women approve of intimate partner violence for a women going out without notifying her husband, a clear decline. 
 
 Consistent with our expectations, there is a negative linear relationship between secondary schooling and women's attitudes about intimate partner violence. \end{scriptsize}
 
@@ -335,7 +337,7 @@ Our first model, for country $i$, was:
 
 Let's add a predictor for region. Remember from prior examples that we saw clear patterns within regions. 
 
-```{r}
+```{r size = "tiny"}
 ipv_model2<-lm(beat_goesout ~ sec_school + region, 
                data = ipv)
 coef(ipv_model2)

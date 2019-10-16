@@ -1,0 +1,42 @@
+---
+title: "HW 4 Solutions"
+author: "Frank Edwards"
+date: "10/14/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(qss)
+library(tidyverse)
+library(pander)
+data(vignettes)
+```
+
+## Question 1
+
+```{r}
+### format the data for analysis
+### OPTIONAL, but recommended:
+### rename the data.frame to something less typo-prone
+### recode china -> country
+### because it's just two values, use ifelse()
+v<-vignettes %>% 
+  mutate(country = ifelse(
+    china==0, "Mexico", "China")) %>% 
+  select(-china) # can discard china variable now
+
+### Barplot for self-assessment
+### must transform to proportion first
+v_prop<-v %>% 
+  group_by(country, self) %>% 
+  summarise(n = n()) %>% ### get count of values by country for proportion numerator
+  mutate(prop = n/sum(n)) ### sum over all self values within country for denominator
+
+
+ggplot(v_prop,
+       aes(x=self, y = prop)) + 
+  geom_col() + 
+  facet_wrap(~country)
+
+```
+
