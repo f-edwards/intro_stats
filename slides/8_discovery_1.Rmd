@@ -1,0 +1,455 @@
+---
+title: "Discovery, 2"
+author: "Frank Edwards"
+date: '10/23/2019'
+output: binb::metropolis
+---
+
+```{r setup, include=FALSE}
+rm(list=ls())
+library(tidyverse)
+library(qss)
+library(pander)
+
+options(xtable.comment = FALSE)
+theme_set(theme_bw())
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, tidy = TRUE, size = "small")
+```
+
+## Text data: setup
+
+```{r size = "tiny"}
+install.packages(c("tm", "SnowballC"))
+```
+
+## Research question
+
+- Are secondary school completion rates for women associated with lower levels of acceptance of intimate partner violence?
+- I expect a negative association between schooling and tolerance for intimate partner violence.
+
+## Visualizing associations: scatterplots
+
+```{r size = "tiny", fig.height = 4}
+ggplot(ipv, 
+       aes(x = sec_school, y = beat_goesout)) +
+  geom_point()
+```
+
+## Describing linear associations: correlation
+
+```{r size = "tiny", fig.height = 4}
+cor(ipv$sec_school, ipv$beat_goesout, use = "complete")
+ggplot(ipv, 
+       aes(x = sec_school, y = beat_goesout)) +
+  geom_point() + 
+  geom_smooth(method = "lm")
+```
+
+## Limits of correlation coefficients and importance of visualization
+
+```{r echo=FALSE, fig.height =4}
+### prep anscombe for small multiple plotting
+### need a long dataframe with x,y,varname columns
+data(anscombe)
+plot_anscombe<-bind_cols(
+  anscombe%>%
+    select(x1,x2,x3,x4)%>%
+    gather()%>%
+    rename(x = value)%>%
+    select(x),
+  anscombe%>%
+    select(y1,y2,y3,y4)%>%
+    gather()%>%
+    rename(y = value,
+           var = key))
+
+pander(plot_anscombe %>% 
+  group_by(var) %>% 
+  summarise(cor = cor(x,y)))
+  
+ggplot(plot_anscombe, 
+       aes(x = x, y = y)) + 
+  geom_smooth(method = "lm", 
+              formula = y~ x) + 
+  geom_point() + 
+  facet_wrap(~var, scales = "free")
+```
+
+## Correlations and linear relationships
+
+- A correlation coefficient ranges between [-1,1]
+- A correlation coefficient of 1 or -1 indicates a perfect linear association: x=y
+- A positive correlation coefficient indicates a positive slope
+- A negative correlation coefficient indicates a negative slope
+- A weak correlation does not imply that there is no relationship
+
+## Limits of linear relationships (continued)
+
+```{r echo = FALSE}
+r<-0.95
+sample <- mvrnorm(n=1000, 
+                  mu=c(0, 0), 
+                  Sigma=matrix(c(1, r, r, 1), nrow=2), 
+                  empirical=TRUE)
+
+sample<-data.frame(x = sample[,1], y = sample[,2])
+
+sample$y<-sample$y^2
+
+ggplot(sample, 
+       aes(x = x, y =y)) +
+  geom_point() + 
+  geom_smooth(method = "lm") +
+  labs(title = paste("cor(x,y)=",round(cor(sample$x, sample$y),3)))
+```
+
+## The linear regression model
+
+We can describe the relationship between a predictor variable $X$ and an outcome variable $Y$ with the line:
+
+\[ Y = \beta_0 + \beta_1 X + \varepsilon \]
+
+Where $\beta_0$ is the y-intercept of the line, $\beta_1$ is the slope of the line, and $\varepsilon$ is the error between the fitted line and the coordinates $(X,Y)$
+
+## The linear regression model
+
+\[ Y = \beta_0 + \beta_1 X + \varepsilon \]
+
+$\beta_0$: The value of $y$ when $x$ is equal to zero
+
+$\beta_1$: The average increase in $y$ when $x$ increases by one unit
+
+$\varepsilon$: The distance between the line $y = \beta_0 + \beta_1 X$ and the actual observed values of $y$. Allows us to estimate the line, even when x and y do not fall exactly on a line.
+
+The line $y = \beta_0 + \beta_1 X$ provides a prediction for the values of $y$ based on the values of $x$.
+
+## The linear regression model and prediction
+
+Remember, that we put a $\hat{hat}$ on variables to indicate that they are estimated from the data, or predicted.
+
+In other words, we try to learn about the *regression coefficients* $\beta_1$ and $\beta_0$ by estimating $\hat{\beta_1}$ and $\hat{\beta_0}$.
+
+A regression line predicts values $Y$, $\hat{Y}$ with the equation:
+
+$\hat{Y} = \hat{\beta_0} + \hat{\beta_1} X$
+
+and the residual, or prediction error is the difference between the observed and predicted values of $Y$
+
+$\varepsilon = Y - \hat{Y}$
+
+## Understanding the regression line
+
+```{r echo = FALSE, size = "tiny"}
+r<-0.95
+sample <- mvrnorm(n=10, 
+                  mu=c(1, 1), 
+                  Sigma=matrix(c(1, r, r, 1), nrow=2), 
+                  empirical=TRUE)
+
+sample<-data.frame(x = sample[,1], y = sample[,2])
+
+m1<-lm(y~x, data = sample)
+coefs<-coef(m1)
+
+as_tibble(sample)
+```
+
+$\hat{\beta_0} =$ `r coefs[1]`, $\hat{\beta_1} =$ `r coefs[2]`
+
+- Estimate $\hat{Y}$. Recall that $\hat{Y} = \hat{\beta_0} + \hat{\beta_1} X$
+- Estimate $\varepsilon$. Recall that $\varepsilon = Y - \hat{Y}$
+
+## Understanding the regression line
+
+$\hat{\beta_0} =$ `r coefs[1]`, $\hat{\beta_1} =$ `r coefs[2]`
+
+```{r echo = FALSE, fig.height = 4}
+yhat<-fitted(m1)
+ggplot(sample, aes(x=x,y=y)) + 
+  geom_point() #+ 
+  #geom_abline(slope = coefs[2], intercept = coefs[1]) + 
+  #geom_point(aes(x=x, y = yhat), color = 2)
+```
+
+## Understanding the regression line: adding the fit
+
+$\hat{\beta_0} =$ `r coefs[1]`, $\hat{\beta_1} =$ `r coefs[2]`
+
+```{r echo = FALSE, fig.height = 4}
+yhat<-fitted(m1)
+ggplot(sample, aes(x=x,y=y)) + 
+  geom_point() + 
+  geom_abline(slope = coefs[2], intercept = coefs[1]) #+ 
+  #geom_point(aes(x=x, y = yhat), color = 2)
+```
+
+## Understanding the regression line: adding $\hat{y}$
+
+$\hat{\beta_0} =$ `r coefs[1]`, $\hat{\beta_1} =$ `r coefs[2]`
+
+```{r echo = FALSE, fig.height = 4}
+yhat<-fitted(m1)
+ggplot(sample, aes(x=x,y=y)) + 
+  geom_point() + 
+  geom_abline(slope = coefs[2], intercept = coefs[1]) + 
+  geom_point(aes(x=x, y = yhat), color = 2)
+```
+
+## Understanding the regression line: adding $\varepsilon$
+
+$\hat{\beta_0} =$ `r coefs[1]`, $\hat{\beta_1} =$ `r coefs[2]`
+
+```{r echo = FALSE, fig.height = 4}
+yhat<-fitted(m1)
+ggplot(sample, aes(x=x,y=y)) + 
+  geom_point() + 
+  geom_abline(slope = coefs[2], intercept = coefs[1]) + 
+  geom_point(aes(x=x, y = yhat), color = 2, size = 2)  +
+  geom_segment(aes(x = x, xend =x, y = y, yend = yhat), lty =2)
+```
+
+## Ordinary least squares
+
+We usually fit a linear regression using a method called *ordinary least squares*, or OLS. 
+
+- This method seeks to minimize the distance between $\hat{Y}$ and $Y$. 
+- To do so, we minimize the sum of squared residuals (SSR)
+
+In other words, we solve for the values of $\hat{\beta_0}$ and $\hat{\beta_1}$ that results in the smallest possible value for:
+
+\[ \textrm{SSR} = \sum_{i=1}^n \varepsilon_i^2 =  \sum_{i=1}^n (y_i - \hat{\beta_0} - \hat{\beta_1} X )^2\]
+
+Also note that we can estimate the coefficient vector $\beta_1$ using matrix algebra:
+
+\[\hat{{\beta_1}}= (X^{\rm T} X )^{-1} X^{\rm T} Y \]
+
+See Imai for a more details on the math behind OLS
+
+## Estimating a regression model in R, the basics
+
+```{r fig.height = 2}
+x<-c(1, 2, 3, 4, 5)
+y<-c(2, 5, 1, 8, 10)
+
+model_demo<-lm(y~x)
+
+coef(model_demo)
+```
+
+## Estimating a linear regression model in R, IPV data
+
+*Are secondary school completion rates for women associated with lower levels of acceptance of intimate partner violence?*
+
+```{r}
+ipv_model<-lm(beat_goesout ~ sec_school, 
+              data = ipv)
+
+coef(ipv_model)
+```
+
+- What does the intercept coefficient ($\beta_0$) indicate?
+- What does the slope coefficient ($\beta_1$) indicate?
+
+## Visualize the model
+
+```{r echo = F}
+ggplot(ipv %>% 
+         filter(!(is.na(sec_school)), !(is.na(beat_goesout))), 
+       aes(x=sec_school, y = beat_goesout)) + 
+  geom_point() + 
+  geom_abline(aes(intercept = coef(ipv_model)[1], 
+                  slope = coef(ipv_model)[2])) #+ 
+  # geom_point(aes(x = sec_school, y = fitted(ipv_model)), color = "red") + 
+  # geom_segment(aes(x = sec_school, xend = sec_school, 
+  #                  y = beat_goesout, yend = fitted(ipv_model)), lty =2)
+```
+
+## Visualize the model
+
+```{r echo = F}
+ggplot(ipv %>% 
+         filter(!(is.na(sec_school)), !(is.na(beat_goesout))), 
+       aes(x=sec_school, y = beat_goesout)) + 
+  geom_point() + 
+  geom_abline(aes(intercept = coef(ipv_model)[1], 
+                  slope = coef(ipv_model)[2])) + 
+  geom_point(aes(x = sec_school, y = fitted(ipv_model)), color = "red") #+ 
+  # geom_segment(aes(x = sec_school, xend = sec_school, 
+  #                  y = beat_goesout, yend = fitted(ipv_model)), lty =2)
+```
+
+## Visualize the model
+
+```{r echo = F}
+ggplot(ipv %>% 
+         filter(!(is.na(sec_school)), !(is.na(beat_goesout))), 
+       aes(x=sec_school, y = beat_goesout)) + 
+  geom_point() + 
+  geom_abline(aes(intercept = coef(ipv_model)[1], 
+                  slope = coef(ipv_model)[2])) + 
+  geom_point(aes(x = sec_school, y = fitted(ipv_model)), color = "red") + 
+  geom_segment(aes(x = sec_school, xend = sec_school,
+                   y = beat_goesout, yend = fitted(ipv_model)), lty =2)
+```
+
+## Interpreting a regression model
+
+```{r size = "tiny"}
+coef(ipv_model)
+```
+
+\begin{scriptsize} On average, women in countries where women have higher levels of secondary education have lower levels of acceptance of domestic violence. For example, the model predicts that $\hat{y}=\beta_0 =$ `r round(coef(ipv_model)[1],2)` percent of women in a country in which zero percent of women have a secondary education approve of a husband beating a wife if she goes out without telling him. In a country where 20 percent of women have a secondary education, by contrast, this model predicts that $\hat{y} = \beta_0 + \beta_1 \times 20 =$ `r round(coef(ipv_model)[1] + 20 * coef(ipv_model)[2] ,2)` percent of women approve of intimate partner violence for a women going out without notifying her husband, a clear decline. 
+
+Consistent with our expectations, there is a negative linear relationship between secondary schooling and women's attitudes about intimate partner violence. \end{scriptsize}
+
+## Linear regression with multiple predictors
+
+We can extend the linear regression model:
+
+\[ y = \beta_0 + \beta_1X + \varepsilon\]
+
+to include more than one predictor. We rewrite the equation as:
+
+\[ y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 \cdots \beta_p x_p + \varepsilon\]
+
+To be more compact, I often write this in matrix notation as
+
+\[ Y = \beta X + \varepsilon\]
+
+Where $Y$ is the vector of predictors, $\beta$ is the vector of coefficients (including the intercept), $X$ is the matrix of all predictors, and $\varepsilon$ is the error term.
+
+## Linear regression with multiple predictors: one continuous, one categorical
+
+Our first model, for country $i$, was:
+
+\[\textrm{IPV Attitudes}_i = \beta_0 + \beta_1\textrm{Secondary School}_i + \varepsilon\]
+
+Let's add a predictor for region. Remember from prior examples that we saw clear patterns within regions. 
+
+```{r size = "tiny"}
+ipv_model2<-lm(beat_goesout ~ sec_school + region, 
+               data = ipv)
+coef(ipv_model2)
+```
+
+Now, we have a coefficient for secondary school, in addition to a coefficient for each region. Note that this kind of model requires a "reference category", which is left out. In this case, Asia is the reference. 
+
+What do we predict will be the level of tolerance for IPV among women 
+- if sec_school = 50 and region = Latin America
+- if sec_school = 50 and region = Middle East and Central Asia
+
+Recall that $\hat{y} = \beta_0 + \beta_1 x_1 + \beta_2 x_2$
+
+## Visualizing the model
+
+```{r echo = FALSE}
+ipv_new<-ipv %>% 
+  filter(!(is.na(sec_school)), !(is.na(beat_goesout)))
+
+coefs<-coef(ipv_model2)
+
+ggplot(ipv_new,
+       aes(x = sec_school, y = beat_goesout, color = region)) + 
+  geom_point() + 
+  geom_abline(aes(intercept = coefs[1], slope = coefs[2]), color ="#F8766D") + 
+  geom_abline(aes(intercept = coefs[1] + coefs[3], slope = coefs[2]), color ="#7CAE00") + 
+  geom_abline(aes(intercept = coefs[1] + coefs[4], slope = coefs[2]), color ="#00BFC4") + 
+  geom_abline(aes(intercept = coefs[1] + coefs[5], slope = coefs[2]), color ="#C77CFF") 
+```
+
+## Interactions
+
+The prior model allowed each region to have its own starting level of tolerance for IPV. What if we thought the relationship (effect) of secondary schooling on IPV depended on region?
+
+We can add *interaction terms* to our model to model processes where we believe the relationship between $y$ and $x_1$ is a function of $x_2$. 
+
+\[ y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2 + \varepsilon\]
+
+## Estimating interactions in R
+
+```{r size = "tiny"}
+ipv_model3<-lm(beat_goesout ~ sec_school + region + 
+                 region * sec_school,
+               data = ipv)
+
+coef(ipv_model3)
+```
+
+## How interactions work
+
+- What is the predicted level of IPV tolerance in a country where sec_school = 20 in Latin America?
+- In Sub-Saharan Africa?
+
+Recall that Asia is the reference category, and hence takes the unmodified version of the intercept and slope.
+
+## Visualizing interactions
+
+```{r echo = FALSE}
+ipv_new<-ipv %>% 
+  filter(!(is.na(sec_school)), !(is.na(beat_goesout)))
+
+coefs<-coef(ipv_model3)
+
+ggplot(ipv_new,
+       aes(x = sec_school, y = beat_goesout, color = region)) + 
+  geom_point() + 
+  geom_abline(aes(intercept = coefs[1], slope = coefs[2]), color ="#F8766D") + 
+  geom_abline(aes(intercept = coefs[1] + coefs[3], slope = coefs[2] + coefs[6]), color ="#7CAE00") + 
+  geom_abline(aes(intercept = coefs[1] + coefs[4], slope = coefs[2] + coefs[7]), color ="#00BFC4") + 
+  geom_abline(aes(intercept = coefs[1] + coefs[5], slope = coefs[2] + coefs[8]), color ="#C77CFF") 
+```
+
+## Fitting transformed predictors
+
+What if we think that the relationship between secondary schooling and tolerance for IPV is non-linear? Maybe there are large decreases in tolerance for increases in sec_school when it is near zero, but diminishing decreases later?
+
+```{r}
+ipv_model4<-lm(beat_goesout ~ I(sec_school^2) + region + 
+                 region * sec_school,
+               data = ipv)
+```
+
+Use I() when doing math to a predictor in a model. No need to transform beforehand. 
+
+Common transformations also include (I() not required for these):
+
+- log() 
+- sqrt()
+- scale()
+
+## Look at the model
+
+```{r}
+coef(ipv_model4)
+```
+
+## Visualize the model
+
+```{r echo = FALSE}
+yhat<-fitted(ipv_model4)
+
+ggplot(ipv_new,
+       aes (x = sec_school, y = beat_goesout,
+            color = region)) + 
+  geom_point(size = 0.7) + 
+  geom_line(aes(y = yhat, x = sec_school, color = region))
+```
+
+## Conclusion
+
+- Regression models are at the core of social science methodology. Get comfortable with them. 
+- All models are wrong, some are useful. Reality is rarely accurately described by straight lines, but we can learn a lot from them.
+- Think carefully about your modeling decisions. Connect your models to your theory about how a process works.
+
+*Lab*
+
+- Causal inference using linear regression models (RCT, regression discontinuity examples)
+
+*Homework*
+
+- Question 4.5.2. Due by 10AM on Wednesday 10/23 (aka the start of lecture)

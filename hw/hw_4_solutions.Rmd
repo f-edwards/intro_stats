@@ -14,6 +14,8 @@ data(vignettes)
 
 ## Question 1
 
+Using World Health Organization survey data from 2002, I explore how respondents in China and Mexico view their relationship to their governments using a series of self-reported and vignette repose data on political efficacy. I display the self-reported political efficacy of respondents by country in a bar plot below. Subjects responded to the question "How much say do you have in getting the government to address issues that interest you?" with responses ranging from 1: No say at all to 5: Unlimited say. For convenience, we treat this response as continuous.
+
 ```{r}
 ### format the data for analysis
 ### OPTIONAL, but recommended:
@@ -30,13 +32,163 @@ v<-vignettes %>%
 v_prop<-v %>% 
   group_by(country, self) %>% 
   summarise(n = n()) %>% ### get count of values by country for proportion numerator
-  mutate(prop = n/sum(n)) ### sum over all self values within country for denominator
+  mutate(prop = n/sum(n)) %>%  ### sum over all self values within country for denominator
+  ungroup() ## remove grouping so it doesn't give us trouble later
 
+### many ways to get here, this is a tidy way to do it
+### note that the count barplot has the exact same shape
+### I generally just use the counts
 
 ggplot(v_prop,
        aes(x=self, y = prop)) + 
-  geom_col() + 
+  geom_col() + ### same as geom_bar(stat="identity")
+  facet_wrap(~country) + 
+  ylab("Proportion of respondents") +
+  xlab("Self rated political efficacy: 1 = No say at all, 5 = Unlimited Say")
+
+```
+
+In Mexico, the majority of respondents (`r v_prop %>% filter(country=="Mexico", self==1) %>% select(prop) %>% mutate(prop = round(100*prop,2))` percent) said that they had "No say at all" in getting the government to address matters of interest to them. Fewer than 10 percent of respondents (`r v_prop %>% filter(country=="Mexico", self>3) %>% select(prop) %>% summarise(prop = round(100*sum(prop),2))` percent) reported that they had alot or unlimited say in getting government to address issues that interest them.
+
+By contrast, in China, the most common (modal) response was that respondents said they had some say in getting the government to address issues that interest them. More respondents reported a high degree of political efficacy in China than in Mexico, and fewer respondents reported that they had no say at all in politics.
+
+
+```{r}
+### compare country means
+country_means<-v %>% 
+  group_by(country) %>% 
+  summarise(self = mean(self))
+
+### use pander for pretty tables
+
+pander(country_means)
+```
+
+In China, the average self-rated political efficacy was `r country_means %>% filter(country=="China") %>% select(self) %>% mutate(self=round(self,2))`, somewhere between "little say" and "some say" in getting government to address issues that matter to them. In Mexico, the average was `r country_means %>% filter(country=="Mexico") %>% select(self) %>% mutate(self=round(self,2))`, which falls between "no say at all" and "little say". Clearly, respondents in China rate their political efficacy as higher, on average, than do respondents in Mexico. 
+
+This finding is surprising, given that citizens of Mexico had recently ousted the then-dominant PRI from power, while Chinese respondents were living under an authoritarian government with no meaningful democratic process. Perhaps there is a bias in responses, in which Chinese respondents were fearful to accurately report their perceptions of political self-efficacy. There is significant reason to be skeptical of these results, on their face. 
+
+## Question 2
+
+Does age help to explain this difference? Are older respondents more likely to report higher self-efficacy? I compare the age distributions for the two countries below.
+
+```{r}
+### first, calculate median by country
+v<-v %>% 
+  group_by(country) %>% 
+  mutate(median_age = median(age)) %>% 
+  ungroup()
+
+ggplot(v,
+       aes(x=age)) + 
+  geom_histogram() + 
+  geom_vline(aes(xintercept = median_age), lty=2) +  ## add dashed line at median of age for each
   facet_wrap(~country)
 
 ```
 
+The surveyed population is older in China than in Mexico, on average. The age distribution of Mexican survey respondents has more mass toward the left hand side of the distribution than does China's. The median age of respondents in the Chinese sample was `r v %>% filter(country=="China") %>% select(median_age) %>% distinct()`, while in Mexico, the median respondent was `r v %>% filter(country=="Mexico") %>% select(median_age) %>% distinct()`. 
+
+Because the book told me to, I'm also providing a quantile-quantile plot. I don't typically find these plots useful for this kind of comparison, but your mileage may vary!
+
+```{r}
+## code borrowed from https://jrnold.github.io/qss-tidy/measurement.html
+
+age_qtiles<-tibble(
+  probs = seq(0,1,by=0.01),
+  China = quantile(filter(v, 
+                          country == "China")$age,
+                   probs = probs),
+  Mexico = quantile(filter(v, 
+                          country == "Mexico")$age,
+                   probs = probs)
+)
+
+ggplot(age_qtiles,
+       aes(x = China, y = Mexico)) + 
+  geom_point() + 
+  geom_abline()
+```
+
+The quantile-quantile plot provides an alternative visual for the age distribution. Each pair of points indicates a percentile of the age distribution, with the Chinese age-location of the percentile on the x-axis, and the Mexican percentile at each age on the y-axis. For example, the 25th percentile of the Chinese age distribution is `r age_qtiles %>% filter(probs==0.25) %>% select(China)`, while the 25th percentile of the Mexican age distribution is `r age_qtiles %>% filter(probs==0.25) %>% select(Mexico)`. The Mexican sample is younger than the Chinese sample across the quantile distribution. It is conceivable that differences in the responses to self efficacy could be a partial function of age.
+
+## Question 3
+
+```{r}
+### compute proportion by country who rank themselves lower than moses
+less_moses<-v %>% 
+  group_by(country) %>% 
+  summarise(lower_than_moses = mean(self<moses) * 100) %>% 
+  ungroup()
+
+pander(less_moses)
+```
+
+Because interpretations of the survey may differ by country, and willingness to answer truthfully may differ by country, I compare respondents' self reported political efficacy to their rating of the "Moses" vignette, in which the subject Moses lacks clean drinking water and has no ability to change his state of affairs.
+
+In China, `r less_moses %>% filter(country=="China") %>% select(lower_than_moses)` percent of respondents report having lower political efficacy than the character in this vignette. However, only `r v_prop %>% filter(country=="China", self ==1) %>% select(prop) %>% mutate(prop = round(prop*100,2))` percent of Chinese respondents rank their self-efficacy to be equal to 1: No say at all. This vignette describes a person with no political efficacy. Chinese respondents appear to indicate that a majority of them have less political power than this powerless individual, despite indicating otherwise on measures of self efficacy. 
+
+In Mexico, the inverse pattern holds. `r v_prop %>% filter(country=="Mexico", self ==1) %>% select(prop) %>% mutate(prop = round(prop*100,2))` rank themselves as having no say at all in political matters, but only `r less_moses %>% filter(country=="Mexico") %>% select(lower_than_moses)` rank themselves as having less say than the vignette representing a fully disempowered political subject.
+
+## Question 4
+
+```{r}
+v_rank<-v %>% 
+  filter(alison>=jane & jane>=moses) %>% 
+  mutate(v_rank = case_when(
+    self<moses~1,
+    self<jane~2, ## less than equal to moses implicit after first condition
+    self<alison~3,
+    self>=alison~4
+  ))
+
+### to make it apples to apples, turn into proportions
+
+v_rank_prop<-v_rank %>% 
+  group_by(country, v_rank) %>% 
+  summarise(n=n()) %>% 
+  mutate(prop = n/sum(n))
+
+ggplot(v_rank_prop,
+       aes(x=v_rank, y = prop)) + 
+  geom_col() + 
+  facet_wrap(~country)
+
+v_rank_means<-v_rank %>% 
+  group_by(country) %>% 
+  summarise(mean_rank = mean(v_rank)) %>% 
+  ungroup()
+
+pander(v_rank_means)
+```
+
+First, we discard those cases where respondents did not rank the vignettes in the intended order. This removes `r (1-nrow(v_rank)/nrow(v)) * 100` percent of cases in the data. Here, a very different pattern emerges than that observed in question 1. Now, we see far more respondents in China ranking themselves as having very low political efficacy relative to the vignettes, while Mexican respondents see themselves as having more political efficacy than many of the vignette subjects. The barplot shows that nearly half of all Chinese respondents rank their own political efficacy below the most disempowered vignette. On average, Chinese respondents ranked their efficacy as `r v_rank_means %>% filter(country=="China") %>% select(mean_rank)`, while in Mexico respondents ranked their efficacy as `r v_rank_means %>% filter(country=="Mexico") %>% select(mean_rank)`. Either the interpretation of the self-rated efficacy scale or the willingness to truthfully answer a question about political self-efficacy is systematically different than respondents rankings of political efficacy when based on the responses to vignettes.
+
+## Question 5
+
+Next, we evaluate whether this bias is more severe among older or younger respondents. I first split the data into two groups, those 40 years or older, and those younger than 40. Then, I repeat the above vignette-based ranking.
+
+```{r}
+v_age<-v_rank<-v %>% 
+  filter(alison>=jane & jane>=moses) %>% 
+  mutate(v_rank = case_when(
+    self<moses~1,
+    self<jane~2, ## less than equal to moses implicit after first condition
+    self<alison~3,
+    self>=alison~4
+  ))
+
+v_age<-v_age %>% 
+  mutate(age = ifelse(age>=40, "old", "young")) %>% 
+  group_by(age, v_rank) %>% 
+  summarise(n=n()) %>% 
+  mutate(prop = n/sum(n))
+
+ggplot(v_age,
+       aes(x = v_rank, y = prop)) + 
+  geom_col() +
+  facet_wrap(~age)
+  
+```
+
+The bar plot shows the distribution of cases by older and younger respondents across each of the efficacy rank. The plot indicates that while there may be some differences in self-perceived efficacy at the lower end of the distribution, the differences are nowhere near as extreme as those we observe by country. Differences in self and vignette ranked efficacy are largely a function of the country of the respondent. This suggests the kind of government a participant lives in profoundly structures their a) perceptions of their own efficacy and b) their willingness to openly discuss their own political efficacy.

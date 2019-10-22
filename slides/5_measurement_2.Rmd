@@ -1,7 +1,7 @@
 ---
 title: "Measurement and visualization, 2"
 author: "Frank Edwards"
-date: "9/17/2019"
+date: "10/1/2019"
 output: binb::metropolis
 ---
 
