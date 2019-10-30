@@ -37,7 +37,8 @@ hist(progresa$votos1994)
 hist(progresa$pri1994)
 hist(progresa$pan1994)
 hist(progresa$prd1994)
-ggplot(progresa, aes(x=pobtot1994, y = fitted(m6)) +
+
+ggplot(progresa, aes(x=pobtot1994, y = fitted(m6))) +
   geom_point() + 
   scale_x_log10()
 
