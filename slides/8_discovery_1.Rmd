@@ -253,8 +253,11 @@ We can hold out subsets of the data, re-fit the model, and check classification 
 **Leave-one-out cross validation: The algorithm**
 
 For each row of the data $i \cdots n$
+
 1. Remove $i$th row of the data
+
 2. Fit the model to the remaining $n-1$ observations
+
 3. Predict the outcome for the held-out $i$th observation, calculate prediction error
 
 Then, calculate the mean prediction error across all n observations. 

@@ -194,15 +194,15 @@ progresa<- progresa %>%
          yhat_turn = fitted(m_turn_4))
 
 ggplot(progresa,
-       aes(x = avgpoverty)) + 
-  geom_point(aes(y = yhat_pri), color = 2, alpha =  0.5,
+       aes(x = avgpoverty, y = yhat_pri, color = factor(treatment))) + 
+  geom_point(color = 2, alpha =  0.5,
              position = position_jitter(width = 0.1)) +  
   geom_point(aes(y = yhat_turn), color =3, alpha = 0.5,
              position = position_jitter(width = 0.1)) +
   xlab("Observed poverty (jittered)") +
   ylab("Predicted values") +
   labs(title = "Predicted turnout (green) and PRI vote share (red)",
-       subtitle = "Facetted by timing of Progresa exposure, 1 = Early") +
+       subtitle = "Facetted by timing of Progresa exposure, 1 = Early") + 
   facet_wrap(~treatment)
 
 

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.12.18)  22 OCT 2019 21:40
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.12.18)  25 OCT 2019 14:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1801,11 +1801,7 @@ LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/m/it' will be
 File: 8_discovery_1_files/figure-beamer/unnamed-chunk-10-1.pdf Graphic file (ty
 pe pdf)
 <use 8_discovery_1_files/figure-beamer/unnamed-chunk-10-1.pdf>
-)
-Overfull \vbox (14.72182pt too high) detected at line 407
- []
-
-[12
+) [12
 
 ]
 \openout4 = `8_discovery_1.vrb'.
@@ -1815,7 +1811,7 @@ File: 8_discovery_1_files/figure-beamer/unnamed-chunk-11-1.pdf Graphic file (ty
 pe pdf)
 <use 8_discovery_1_files/figure-beamer/unnamed-chunk-11-1.pdf>
 )
-Overfull \vbox (3.15988pt too high) detected at line 424
+Overfull \vbox (3.16205pt too high) detected at line 424
  []
 
 [13
@@ -1894,7 +1890,7 @@ File: ./vis/kmeans.jpg Graphic file (type bmp)
 \openout4 = `8_discovery_1.vrb'.
 
 (./8_discovery_1.vrb)
-Overfull \vbox (131.93663pt too high) detected at line 570
+Overfull \vbox (123.88667pt too high) detected at line 569
  []
 
 [18
@@ -1925,23 +1921,23 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 709.
+(Font)              <10> on input line 708.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 709.
+(Font)              <7> on input line 708.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 709.
+(Font)              <5> on input line 708.
 LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/m/n' will be
-(Font)              scaled to size 5.76868pt on input line 709.
+(Font)              scaled to size 5.76868pt on input line 708.
 LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/m/n' will be
-(Font)              scaled to size 4.12048pt on input line 709.
+(Font)              scaled to size 4.12048pt on input line 708.
 LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/m/it' will be
-(Font)              scaled to size 8.24097pt on input line 709.
+(Font)              scaled to size 8.24097pt on input line 708.
 LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/m/it' will be
-(Font)              scaled to size 5.76868pt on input line 709.
+(Font)              scaled to size 5.76868pt on input line 708.
 LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/m/it' will be
-(Font)              scaled to size 4.12048pt on input line 709.
+(Font)              scaled to size 4.12048pt on input line 708.
 LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/bx/n' will be
-(Font)              scaled to size 8.95534pt on input line 709.
+(Font)              scaled to size 8.95534pt on input line 708.
 [23
 
 ]
@@ -1973,11 +1969,11 @@ LaTeX Font Info:    Font shape `TU/FiraSansLight(0)/bx/n' will be
 \tf@snm=\write9
 \openout9 = `8_discovery_1.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 843.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 843.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 849.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 849.
 (./8_discovery_1.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 843.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 843.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 849.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 849.
 Package rerunfilecheck Info: File `8_discovery_1.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E.
 
@@ -1985,10 +1981,10 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 39129 strings out of 492933
- 793160 string characters out of 6133144
+ 39138 strings out of 492933
+ 793415 string characters out of 6133144
  963537 words of memory out of 5000000
- 42458 multiletter control sequences out of 15000+600000
+ 42467 multiletter control sequences out of 15000+600000
  540552 words of font info for 90 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  71i,13n,145p,10550b,580s stack positions out of 5000i,500n,10000p,200000b,80000s
