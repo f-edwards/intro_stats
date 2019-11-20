@@ -576,6 +576,7 @@ ggplot(data.frame(z_score=scale(xbar_1000)),
 
 ## Lab, HW
 
+- Struggling with probability? Try Khan Academy [probability](https://www.khanacademy.org/math/statistics-probability/probability-library) and [distributions](https://www.khanacademy.org/math/statistics-probability/modeling-distributions-of-data). 
 - Homework (late work): Any late assignments (including this week's HW) are due without penalty by Friday. After that, I'm going to start deducting points for late work.
 - Homework: Question 6.6.3. Due 12/4. Start early on this to give yourself time to ask questions
 - Lab: Obama vote share example, and some hints for the homework
