@@ -189,9 +189,9 @@ sim_bdays(366)
 Repeat our random draw of $k$ birthdays a large number of times to approximate the solution. How likely is a shared birthday for 30 students?
 
 ```{r}
-n<-1000
+n<-100000
 k<-30
-sames<-rep(0, n)
+sames<-rep(NA, n)
 for(i in 1:n){
   sames[i]<-sim_bdays(k)
 }
