@@ -202,19 +202,6 @@ ggplot(temp_dat, aes(x=x1, xend=x2, y=y1, yend=y2)) +
   ylab("P(x<=X)")
 ```
 
-```{r echo = F}
-b<-10; a<-0
-p<-1/(b-a)
-temp_dat<-data.frame(x1=c(-5, 0, 10),
-                     x2=c(0, 10, 15),
-                     y1=c(0, p, 0),
-                     y2=c(0, p, 0))
-ggplot(temp_dat, aes(x=x1, xend=x2, y=y1, yend=y2)) + 
-  geom_segment() + 
-  xlab("x") + 
-  ylab("p")
-```
-
 ## A note on CDF for continuous variables                
 
 Recall that a CDF for a discrete variable is the sum of all probabilities for values $x\leq X$
@@ -253,7 +240,7 @@ Each of these trials is a sample from  $X \sim Binomial(n, p)$ where $n=5$ and $
 
 What is $x$ for each trial?
 
-## Probability Distribution Function for $X \sim Binomial(5, 0.5)$
+## Probability Mass Function for $X \sim Binomial(5, 0.5)$
 
 ```{r echo = F}
 temp_dat<-data.frame(x=0:5)
@@ -363,7 +350,7 @@ ggplot(data.frame(x=c(-4,4)), aes(x)) +
 ggplot(data.frame(x=c(-4,4)), aes(x)) +
   stat_function(fun=dnorm) +
   stat_function(fun=dnorm,
-                xlim=c(-4,1),
+                xlim=c(-4,-1),
                 geom="area",
                 fill="blue",
                 alpha = 0.5) +
