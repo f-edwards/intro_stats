@@ -44,7 +44,16 @@ russia2011<-russia2011 %>%
 
 num_fracs<-length(unique(russia2011$p))
 
-hist(russia2011$p, breaks = num_fracs)
+hist(russia2011$p, 
+     breaks = num_fracs,
+     freq = FALSE)
+
+commons<-russia2011 %>% 
+  group_by(p) %>% 
+  summarise(n = n()) %>% 
+  arrange(desc(n))
+
+commons<-commons[1:10,]
 
 ### question 2
 ### define parameters
@@ -75,3 +84,32 @@ for(i in 1:sims){
 n_fracs<-length(unique(output))
 ### check output for common fractions
 table(output==0.5)
+
+hist(output, breaks = n_fracs, freq = FALSE)
+
+
+#### q3
+hist_dat_observed<-russia2011 %>% 
+  mutate(p_common = ifelse(p%in%commons$p, p, NA))
+
+
+commons<-commons[1:4,]
+hist(hist_dat_observed$p_common, freq=F)
+sim_dat_commons<-ifelse(output%in%commons$p, output, NA)
+hist(sim_dat_commons, freq=F, ylim=c(0,6))
+hist(hist_dat_observed$p_common, freq=F, ylim=c(0,6))
+
+
+####
+
+bins<-seq(from=0, to=1, by=0.01)
+in_bins<-data.frame(bin = bins, prop = NA)
+n_obs<-nrow(russia2011)
+for(i in 1:length(bins)){
+  temp<-sum(russia2011$p>=bins[i] & russia2011$p<bins[i] + 0.01)
+  in_bins$prop[i] <- temp/n_obs
+}
+
+### for the sims
+
+
