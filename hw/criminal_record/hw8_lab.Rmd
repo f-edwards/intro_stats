@@ -41,7 +41,7 @@ Begin by loading the data into R and explore the data. How many cases are there 
 ```{r}
 library(qss)
 library(tidyverse)
-cj<-read_csv("./hw/criminal_record/criminalrecord.csv")
+cj<-read_csv("criminalrecord.csv")
 ```
 
 
@@ -75,6 +75,34 @@ Now consider the callback rate for white applicants with a criminal record.  Con
 ## Question 4
 
 Calculate the estimated effect of a criminal record for white applicants by comparing the callback rate in the treatment condition and the callback rate in the control condition.  Create a 95% confidence interval around this estimate.  Next, describe the estimate and confidence interval in a way that could be understood by a general audience.
+
+```{r}
+treatment<-cj %>% 
+  filter(crimrec==1) %>% 
+  group_by(black) %>% 
+  summarise(#callback = sum(callback),
+            #total = n(),
+            xbar = sum(callback)/n(),
+            se = sd(callback)/sqrt(n()))  
+
+control<-cj %>% 
+  filter(crimrec==0) %>% 
+  group_by(black) %>% 
+  summarise(#callback = sum(callback),
+            #total = n(),
+            xbar = sum(callback)/n(),
+            se = sd(callback)/sqrt(n()))  
+
+SATE<-treatment %>% 
+  mutate(SATE = xbar - control$xbar,
+         SATE_se = sqrt(se^2 + control$se^2))
+
+
+ggplot(SATE, aes(y=xbar, x= as.character(black))) + 
+  geom_col() 
+
+```
+
 
 ## Question 5
 
