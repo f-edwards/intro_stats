@@ -1,8 +1,8 @@
 ---
 title: "Mother Wage Penalty"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 Across industrialized countries, it is a well-studied phenomenon 
@@ -94,6 +94,13 @@ and descriptions of variables are:
 What years are included in the data?  How many women are included, and how
 many person-years are included? Briefly comment on the results.
 
+```{r}
+library(tidyverse)
+yu<-read_csv("./data/yu2017sample.csv")
+```
+
+
+
 ## Question 2
 
 Create a new variable called `logwage` that is the log of `wage`. 
@@ -103,9 +110,14 @@ between `logwage`, `numChildren`, `experience`, and at least two other
 continuous variables in the data, e.g., `competitiveness`, `autonomy`,
 `teamwork`.
 
+```{r}
+cor(log(yu$wage), yu$experience, use = "complete.obs")
+```
+
+
 ## Question 3
 
-Run a two-way fixed effects effects (factor(region) + factor(year)) regression where the outcome
+Run a two-way fixed effects model (factor(region) + factor(year)) regression where the outcome
 is the log wage and the predictor is the number of children that
 a woman has. Include fixed effects for each *woman* and each *year*
 (i.e., include factorized variables for `year` and `PUBID` in the 
