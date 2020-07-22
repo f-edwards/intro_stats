@@ -3,10 +3,10 @@ layout: default
 ---
 
 | Intermediate Statistics   | 27:202:542 |  
-| Wednesday, 10:00-12:40   | Room: CLJ 571 |
-| Lab: Wed, 1:30-3:00 | Room: CLJ 571 |
-| frank.edwards@rutgers.edu | Office hours: Friday, 10-2PM|
-| TA: christiane.schwarz@rutgers.edu | Office hours: Tuesday 10-2| 
+| Lecture: Wednesday, 10:00-12:40   | Webex Room: https://rutgers.webex.com/meet/fe72 |
+| Lab: TBA | Webex Room: https://rutgers.webex.com/meet/fe72 |
+| frank.edwards@rutgers.edu | Office hours: TBA|
+| TA: TBA | Office hours: TBA | 
 
 ## Quick links
 
@@ -14,9 +14,11 @@ layout: default
 
 [Course Slack](https://scj-introstats.slack.com)
 
+[Lecture recordings](https://www.youtube.com/feed/my_videos)
+
 ## Course description
 
-This is the course syllabus for Introduction to Statistics, Fall 2019. It is a Ph.D. level introduction to conducting quantitative social science research, and is the first part of a two-semester sequence. By the end of this course, you will be familiar with how to manipulate, visualize, and model quantitative data.
+This is the course syllabus for Introduction to Statistics, Fall 2020. It is a graduate-level introduction to conducting quantitative social science research, and is the first part of a two-semester sequence. By the end of this course, you will be familiar with how to manipulate, visualize, and model quantitative data.
 
 ## Course goals
 
@@ -45,13 +47,11 @@ I've set up a Slack page for us to communicate about the course. This can be a r
 
 - Come prepared (do the readings). 
 
-- Complete homeworks on time. Homeworks should take between 4-12 hours to complete. Start them early.
+- Complete homeworks on time. Homeworks should take between 4-12 hours to complete. Don't start them the day before they are due.
 
-- Be respectful and professional. Be mindful of the space you take up in the classroom. Food and drink are allowed, but please keep the cell phone use and non-course related computer use to a minimum. 
+- Be respectful and professional. Be mindful of the space you take up in the classroom.
 
-- Bring your computer. Most of the work we'll be doing involves writing code, so bring a computer with you to class. Let me know if access to a laptop is an issue.
-
-- Collaborate with your colleagues. I encourage you all to work together to complete assignments. However, I do expect you each to submit your own homework writeups. 
+- Collaborate with your colleagues. I encourage you all to work together to complete assignments. I'll create a Slack channel for each homework and I want you to share and post comments on code and concepts. However, I do expect you each to submit your own homework writeups. 
 
 ## Prerequisites
 
@@ -69,7 +69,7 @@ Lastly, I recommend learning some form of version control to ensure your work is
 
 ## Assignments and grading
 
-Course grading is based on course participation (20 percent) and homework assignments (80 percent). There is no final project.
+Course grading is fully based on homework assignments. There is no final project.
 
 ### Homeworks
 
