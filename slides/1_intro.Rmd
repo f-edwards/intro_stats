@@ -2,7 +2,8 @@
 title: "1. Introducing data analysis in R"
 author: "Frank Edwards"
 date: "9/4/2019"
-output: binb::metropolis
+output: binb::metropolis(citation_package="none")
+
 ---
 
 # Introduction to Statistics
