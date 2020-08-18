@@ -4,8 +4,7 @@ layout: default
 
 | Intermediate Statistics   | 27:202:542 |  
 | Lecture: Wednesday, 10:00-12:40   | Webex Room: https://rutgers.webex.com/meet/fe72 |
-| Lab: TBA | Webex Room: https://rutgers.webex.com/meet/fe72 |
-| frank.edwards@rutgers.edu | Office hours: TBA|
+| Lab: TBA | Room: Zoom (see slack for link) | Office hours: TBA|
 | TA: TBA | Office hours: TBA | 
 
 ## Quick links
@@ -14,7 +13,7 @@ layout: default
 
 [Course Slack](https://introstatsfall2020.slack.com)
 
-[Lecture recordings](https://www.youtube.com/feed/my_videos)
+[Lecture recordings](https://www.youtube.com/user/frankalready)
 
 ## Course description
 
