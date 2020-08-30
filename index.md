@@ -26,18 +26,9 @@ This is the course syllabus for Introduction to Statistics, Fall 2020. It is a g
 2. Develop data manipulation, exploration, and visualization skills
 3. Introduce core concepts in probability and statistics
 
-## Books
-
-We will work primarily from two books. 
+## Book
 
 - Imai, Kosuke. Quantitative Social Science: An Introduction. Princeton: Princeton University Press, 2017.
-- Wickham, Hadley, and Garrett Grolemund. R for Data Science: Import, Tidy, Transform, Visualize, and Model Data. First edition. Sebastopol, CA: O’Reilly, 2016.
-
-And one companion website:
-
-- Arnold, Jeff: Quantitative Social Science: The R Tidyverse https://jrnold.github.io/qss-tidy/
-
-Note that the Wickham and Grolemund text is available for free as an [e-book](https://r4ds.had.co.nz/).
 
 ## Communication
 
@@ -63,7 +54,9 @@ All instruction will be conducted in the R statistical programming language. R i
 
 We will be using the [RStudio integrated development environment](https://www.rstudio.com/products/rstudio/download/). RStudio provides a powerful text editor and a range of very useful utilities. 
 
-In addition to writing code, it is a great tool for writing reports, papers, and slides using [RMarkdown](https://rmarkdown.rstudio.com/lesson-1.html). This syllabus, most of my course materials, and most of my academic papers are based on Markdown. You are required to submit assignments using RMarkdown. 
+In addition to writing code, it is a great tool for writing reports, papers, and slides using [RMarkdown](https://rmarkdown.rstudio.com/lesson-1.html). This syllabus, most of my course materials, and most of my academic papers are based on Markdown. 
+
+You are required to submit assignments using RMarkdown. 
 
 Lastly, I recommend learning some form of version control to ensure your work is a) backed up, b) easily accessible to collaborators and c) reproducible. Git and GitHub are great and flexible tools for software development that have powerful applications for researchers. Here's a useful [intro to GitHub](https://happygitwithr.com/) for R users.
 
@@ -79,22 +72,22 @@ I will assign homework each week. Assignments are due at the beginning of the fo
 
 Homework should be submitted to me via email (frank.edwards@rutgers.edu). Each student is allowed two 5-day extensions without penalty for a homework due-date over the semester. Email me to let me know if you need to take an extension.
 
-I expect to see your code, code output, and your interpretations of the results for each question. You will submit your homeworks as compiled RMarkdown documents. I will instruct you on how to use this software during the first week of class. You can submit your compiled homeworks in either .html or .pdf format.
+I expect to see your code, code output, and your interpretations of the results for each question. Please submit your homework as two files in both a compiled .html and raw cowde .Rmd formats.
 
 ## Course schedule, topics, and readings
 
-|9/2| Introduction | Imai 1 (all); Wickham 2, 5, 6, 8, 9-11; Arnold 1|
-|9/9| Causality (1) | Imai 2.1-2.5; Arnold 2 |
-|9/16| Causality (2) | Imai 2.5 -2.7; Wickham 12| 
-|9/23| Measurement (1) | Imai 3.1-3.4; Wickham 3, 7; Arnold 3.1-3.4 |
-|9/30| Measurement (2) | Imai 3.5-3.8; Arnold 3.5-3.6 |
-|10/7| Prediction (1) | Imai 4.1-4.2; Arnold 4.1-4.2|
-|10/14| Prediction (2) | Imai 4.3-4.4; Arnold 4.3 | 
-|10/21| Discovery (1) | Imai 5.1-5.2; Arnold 5.1-5.2 |
-|10/28| Discovery (2) | Imai 5.3-5.4; Arnold 5.3|
-|11/4| Probability (1) | Imai 6.1-6.2; Arnold 6.1-6.2 |
-|11/11| No class, ASC |  |
-|11/18| Probability (2) | Imai 6.3-6.5; Arnold 6.3-6.4 | 
+|9/2| Introduction | Imai 1 (all)|
+|9/9| Causality (1) | Imai 2.1-2.5 |
+|9/16| Causality (2) | Imai 2.5 -2.7| 
+|9/23| Measurement (1) | Imai 3.1-3.4|
+|9/30| Measurement (2) | Imai 3.5-3.8|
+|10/7| Prediction (1) | Imai 4.1-4.2|
+|10/14| Prediction (2) | Imai 4.3-4.4| 
+|10/21| Discovery (1) | Imai 5.1-5.2|
+|10/28| Discovery (2) | Imai 5.3-5.4|
+|11/4| Probability (1) | Imai 6.1-6.2|
+|11/11| Probability (2) | Imai 6.3-6.5 |
+|11/18| Uncertainty (1) | Imai 7.1-7.2 | 
 |11/25| No class, University break |  |
-|12/2| Uncertainty (1) | Imai 7.1-7.2; Arnold 7.1-7.2 |
-|12/9| Uncertainty (2) | Imai 7.3-7.4; Arnold 7.3 |
+|12/2| Uncertainty (2) | Imai 7.3-7.4|
+|12/9| Wrap up and review | |
