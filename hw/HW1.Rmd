@@ -7,8 +7,13 @@ output: html_document
 
 0.1 Complete Swirl lesson INTRO2. Below, briefly describe one technique or concept in R that you are having trouble understanding. And don't worry! It is confusing and hard! 
 
-
 ## Bias in voter turnout (exercise 1.5.1)
+
+You can obtain the file needed for this assignment either from the qss.student package, or from my web page:
+
+ https://raw.githubusercontent.com/f-edwards/intro_stats/master/hw/data/turnout.csv
+
+Save the file as 'turnout.csv' in the working directory that your homework file is in.
 
 Surveys are frequently used to measure political behavior such as
 voter turnout, but some researchers are concerned about the accuracy
@@ -20,7 +25,9 @@ American National Election Studies (ANES)?  The ANES is a nation-wide
 survey that has been conducted for every election since 1948.  The
 ANES conducts face-to-face interviews with a nationally representative
 sample of adults.  The table below displays the names and descriptions
-of variables in the `turnout.csv` data file.
+of variables in the `turnout.csv` data file. 
+
+
 
 --------------------------------------------------------------------------------
  Name                 Description
