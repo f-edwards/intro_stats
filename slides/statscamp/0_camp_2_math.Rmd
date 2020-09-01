@@ -615,7 +615,7 @@ $$f(x) = e^x; f'(x) = e^x$$
 ## Examples of derivatives
 
 - $$f(x) = x^5; f'(x) = 5x^4 $$
-- $$f(x) = 2x^3 + 3x + 9; f'(x) = 6x + 3$$
+- $$f(x) = 2x^3 + 3x + 9; f'(x) = 6x^2 + 3$$
 - $$f(x) = 2e^x; f'(x) = 2e^x$$
 
 ## Exercises
@@ -670,7 +670,7 @@ ggplot(data.frame(x = c(-2,8)), aes(x=x)) +
 
 ## Distance, velocity, acceleration
 
-$d = \textsf{distance}, v = \textsf{velocity}, a = \textsf{acceletation}, t = \textsf{time}$
+$d = \textsf{distance}, v = \textsf{velocity}, a = \textsf{acceleration}, t = \textsf{time}$
 
 $$d(t) = \frac{a}{2}t^2$$
 

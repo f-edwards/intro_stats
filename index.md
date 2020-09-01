@@ -5,7 +5,7 @@ layout: default
 | Intermediate Statistics   | 27:202:542 |  
 | Lecture: Wednesday, 10:00-12:40   | Room: Zoom (see slack for link) |
 | Lab: TBA | Room: Zoom | 
-| Office hours: TBA| Room: Zoom |
+| Office hours: Friday, 9:30-11 | Room: Zoom |
 | TA: Raven Lewis | Office hours: TBA | 
 
 ## Quick links
