@@ -16,6 +16,8 @@ layout: default
 
 [Lecture recordings](https://www.youtube.com/user/frankalready)
 
+[Homework assignments]()
+
 ## Course description
 
 This is the course syllabus for Introduction to Statistics, Fall 2020. It is a graduate-level introduction to conducting quantitative social science research, and is the first part of a two-semester sequence. By the end of this course, you will be familiar with how to manipulate, visualize, and model quantitative data.
