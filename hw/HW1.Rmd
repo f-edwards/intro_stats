@@ -2,7 +2,9 @@
 title: "Homework 1"
 author: "YOUR NAME HERE"
 date: "SUBMISSION DATE HERE"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ## 0.1 
