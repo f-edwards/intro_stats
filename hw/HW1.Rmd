@@ -5,15 +5,19 @@ date: "SUBMISSION DATE HERE"
 output: html_document
 ---
 
-0.1 Complete Swirl lesson INTRO2. Below, briefly describe one technique or concept in R that you are having trouble understanding. And don't worry! It is confusing and hard! 
+## 0.1 
 
-## Bias in voter turnout (exercise 1.5.1)
+Complete Swirl lesson INTRO2. 
+
+Briefly describe one technique or concept in R that you are having trouble understanding. And don't worry! It is confusing and hard! 
+
+## Bias in voter turnout (book exercise 1.5.1)
 
 You can obtain the file needed for this assignment either from the qss.student package, or from my web page:
 
- https://raw.githubusercontent.com/f-edwards/intro_stats/master/hw/data/turnout.csv
+https://raw.githubusercontent.com/f-edwards/intro_stats/master/hw/data/turnout.csv
 
-Save the file as 'turnout.csv' in the working directory that your homework file is in.
+Save the file as `turnout.csv` in the working directory that your homework file is in.
 
 Surveys are frequently used to measure political behavior such as
 voter turnout, but some researchers are concerned about the accuracy

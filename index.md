@@ -16,7 +16,7 @@ layout: default
 
 [Lecture recordings](https://www.youtube.com/user/frankalready)
 
-[Homework assignments]()
+[Homework assignments](https://github.com/f-edwards/intro_stats/tree/master/hw)
 
 ## Course description
 
