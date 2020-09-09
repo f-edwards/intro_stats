@@ -476,3 +476,19 @@ dat_crimrecF
 - Causality, part 2. Observational studies 
 
 - Measuring characteristics of the distribution of a variable
+
+# Lab: factors, logicals, subsetting
+
+## Load the Pager data
+
+- Convert `callback` into a logical variable, where T means the subject was called back and F means they weren't \pause
+
+- Convert `crimrec` to logical \pause
+
+- Convert `black` to logical \pause
+
+- Produce a crosstab of `callback` by `crimrec` \pause
+
+- Produce a crosstab of `callback` by `black` \pause
+
+- Subset the data into Black and white subjects
