@@ -43,17 +43,54 @@ Name                        Description
 
 Begin by loading the data into R and explore the data. How many cases are there in the data? Run `summary()` to get a sense of things. In how many cases is the tester black? In how many cases is he white?
 
+```{r}
+cr<-read.csv("./data/criminalrecord.csv")
+
+summary(cr)
+```
+
+The tester is Black in `r sum(cr$black)` of the cases, and white in `r sum(cr$black==0)` of the cases.
+
+
 ## Question 2  
 
 Now we examine the central question of the study. Calculate the proportion of callbacks for white applicants with and without a criminal record, and calculate this proportion for black applicants with and without a criminal record.
+
+```{r}
+
+### divide callbacks for white, crimrec by all white, crimrec, etc...
+call_white_nocr<-sum(cr$callback==1 & cr$black==0 & cr$crimrec==0) / 
+  sum(cr$black==0 & cr$crimrec == 0)
+call_white_cr<-sum(cr$callback==1 & cr$black==0 & cr$crimrec==1) / 
+  sum(cr$black==0 & cr$crimrec == 1)
+
+### divide callbacks for black, crimrec by all white, crimrec, etc...
+call_black_nocr<-sum(cr$callback==1 & cr$black==1 & cr$crimrec==0) / 
+  sum(cr$black==1 & cr$crimrec == 0)
+call_black_cr<-sum(cr$callback==1 & cr$black==1 & cr$crimrec==1) / 
+  sum(cr$black==1 & cr$crimrec == 1)
+
+```
+
+|   |Black   |White   |
+|---|---|---|
+|No record   |  `r round(call_black_nocr, 2)` | `r round(call_white_nocr, 2)`   |
+|Criminal record   | `r round(call_black_cr, 2)`   | `r round(call_white_cr, 2)`   |
+
 
 ## Question 3
 
 What is the difference in callback rates between individuals with and without a criminal record within each race. What do these specific results tell us?  Consider both the difference in callback rates and the ratio of callback rates for the subjects with criminal records and those without within each racial group.
 
+For Black testers, the difference in callback rates between those assigned criminal records and those without was `r round(call_black_nocr - call_black_cr, 2) * 100` percentage points. Black testers without criminal records were `r round(call_black_nocr / call_black_cr, 2)` times more likely to be called back than those with criminal records.  
+
+For white testers, the difference in callback rates between those assigned criminal records and those without was `r round(call_white_nocr - call_white_cr, 2) * 100` percentage points. White testers without criminal records were `r round(call_white_nocr / call_white_cr, 2)` times more likely to be called back than those with criminal records.  
+
 ## Question 4
 
 Compare the callback rates of whites *with* a criminal record versus blacks *without* a criminal record. What do we learn from this comparison?
+
+Black testers without a criminal record were `r round(abs(call_black_nocr - call_white_cr), 2) * 100` percentage points less likely to be called back than white respondents with criminal records. For Black testers, criminal records doubly disadvantaged their employment chances, already lower than white testers with criminal records. Criminal record discrimination added on top of already high levels of racial discrimination to shut Black testers out of the labor market.s
 
 ## Question 5
 

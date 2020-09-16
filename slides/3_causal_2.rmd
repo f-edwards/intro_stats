@@ -1,0 +1,661 @@
+---
+title: "Causality, 2"
+author: "Frank Edwards"
+date: "9/16/2020"
+output: binb::metropolis
+---
+
+```{r setup, include=FALSE}
+rm(list=ls())
+library(tidyverse)
+library(qss)
+set.seed(1)
+
+options(xtable.comment = FALSE)
+theme_set(theme_bw())
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, tidy = F, size = "small")
+```
+
+## Challenges in R so far
+
+```{r echo = F}
+problems<-data.frame(
+  challenges = c(
+    "data frame and matrix indexing",
+    "everything!",
+    "data frame and matrix indexing",
+    "syntax",
+    "data frame and matrix indexing",
+    "syntax",
+    "package installation",
+    "concatenate function",
+    "making tables look good",
+    "naming elements",
+    "everything",
+    "rstudio UI",
+    "everything",
+    "translating math into R",
+    "understanding the homework questions",
+    "remembering functions",
+    "making tables look good"
+  ))
+
+problem_counts<-problems %>% 
+  group_by(challenges) %>% 
+  summarise(n = n()) %>% 
+  arrange(desc(n))
+
+ggplot(problem_counts, 
+       aes(y = n, x = reorder(challenges, n))) + 
+  coord_flip()+
+  geom_col() + 
+  labs(x = "", y = "count")
+```
+
+
+# Returning to Pager's experiment
+
+## The causal effect
+
+For observation $i$ is equal to callback_crimTRUE_i - callback_crimFALSE_i
+
+*The fundamental problem of causal inference is that we only observe one of these outcomes*
+
+## The counterfactual and potential outcomes
+
+```{r echo= FALSE, message = FALSE, size ="tiny"}
+dat<-read_csv("./data/criminalrecord.csv")
+c_fact<-data.frame(callback = dat$callback,
+                   crimrec = dat$crimrec)
+
+### create explicit counterfactual
+
+c_fact$callback_crimT<-ifelse(c_fact$crimrec==1, 
+                              c_fact$callback, NA)
+
+c_fact$callback_crimF<-ifelse(c_fact$crimrec==0, c_fact$callback, NA)
+
+
+head(c_fact)
+```
+
+## Randomized experiments (or RCTs)
+
+- By randomizing assignment to treatment, we can treat units as equivalent \pause
+- If units are equivalent, we can estimate the average treatment effect as a difference in means on the outcome between the treatment and control group \pause
+- If we don't randomize, we have no assurance that the treated and control groups are equivalent, meaning we don't have a strong case that we've observed the counterfactual 
+
+## Obtaining a sample average treatment effect
+
+The sample average treatment effect is defined as:
+
+\[ \textrm{SATE} = \frac{1}{n}\sum_{i=1}^n Y_i(1) - Y_i(0) \] \pause
+
+In practice, since we only observe $Y_i(1)$ OR $Y_i(0)$, we instead estimate a *difference-in-means* of the outcome between the treatment and control: $mean(Y(1)) - mean(Y(0))$. If assignment has been randomized, these values are identical.
+
+# Why we randomize
+
+## An experiment on voting and a social pressure 
+
+*Civic duty:* The whole point of democracy is that citizens are active participants in government; that we have a voice in government. Your voice starts with your vote. On August 8, remember your rights and responsibilities as a citizen. Remember to vote. DO YOUR CIVIC DUTY – VOTE \pause
+
+*Hawthorne effect (surveillance):* This year, we’re trying to figure out why people do or do not vote. We’ll be studying voter turnout in the August 8 primary election. Our analysis will be based on public records, so you will not be contacted again or disturbed in any way. Anything we learn about your voting or not voting will remain confidential and will not be disclosed to anyone else. DO YOUR CIVIC DUTY – VOTE
+
+## An experiment on voting and a social pressure 
+
+```{r size = "tiny"}
+data(social)
+head(social)
+```
+
+## Obtaining mean voting by treatment/control
+
+```{r}
+control<-mean(
+  social[social$messages == "Control", "primary2006"]
+  ) 
+
+treatment<-mean(
+  social[social$messages != "Control", "primary2006"]
+  ) 
+control
+treatment
+```
+
+## The difference in means (causal effect)
+
+```{r}
+effect <- treatment - control
+
+effect
+```
+
+## Why randomization matters
+
+```{r echo = FALSE}
+prop_vot<-social %>% 
+  group_by(yearofbirth) %>% 
+  summarise(voting_prop = sum(primary2006)/n())
+
+ggplot(prop_vot,
+       aes(x = yearofbirth, y = voting_prop)) + 
+  geom_point() + 
+  ylab("Proportion voting in 2006 primary") + 
+  xlab("Year of birth")
+
+```
+
+## Why randomization matters (continued)
+
+```{r echo = FALSE}
+sex_hh<-social %>% 
+  group_by(sex, hhsize) %>% 
+  summarise(voting_prop = sum(primary2006)/n())
+
+ggplot(sex_hh,
+       aes(x = hhsize, y = voting_prop, color = sex)) + 
+  geom_point() + 
+  xlab("Household size") + 
+  ylab("Proportion voting in 2006 primary") 
+
+```
+
+## Randomization matters 
+
+- Because certain kinds of people are more likely to vote in primaries than others \pause
+- We note these differences between observed variables and our outcome: primary2006 \pause
+- We didn't measure very much here. They could also differ across unobserved or unobservable variables! \pause
+- Randomization (given a large enough n) ensures that treatment and control groups are *identical* across all observed and unobserved/unobservable differences prior to treatment \pause
+- This condition -- statistically identical treatment and control groups -- is a necessary condition for causal inference. Randomization is the most straightforward way to achieve this condition.
+
+# Causal inference in observational data
+
+## Estimating the impact of a minimum wage increase
+
+In 1992, New Jersey raised it's minimum wage from \$4.25 to \$5.05. Pennsylvania did not.
+
+```{r size = "tiny"}
+data(minwage)
+head(minwage)
+```
+
+## Describing the data, categoricals
+
+```{r}
+table(minwage$chain)
+table(minwage$location)
+```
+
+## Did NJ minimum wage increase the wages paid to employees?
+
+```{r size = "tiny"}
+minwage %>% 
+  group_by(location) %>% 
+  summarise(wageBefore_mn = mean(wageBefore),
+            wageAfter_mn = mean(wageAfter))
+```
+
+## Another way to look at change in wages
+
+```{r}
+minwage %>% 
+  group_by(location) %>% 
+  summarise(prop_below_before = mean(wageBefore>=5.05),
+            prop_below_after = mean(wageAfter>=5.05))
+```
+
+## Look at our outcome variable
+
+```{r}
+###Compute proportion full time before
+###And after
+
+minwage$prop_ft_pre<- minwage$fullBefore / 
+  (minwage$fullBefore +minwage$partBefore)
+
+minwage$prop_ft_post <- minwage$fullAfter / 
+  (minwage$fullAfter + minwage$partAfter)
+```
+
+## Look at our outcome variable
+
+```{r size = "tiny"}
+minwage %>% 
+  group_by(location) %>% 
+  summarise(prop_ft_pre = mean(prop_ft_pre),
+            prop_ft_post = mean(prop_ft_post))
+```
+
+## Assumption: PA is a no-treatment counterfactual
+
+Estimate the causal effect 
+
+```{r size = "tiny"}
+control<-mean(
+  minwage[minwage$location=="PA", "prop_ft_post"])
+
+treatment<-mean(
+  minwage[minwage$location!="PA", "prop_ft_post"])
+
+treatment - control
+```
+
+# Is this a valid estimate of the causal effect?
+
+## Confounding jeopardizes causal inference
+
+- Confounding bias: a third variable is associated with both the treatment and the outcome \pause
+- Selection bias: a unit may choose to participate in a treatment for reasons that are correlated with the outcome \pause
+
+**Correlation != Causation**
+
+## Dealing with confounding
+
+- Randomize treatment! \pause
+- When we can't... \pause
+- Statistical control: within-subgroup analysis based on confounder values 
+
+## Are NJ and PA the same (at least when it comes to fast food jobs?)?  
+
+```{r}
+minwage %>% 
+  group_by(location) %>% 
+  summarise(prop_wendys = mean(chain=="wendys"),
+            prop_bk = mean(chain=="burgerking"),
+            prop_kfc = mean(chain=="kfc"),
+            prop_roys = mean(chain=="roys"))
+```
+
+## Maybe restaurant chain matters? Let's control for it!
+
+```{r}
+control<-minwage %>% 
+  filter(location=="PA") %>% 
+  group_by(chain) %>% 
+  summarise(prop_ft_post = mean(prop_ft_post))
+```
+
+## Maybe restaurant chain matters? Let's control for it!
+
+```{r size = "tiny"}
+treatment<-minwage %>% 
+  filter(location!="PA") %>% 
+  group_by(chain) %>% 
+  summarise(prop_ft_post = mean(prop_ft_post)) 
+```
+
+
+## Maybe restaurant chain matters? Let's control for it!
+
+```{r}
+treatment$effect<-treatment$prop_ft_post - 
+  control$prop_ft_post
+
+treatment
+```
+
+## Maybe region matters: central and south vs north and shore
+
+```{r size = "tiny"}
+control<-minwage %>% 
+  filter(location=="PA") %>% 
+  summarise(prop_ft_post = mean(prop_ft_post))
+
+treatment<-minwage %>% 
+  filter(location!="PA") %>% 
+  group_by(location) %>% 
+  summarise(prop_ft_post = mean(prop_ft_post))
+
+control
+
+treatment
+```
+
+## Maybe region matters?
+
+```{r}
+treatment$effect<-treatment$prop_ft_post - 
+  control$prop_ft_post
+
+treatment
+```
+
+
+## Cross-sections and time series
+
+- Longitudinal data: repeated measurements of the same unit on the same variables over time \pause
+- Cross-sectional data: one measurement of many units \pause
+- Panel data (or time series cross-sectional data): repeated measurements of many units on the same variables over time \pause
+- Key advantages to panel data: variables may differ across units and within-units over time (trends). 
+
+## Before and after design (longitudinal)
+
+```{r echo = FALSE}
+minwage_plot<-minwage %>% 
+  ungroup() %>% 
+  mutate(location = ifelse(location=="PA", "PA", "NJ")) %>% 
+  group_by(location) %>% 
+  summarise(prop_ft_pre = mean(prop_ft_pre),
+            prop_ft_post = mean(prop_ft_post)) %>% 
+  gather(time, full, -location) %>% 
+  mutate(time = ifelse(time=="prop_ft_pre", 1, 2))
+
+ggplot(minwage_plot,
+       aes(x = time, y = full, color = location)) + 
+  geom_point() + 
+  geom_line()
+```
+
+## Difference in Differences
+
+- What if we treated PA as the counterfactual, and used information about it's trend in employment to estimate the effect of NJ's minimum wage increase? \pause
+- Assumption: The trend in the outcome over time would have been identical across all units if the treatment had never been imposed (parallel trends)
+
+## Difference in Differences (visual)
+
+```{r echo = FALSE}
+minwage_plot<-minwage %>% 
+  ungroup() %>% 
+  mutate(location = ifelse(location=="PA", "PA", "NJ")) %>% 
+  group_by(location) %>% 
+  summarise(prop_ft_pre = mean(prop_ft_pre),
+            prop_ft_post = mean(prop_ft_post)) %>% 
+  gather(time, full, -location) %>% 
+  mutate(time = ifelse(time=="prop_ft_pre", 1, 2))
+
+ggplot(minwage_plot,
+       aes(x = time, y = full, color = location)) + 
+  geom_point() + 
+  geom_line() + 
+  geom_segment(aes(x = 1, xend =2, y = 0.297, 
+                   yend = 0.297 + (0.272-0.31)),
+               lty =2, color = 2)
+```
+
+## Estimating the causal effect: Differenc in Differences
+
+Where $y_{ij}$ is the outcome for treatment group $i=1$ and post-treatment time $j=1$
+
+\[ \textrm{DiD} = (\bar{y}_{1,1} - \bar{y}_{1,0}) - (\bar{y}_{2,1} -\bar{y}_{2,0})\]
+
+Assuming that the counterfactual outcome for the treatment group has a parallel time trend to that observed for the control group.
+
+## Compute the DiD estimator
+
+```{r size = "tiny", echo = F}
+minwage %>% 
+  mutate(location = 
+           ifelse(location=="PA", "PA", "NJ")) %>% 
+  group_by(location) %>% 
+  summarise(prop_ft_pre = mean(prop_ft_pre),
+            prop_ft_post = mean(prop_ft_post))
+```
+\pause
+
+\[ \textrm{DiD} = (\bar{y}_{1,1} - \bar{y}_{1,0}) - (\bar{y}_{2,1} -\bar{y}_{2,0})\] \pause
+
+```{r}
+### the DiD Estimator
+(0.320 - 0.297) - (0.272 - 0.310)
+```
+
+
+# Descriptive Statistics
+
+## Summarizing a variable
+
+Reduce a vector to a single or smaller set of values that tell us something useful
+
+Examples we've already used: 
+- minimum: min() 
+- maximum: max() 
+- median: median() 
+- mean: mean()
+
+## Quantiles
+
+- The median is the 0.5 quantile (50th percentile)
+- Quantiles are less sensitive to outliers than are other measures (like the mean)
+- Quantiles tell you the proportion of a data that falls below some cutpoint
+
+## Quantiles: example
+
+```{r}
+quantile(minwage$wageBefore, 0.25)
+```
+
+## Quantiles: example
+
+```{r}
+quantile(minwage$wageBefore, 0.75)
+```
+
+
+## Quantiles: example
+
+```{r}
+quantile(minwage$wageBefore, c(0.05, 0.25, 0.5, .75, 0.95))
+```
+
+## Standard deviation
+
+- The standard deviation (SD, $\sigma$) is a measure of the spread of a variable \pause
+- It provides a measure of how much each observation of a variable differs from the mean of the variable \pause
+- You can use the sd() function in R \pause
+- The variance (var() function) is the square of the standard deviation
+
+$$\sigma = \sqrt{\frac{1}{n} \sum_{i=1}^n (x_i - \bar{x})^2}$$ \pause
+$$variance = \sigma^2$$
+
+## Compute an SD for these variables
+```{r}
+minwage$wageBefore[1:10]
+minwage$fullBefore[1:10]
+```
+
+## Homework
+
+- HW3 posted to Slack
+- For part 1, load the data from `library(nycflights13)`
+- For part 2, load the data with `data(STAR)` from `library(qss)`
+- make sure to use `na.rm = TRUE` for mean(), quantile() and other functions
+- `group_by()` and `summarize()` are very helpful on this one
+
+# Lab: Introducing the tidyverse: data transformation with dplyr
+
+## What is tidyverse?
+
+A collection of packages that share an underlying philosophy of 'tidy' data. Each variable is a column, each row is an observation. 
+
+```{r size = "tiny"}
+library(tidyverse)
+```
+
+## A valuable resource: QSS translation
+
+Jeff Arnold has translated all relevant code from QSS into tidyverse syntax: https://jrnold.github.io/qss-tidy/introduction.html
+
+## A valuable resource: Wickham's R for Data Science
+
+https://r4ds.had.co.nz/
+
+Today, covering chapter 5
+
+## Getting ready
+
+```{r size = "tiny"}
+library(gapminder)
+
+head(gapminder)
+```
+
+## Dplyr basics (verbs)
+
+- `filter()` chooses observations by their value \pause
+- `arrange()` reorders rows by value \pause
+- `select()` chooses variables by name \pause
+- `mutate()` creates new variables \pause
+- `summarize()` collapses variables to a single summary 
+
+Each of these can be paired with `group_by()` to operate on a subsset of the data with a grouping variable.
+
+## Dplyr input and output
+
+We feed dplyr data frames, it returns data frames. 
+
+## filter() to subset
+
+The first argument is a data frame, the subsequent argument(s) are logical conditions to filter the data on
+
+```{r size = "tiny"}
+filter(gapminder, year<1957)
+```
+
+## filter() to subset
+
+```{r size = "tiny"}
+filter(gapminder, lifeExp > 80)
+```
+
+## filter() to subset
+
+```{r size = "tiny"}
+filter(gapminder, country == "Algeria",
+       year > 1990)
+```
+
+## filter() to subset 
+
+```{r size = "tiny"}
+filter(gapminder, (country == "Algeria" | country == "Tunisia") 
+       & year > 1994)
+```
+
+## Practice
+
+- Find all country-years in South America with life expectancy greater than 75 years 
+- Find the country-year with the smallest life expectancy
+- Find the country-year with the highest life expectancy
+
+## arrange() rows
+
+Reorders rows by the values in one (or more) columns
+
+```{r size = "tiny"}
+arrange(gapminder, pop)
+```
+
+## arrange() rows
+
+`desc()` puts them in descending order
+
+```{r size = "tiny"}
+arrange(gapminder, desc(pop))
+```
+
+## arrange() rows
+
+We can arrange by more than one variable
+
+```{r size = "tiny"}
+arrange(gapminder, year, pop)
+```
+
+## Practice
+
+- Arrange countries by life expectancy from lowest to highest
+- Arrange countries by life expectancy from highest to lowest
+
+## select() columns
+
+`select()` chooses columns to return by name.
+
+```{r size = "tiny"}
+select(gapminder, country, year)
+```
+
+## select() columns
+
+You can use - to remove a column from the selection
+
+```{r size = "tiny"}
+select(gapminder, -gdpPercap, -pop)
+```
+
+## Practice
+
+- Return a data frame containing continent, country, and year
+- Return a data frame containing everything except population
+
+## Create new variables with mutate()
+
+```{r size = "tiny"}
+mutate(gapminder, 
+       pop_100k = pop / 100000)
+```
+
+## Create new variables with mutate()
+
+```{r size = "tiny"}
+mutate(gapminder, 
+       pop_100k = pop / 100000,
+       gdp = gdpPercap * pop)
+```
+
+## Create new variables with mutate()
+
+```{r size = "tiny"}
+mutate(gapminder, 
+       year_c = year-1952,
+       period = year_c / 5)
+```
+
+## Practice
+
+- Create a new variable equal to the log() of lifeExp
+
+## Summarize the data
+
+`summarize()` collapses a data frame to one row
+
+```{r}
+summarize(gapminder, 
+          lifeExp_mn = mean(lifeExp),
+          lifeExp_md = median(lifeExp))
+```
+
+## Summarizing by group
+
+`group_by()` performs subsequent operations over specified groups (usually a factor). We use the 'pipe' operator `%>%` to string together commands
+
+```{r}
+gapminder %>% 
+  group_by(continent) %>% 
+  summarise(lifeExp_mn = mean(lifeExp),
+            lifeExp_sd = sd(lifeExp))
+```
+
+## Summarizing by group
+
+```{r size = "tiny"}
+gapminder %>% 
+  group_by(continent, year) %>% 
+  summarise(lifeExp_mn = mean(lifeExp))
+```
+
+## Advanced dplyr: piping
+
+We can use the pipe to string together any number of dplyr commands. We start with the data frame we are working from
+
+```{r size = "tiny"}
+gapminder %>% 
+  filter(continent=="Americas") %>% 
+  select(country, year, gdpPercap) %>% 
+  arrange(year)
+```
+

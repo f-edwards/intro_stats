@@ -12,7 +12,7 @@
 <meta name="author" content="YOUR NAME HERE" />
 
 
-<title>Homework 2</title>
+<title>Homework 1</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -375,22 +375,29 @@ summary {
 
 
 
-<h1 class="title toc-ignore">Homework 2</h1>
+<h1 class="title toc-ignore">Homework 1</h1>
 <h4 class="author">YOUR NAME HERE</h4>
 <h4 class="date">SUBMISSION DATE HERE</h4>
 
 </div>
 
 
-<p>In this exercise, we analyze the causal effects of a criminal record on the job prospects of white and black job applicants. This exercise is based on:</p>
-<p>Pager, Devah. (2003). “<a href="https://doi.org/10.1086/374403">The Mark of a Criminal Record</a>.” <em>American Journal of Sociology</em> 108(5):937-975. You are also welcome to watch Professor Pager discuss the design and result <a href="https://youtu.be/nUZqvsF_Wt0">here</a>.</p>
-<p>To isolate the causal effect of a criminal record for black and white applicants, Pager ran an audit experiment. In this type of experiment, researchers present two similar people that differ only according to one trait thought to be the source of discrimination. This approach was used in the resume experiment described in Chapter 2 of <em>QSS</em>, where researchers randomly assigned stereotypically African-American-sounding names and stereotypically white-sounding names to otherwise identical resumes to measure discrimination in the labor market.</p>
-<p>To examine the role of a criminal record, Pager hired a pair of white men and a pair of black men and instructed them to apply for existing entry-level jobs in the city of Milwaukee. The men in each pair were matched on a number of dimensions, including physical appearance and self-presentation. As much as possible, the only difference between the two was that Pager randomly varied which individual in the pair would indicate to potential employers that he had a criminal record. Further, each week, the pair alternated which applicant would present himself as an ex-felon. To determine how incarceration and race influence employment chances, she compared callback rates among applicants with and without a criminal background and calculated how those callback rates varied by race.</p>
-<p>In the data you will use <code>ciminalrecord.csv</code> nearly all these cases are present, but 4 cases have been redacted. As a result, your findings may differ slightly from those in the paper. The names and descriptions of variables are shown below. You may not need to use all of these variables for this activity. We’ve kept these unnecessary variables in the dataset because it is common to receive a dataset with much more information than you need.</p>
-<table>
+<div id="section" class="section level2">
+<h2>0.1</h2>
+<p>Complete Swirl lesson INTRO2.</p>
+<p>Briefly describe one technique or concept in R that you are having trouble understanding. And don’t worry! It is confusing and hard!</p>
+<p>THIS IS ALL NUTS AND I DON’T KNOW WHAT IS GOING ON!! But really, vectors are still confusing to me.</p>
+</div>
+<div id="bias-in-voter-turnout-book-exercise-1.5.1" class="section level2">
+<h2>Bias in voter turnout (book exercise 1.5.1)</h2>
+<p>You can obtain the file needed for this assignment either from the qss.student package, or from my web page:</p>
+<p><a href="https://raw.githubusercontent.com/f-edwards/intro_stats/master/hw/data/turnout.csv" class="uri">https://raw.githubusercontent.com/f-edwards/intro_stats/master/hw/data/turnout.csv</a></p>
+<p>Save the file as <code>turnout.csv</code> in the working directory that your homework file is in.</p>
+<p>Surveys are frequently used to measure political behavior such as voter turnout, but some researchers are concerned about the accuracy of self-reports. In particular, they worry about possible <em>social desirability bias</em> where in post-election surveys, respondents who did not vote in an election lie about not having voted because they may feel that they should have voted. Is such a bias present in the American National Election Studies (ANES)? The ANES is a nation-wide survey that has been conducted for every election since 1948. The ANES conducts face-to-face interviews with a nationally representative sample of adults. The table below displays the names and descriptions of variables in the <code>turnout.csv</code> data file.</p>
+<table style="width:99%;">
 <colgroup>
-<col width="30%" />
-<col width="69%" />
+<col width="25%" />
+<col width="72%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -400,58 +407,147 @@ summary {
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left"><code>jobid</code></td>
-<td align="left">Job ID number</td>
+<td align="left"><code>year</code></td>
+<td align="left">Election year</td>
 </tr>
 <tr class="even">
-<td align="left"><code>callback</code></td>
-<td align="left">1 if tester received a callback, 0 if the tester did not receive a callback.</td>
+<td align="left"><code>VEP</code></td>
+<td align="left">Voting Eligible Population (in thousands)</td>
 </tr>
 <tr class="odd">
-<td align="left"><code>black</code></td>
-<td align="left">1 if the tester is black, 0 if the tester is white.</td>
+<td align="left"><code>VAP</code></td>
+<td align="left">Voting Age Population (in thousands)</td>
 </tr>
 <tr class="even">
-<td align="left"><code>crimrec</code></td>
-<td align="left">1 if the tester has a criminal record, 0 if the tester does not.</td>
+<td align="left"><code>total</code></td>
+<td align="left">Total ballots cast for highest office (in thousands)</td>
 </tr>
 <tr class="odd">
-<td align="left"><code>interact</code> <code>city</code></td>
-<td align="left">1 if tester interacted with employer during the job application, 0 if tester does not interact with employer. 1 is job is located in the city center, 0 if job is located in the suburbs.</td>
+<td align="left"><code>felons</code></td>
+<td align="left">Total ineligible felons (in thousands)</td>
 </tr>
 <tr class="even">
-<td align="left"><code>distance</code></td>
-<td align="left">Job’s average distance to downtown.</td>
+<td align="left"><code>noncitizens</code></td>
+<td align="left">Total non-citizens (in thousands)</td>
 </tr>
 <tr class="odd">
-<td align="left"><code>custserv</code></td>
-<td align="left">1 if job is in the costumer service sector, 0 if it is not.</td>
+<td align="left"><code>overseas</code></td>
+<td align="left">Total eligible overseas voters (in thousands)</td>
 </tr>
 <tr class="even">
-<td align="left"><code>manualskill</code></td>
-<td align="left">1 if job requires manual skills, 0 if it does not.</td>
+<td align="left"><code>osvoters</code></td>
+<td align="left">Total ballots counted by overseas voters (in thousands)</td>
 </tr>
 </tbody>
 </table>
+</div>
 <div id="question-1" class="section level2">
 <h2>Question 1</h2>
-<p>Begin by loading the data into R and explore the data. How many cases are there in the data? Run <code>summary()</code> to get a sense of things. In how many cases is the tester black? In how many cases is he white?</p>
+<p>Load the data into R and check the dimensions of the data. Also, obtain a summary of the data. How many observations are there? What is the range of years covered in this data set?</p>
+<pre class="r"><code>library(qss)
+data(turnout)
+summary(turnout)</code></pre>
+<pre><code>##       year           VEP              VAP             total       
+##  Min.   :1980   Min.   :159635   Min.   :164445   Min.   : 64991  
+##  1st Qu.:1986   1st Qu.:171192   1st Qu.:178930   1st Qu.: 73179  
+##  Median :1993   Median :181140   Median :193018   Median : 89055  
+##  Mean   :1993   Mean   :182640   Mean   :194226   Mean   : 89778  
+##  3rd Qu.:2000   3rd Qu.:193353   3rd Qu.:209296   3rd Qu.:102370  
+##  Max.   :2008   Max.   :213314   Max.   :230872   Max.   :131304  
+##                                                                   
+##       ANES           felons         noncit         overseas       osvoters  
+##  Min.   :47.00   Min.   : 802   Min.   : 5756   Min.   :1803   Min.   :263  
+##  1st Qu.:57.00   1st Qu.:1424   1st Qu.: 8592   1st Qu.:2236   1st Qu.:263  
+##  Median :70.50   Median :2312   Median :11972   Median :2458   Median :263  
+##  Mean   :65.79   Mean   :2177   Mean   :12229   Mean   :2746   Mean   :263  
+##  3rd Qu.:73.75   3rd Qu.:3042   3rd Qu.:15910   3rd Qu.:2937   3rd Qu.:263  
+##  Max.   :78.00   Max.   :3168   Max.   :19392   Max.   :4972   Max.   :263  
+##                                                                NA&#39;s   :13</code></pre>
+<pre class="r"><code>nrow(turnout)</code></pre>
+<pre><code>## [1] 14</code></pre>
+<pre class="r"><code>ncol(turnout)</code></pre>
+<pre><code>## [1] 9</code></pre>
+<pre class="r"><code>range(turnout$year)</code></pre>
+<pre><code>## [1] 1980 2008</code></pre>
+<p>There are 14 observations in this dataset, and 9 columns. The data contains observations every two years between 1980 and 2008, with the exception of 2006. The means, medians, ranges, and first and third quartiles of the data are presented above.</p>
 </div>
 <div id="question-2" class="section level2">
 <h2>Question 2</h2>
-<p>Now we examine the central question of the study. Calculate the proportion of callbacks for white applicants with and without a criminal record, and calculate this proportion for black applicants with and without a criminal record.</p>
+<p>Calculate the turnout rate based on the voting age population or VAP. Note that for this data set, we must add the total number of eligible overseas voters since the <em>VAP</em> variable does not include these individuals in the count. Next, calculate the turnout rate using the voting eligible population or VEP. What difference do you observe?</p>
+<pre class="r"><code>turnout$turnout_VAP &lt;- turnout$total / (turnout$VAP + turnout$overseas)
+turnout$turnout_VEP &lt;- turnout$total / turnout$VEP
+
+mean(turnout$turnout_VAP)</code></pre>
+<pre><code>## [1] 0.4545658</code></pre>
+<pre class="r"><code>mean(turnout$turnout_VEP)</code></pre>
+<pre><code>## [1] 0.4894937</code></pre>
+<p>As shown above, the turnout calculated by using the VAP rather than the VEP tends to be lower by several percentage points. The VAP is underestimating turnout relative to the VEP by an average of NaN percentage points between 1980 and 2008.</p>
 </div>
 <div id="question-3" class="section level2">
 <h2>Question 3</h2>
-<p>What is the difference in callback rates between individuals with and without a criminal record within each race. What do these specific results tell us? Consider both the difference in callback rates and the ratio of callback rates for the subjects with criminal records and those without within each racial group.</p>
+<p>Compute the difference between VAP and ANES estimates of turnout rate. How big is the difference on average? What is the range of the difference? Conduct the same comparison for the VEP and ANES estimates of voter turnout. Briefly comment on the results.</p>
+<pre class="r"><code>turnout$ANES&lt;-turnout$ANES/100
+
+turnout$ANES_diff_vap &lt;- turnout$turnout_VAP - turnout$ANES
+turnout$ANES_diff_vep &lt;- turnout$turnout_VEP - turnout$ANES
+
+mean_anes_diff_vap &lt;-mean(turnout$ANES_diff_vap)
+min_anes_diff_vap &lt;-min(turnout$ANES_diff_vap)
+max_anes_diff_vap &lt;-max(turnout$ANES_diff_vap)
+mean_anes_diff_vep &lt;-mean(turnout$ANES_diff_vep)
+min_anes_diff_vep &lt;-min(turnout$ANES_diff_vep)
+max_anes_diff_vep &lt;-max(turnout$ANES_diff_vep)</code></pre>
+<p>The VEP yields results closer to the ANES estimated turnout on average, than does the VAP. The average difference between the VAP and ANES is -0.203, though this difference is as large as -0.262 and as small as -0.111 in some elections.</p>
+<p>By contrast, the VEP differs from the ANES estimates on average by -0.168, with a minimum difference of -0.225 and a maximum difference of -0.086.</p>
 </div>
 <div id="question-4" class="section level2">
 <h2>Question 4</h2>
-<p>Compare the callback rates of whites <em>with</em> a criminal record versus blacks <em>without</em> a criminal record. What do we learn from this comparison?</p>
+<p>Compare the VEP turnout rate with the ANES turnout rate separately for presidential elections and midterm elections. Note that the data set excludes the year 2006. Does the bias of the ANES vary across election types?</p>
+<pre class="r"><code>### every 4 years...
+election_years&lt;-seq(from = 1980, to = 2008, by = 4)
+
+turnout$pres&lt;-turnout$year%in%election_years
+
+turnout_pres&lt;-turnout[turnout$pres==T, ]
+
+turnout_mid&lt;-turnout[turnout$pres==F, ]
+
+mean(turnout_pres$ANES_diff_vep)</code></pre>
+<pre><code>## [1] -0.17892</code></pre>
+<pre class="r"><code>mean(turnout_mid$ANES_diff_vep)</code></pre>
+<pre><code>## [1] -0.154288</code></pre>
+<p>On average, the bias of the VEP relative to the ANES is more extreme during mid-term elections. Between 1980 and 2008, the bias in the VEP derived estimate was -2.5 percentage points lower in midterm elections versus general elections.</p>
 </div>
 <div id="question-5" class="section level2">
 <h2>Question 5</h2>
-<p>When carrying out this experiment, Pager made many decisions. For example, she opted to conduct the research in Milwaukee; she could have done the same experiment in Dallas or Topeka or Princeton. She ran the study at a specific time: between June and December of 2001. But, she could have also run it at a different time, say 5 years earlier or 5 years later. Pager decided to hire 23-year-old male college students as her testers; she could have done the same experiment with 23-year-old female college students or 40-year-old male high school drop-outs. Further, the criminal record she randomly assigned to her testers was a felony convinction related to drugs (possession with intent to distribute, cocaine). But, she could have assigned her testers a felony conviction for assault or tax evasion. Pager was very aware of each of these decisions, and she discusses them in her paper. Now you should pick <em>one</em> of these decisions described above or another decision of your choosing. Speculate about how the results of the study might (or might not) change if you were to conduct the same study but alter this specific decision. This is part of thinking about the <em>external validity</em> of the study.</p>
+<p>Divide the data into half by election years such that you subset the data into two periods. Calculate the difference between the VEP turnout rate and the ANES turnout rate separately for each year within each period. Has the bias of the ANES increased over time?</p>
+<pre class="r"><code>turnout_pre&lt;-turnout[turnout$year&lt;=median(turnout$year), ]
+turnout_post&lt;-turnout[!(turnout$year&lt;=median(turnout$year)), ]
+
+turnout_pre$ANES_diff_vep</code></pre>
+<pre><code>## [1] -0.16804491 -0.17862987 -0.18751404 -0.14858846 -0.17231520 -0.08581054
+## [7] -0.16886160</code></pre>
+<pre class="r"><code>turnout_post$ANES_diff_vep</code></pre>
+<pre><code>## [1] -0.1487375 -0.2134207 -0.1390684 -0.1877551 -0.2248936 -0.1689916 -0.1644567</code></pre>
+<pre class="r"><code>mean(turnout_pre$ANES_diff_vep)</code></pre>
+<pre><code>## [1] -0.1585378</code></pre>
+<pre class="r"><code>mean(turnout_post$ANES_diff_vep)</code></pre>
+<pre><code>## [1] -0.1781891</code></pre>
+<p>While there is some fluctuation, the ANES does appear to deviate more from VEP voting rate estimates in later years in this time series. The average bias in the post-1992 era is about 2 percentage points larger than the bias in the pre-1992 era.</p>
+</div>
+<div id="question-6" class="section level2">
+<h2>Question 6</h2>
+<p>The ANES does not interview overseas voters and prisoners. Calculate an adjustment to the 2008 VAP turnout rate. Begin by subtracting the total number of ineligible felons and non-citizens from the VAP to calculate an adjusted VAP. Next, calculate an adjusted VAP turnout rate, taking care to subtract the number of overseas ballots counted from the total ballots in 2008. Compare the adjusted VAP turnout with the unadjusted VAP, VEP, and the ANES turnout rate. Briefly discuss the results.</p>
+<pre class="r"><code>turnout_08&lt;-turnout[turnout$year==2008, ]
+turnout_08$turnout_adj&lt;- (turnout_08$total - turnout_08$osvoters) / 
+  (turnout_08$VAP - turnout_08$felons - turnout_08$noncit)
+
+turnout_08$turnout_adj; turnout_08$turnout_VAP; turnout_08$turnout_VEP</code></pre>
+<pre><code>## [1] 0.6289918</code></pre>
+<pre><code>## [1] 0.5567409</code></pre>
+<pre><code>## [1] 0.6155433</code></pre>
+<p>The ANES reported turnout rate is higher than all other turnout rates. Our adjusted figure based on a modified VAP comes closest to this fiugure, but is still 15 percentage points away from the ANES estimate.</p>
+<p>It appears that there is substantial bias in the ANES estimated voter turnout rates.</p>
 </div>
 
 

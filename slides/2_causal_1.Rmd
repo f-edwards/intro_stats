@@ -97,7 +97,7 @@ With over 2 million individuals currently incarcerated, and over half a million 
 - grab the data from Slack
 
 ```{r message = FALSE}
-dat<-read.csv("./data/criminalrecord.csv")
+dat<-read.csv("./slides/data/criminalrecord.csv")
 ```
 
 ## Variables in the data
@@ -143,7 +143,7 @@ table(race = dat$black, crimrec = dat$crimrec)
 ```
 
 ```{r}
-table(Black = dat$black == 1, callback = dat$callback)
+table(Black = dat$black, callback = dat$callback)
 ```
 
 ## Using crosstabs
@@ -163,7 +163,7 @@ What was the callback rate for subjects assigned a criminal record?
 crim_rec
 ## Divide those with a criminal record and callback 
 ## By all those with a criminal record
-crim_rec[2, 2] / sum(crim_rec[2,])
+with<-crim_rec[2, 2] / sum(crim_rec[2,])
 ```
 
 ## Using crosstabs
@@ -174,7 +174,7 @@ What was the callback rate for subjects *not* assigned a criminal record?
 crim_rec
 ## Divide those with a criminal record and callback 
 ## By all those with a criminal record
-crim_rec[1, 2] / sum(crim_rec[1,])
+without<-crim_rec[1, 2] / sum(crim_rec[1,])
 ```
 
 # Subsetting and an aside on logicals

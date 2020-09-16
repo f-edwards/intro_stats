@@ -436,10 +436,70 @@ summary {
 <div id="question-1" class="section level2">
 <h2>Question 1</h2>
 <p>Begin by loading the data into R and explore the data. How many cases are there in the data? Run <code>summary()</code> to get a sense of things. In how many cases is the tester black? In how many cases is he white?</p>
+<pre class="r"><code>cr&lt;-read.csv(&quot;./data/criminalrecord.csv&quot;)
+
+summary(cr)</code></pre>
+<pre><code>##      jobid            callback          black          crimrec      
+##  Min.   :   1.00   Min.   :0.0000   Min.   :0.000   Min.   :0.0000  
+##  1st Qu.:  87.75   1st Qu.:0.0000   1st Qu.:0.000   1st Qu.:0.0000  
+##  Median :1024.50   Median :0.0000   Median :1.000   Median :0.0000  
+##  Mean   : 658.57   Mean   :0.1638   Mean   :0.569   Mean   :0.4986  
+##  3rd Qu.:1112.25   3rd Qu.:0.0000   3rd Qu.:1.000   3rd Qu.:1.0000  
+##  Max.   :1200.00   Max.   :1.0000   Max.   :1.000   Max.   :1.0000  
+##                                                                     
+##     interact           city           distance        custserv     
+##  Min.   :0.0000   Min.   :0.0000   Min.   : 0.00   Min.   :0.0000  
+##  1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.: 8.00   1st Qu.:0.0000  
+##  Median :0.0000   Median :0.0000   Median :12.00   Median :1.0000  
+##  Mean   :0.2428   Mean   :0.3919   Mean   :11.96   Mean   :0.6282  
+##  3rd Qu.:0.0000   3rd Qu.:1.0000   3rd Qu.:16.00   3rd Qu.:1.0000  
+##  Max.   :1.0000   Max.   :1.0000   Max.   :25.00   Max.   :1.0000  
+##                   NA&#39;s   :2        NA&#39;s   :2       NA&#39;s   :2       
+##   manualskill    
+##  Min.   :0.0000  
+##  1st Qu.:0.0000  
+##  Median :0.0000  
+##  Mean   :0.4813  
+##  3rd Qu.:1.0000  
+##  Max.   :1.0000  
+##  NA&#39;s   :2</code></pre>
+<p>The tester is Black in 396 of the cases, and white in 300 of the cases.</p>
 </div>
 <div id="question-2" class="section level2">
 <h2>Question 2</h2>
 <p>Now we examine the central question of the study. Calculate the proportion of callbacks for white applicants with and without a criminal record, and calculate this proportion for black applicants with and without a criminal record.</p>
+<pre class="r"><code>### divide callbacks for white, crimrec by all white, crimrec, etc...
+call_white_nocr&lt;-sum(cr$callback==1 &amp; cr$black==0 &amp; cr$crimrec==0) / 
+  sum(cr$black==0 &amp; cr$crimrec == 0)
+call_white_cr&lt;-sum(cr$callback==1 &amp; cr$black==0 &amp; cr$crimrec==1) / 
+  sum(cr$black==0 &amp; cr$crimrec == 1)
+
+### divide callbacks for black, crimrec by all white, crimrec, etc...
+call_black_nocr&lt;-sum(cr$callback==1 &amp; cr$black==1 &amp; cr$crimrec==0) / 
+  sum(cr$black==1 &amp; cr$crimrec == 0)
+call_black_cr&lt;-sum(cr$callback==1 &amp; cr$black==1 &amp; cr$crimrec==1) / 
+  sum(cr$black==1 &amp; cr$crimrec == 1)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>Black</th>
+<th>White</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>No record</td>
+<td>0.14</td>
+<td>0.34</td>
+</tr>
+<tr class="even">
+<td>Criminal record</td>
+<td>0.05</td>
+<td>0.17</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="question-3" class="section level2">
 <h2>Question 3</h2>
