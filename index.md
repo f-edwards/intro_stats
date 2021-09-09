@@ -3,8 +3,8 @@ layout: default
 ---
 
 | Intermediate Statistics   | 27:202:542 |  
-| Lecture: Tuesday, 10:00-12:40   | Room: CLJ 571 |
-| Office hours: Friday, 9:30-11 | Room: Zoom |
+| Lecture: Tuesday, 10:00-12:40   | Room: CLJ 574 |
+| Office hours: Friday, 10:30-11:30 | Room: Zoom (see slack for link) |
 | TA: Sofia Flores | Office hours: TBA | 
 
 ## Quick links
