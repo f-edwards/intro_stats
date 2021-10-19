@@ -1,0 +1,727 @@
+---
+title: "Measurement and visualization, 2"
+author: "Frank Edwards"
+date: "10/19/21"
+output: binb::metropolis
+---
+
+```{r setup, include=FALSE}
+rm(list=ls())
+library(tidyverse)
+library(MASS)
+select<-dplyr::select
+set.seed(1)
+data(afghan)
+data(afghan.village)
+
+options(xtable.comment = FALSE)
+theme_set(theme_bw())
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, tidy = F, size = "small")
+```
+
+## Today: Measurement in the social sciences
+
+- Survey methods with randomization
+- Administrative data and agency surveys
+- Unit, item non-response
+- Desirability bias
+- Latent variables, latent groups
+- More visualization
+
+## Surveys and censuses
+
+- A census records information about a population, with measurement for each individual or unit in the population
+- A survey samples from a population to make an inference about population characteristics
+
+## The basic motivation for survey sampling
+
+```{r fig.height = 3}
+n<-1e6
+marbles<-data.frame(
+  color = c(rep("blue", n), 
+            rep("green", n), 
+            rep("red", n)))
+table(marbles$color)
+```
+
+## How could we know how many of each color are in the enormous bag of marbles?
+
+- Count them all (tedious!)
+- Sample
+
+## The Truth
+
+```{r fig.height = 4}
+ggplot(marbles, aes(x = color)) + geom_bar() 
+```
+
+## How many random draws is enough to accurately measure the characteristics of 3 million marbles?
+
+```{r echo = FALSE}
+n<-c(5, 10, 50, 100, 300, 500, 1000, 5000, 10000, 50000, 75000, 100000)
+
+samples<-list()
+for(i in 1:length(n)){
+  samples[[i]]<-marbles %>% 
+    sample_n(n[i]) %>% 
+    group_by(color) %>% 
+    summarise(count = n()) %>% 
+    mutate(prop = count/n[i],
+           sample_size = n[i]) 
+}
+
+samples<-bind_rows(samples)
+
+ggplot(samples,
+       aes(x = color, y = prop)) + 
+  geom_col()+
+  facet_wrap(~sample_size)
+```
+
+## Random sampling
+
+- With a sufficiently large sample and equal probability of sampling for all units in the population, a simple random sample allows for unbiased measurement of population characteristics. \pause 
+
+- Identical motivation for randomization in experiments \pause
+
+- Such a sample is representative of the population across both measured and unmeasured characteristics 
+
+## Stratified random sampling
+
+If we wish to learn about particular sub-populations (i.e. geographies), we can use multi-stage or stratified sampling \pause
+
+1. Randomly sample larger units (geographic) or select larger units of interest purposively \pause
+2. Randomly sample individuals within these larger units
+
+\pause
+
+EXAMPLE: The American Community Survey (simplified) \pause
+
+1. Take a list of all US Census tracts \pause
+2. Randomly sample households within tract based on complete list of addresses (sampling frame) \pause
+3. Randomly sample adults within household, conduct survey
+
+## When surveys go wrong
+
+1. Unit non-response \pause
+2. Item non-response \pause
+3. Lying (of various sorts)
+
+## Unit non-response
+
+Individual (or organization) doesn't respond to the survey \pause
+
+- How are surveys actually administered?
+- Response rates are generally low (and decreasing!)
+
+Completely random non-response does not bias inference \pause
+
+When would non-response be an issue?
+
+## Question non-response
+
+Individual takes the survey, but refuses to answer (skips) a particular question
+
+- Why might this occur? \pause
+- When would this be a problem?
+
+## Lying (ok... misrepresentation) 
+
+- Social desirability bias
+  - Did you vote? Remember HW 1?
+  - Are you a racist?
+  - What kinds of crimes do you like to do?
+
+# Examining non-response in a survey of exposure to violence in Afghanistan
+
+## Load the data
+
+```{r}
+### survey of 
+afghan<-read_csv("https://raw.githubusercontent.com/kosukeimai/qss/master/MEASUREMENT/afghan.csv")
+afghan.village<-read_csv("https://raw.githubusercontent.com/kosukeimai/qss/master/MEASUREMENT/afghan-village.csv")
+```
+
+## Explore the variables in afghan
+
+```{r size = "tiny"}
+table(afghan$province)
+table(afghan$district)
+```
+
+## Explore the variables in afghan
+
+```{r}
+ggplot(afghan, aes(x=age)) + geom_histogram()
+```
+
+## Explore the variables in afghan
+
+```{r}
+ggplot(afghan, aes(x = educ.years)) + geom_bar()
+```
+
+## Explore the variables in afghan
+
+```{r}
+table(afghan$employed)
+```
+
+## Explore the variables in afghan
+
+```{r size = "tiny"}
+table(afghan$income)
+## for ordered categorical
+afghan<-afghan %>% 
+  mutate(income = 
+           factor(income,
+                  levels = c(
+                    "less than 2,000", "2,001-10,000",
+                    "10,001-20,000", "20,001-30,000",
+                    "over 30,000")))
+
+table(afghan$income)
+```
+
+## Explore the variables in afghan
+
+```{r}
+afghan %>% 
+  select(employed, violent.exp.ISAF, violent.exp.taliban) %>% 
+  summary()
+```
+
+## Explore the variables in afghan.village
+
+```{r}
+head(afghan.village)
+```
+
+## Explore the variables in afghan.village
+
+```{r}
+ggplot(afghan.village, aes(x=altitude)) + 
+  geom_histogram()
+```
+
+## Explore the variables in afghan.village
+
+```{r}
+ggplot(afghan.village, aes(x=population)) + 
+  geom_histogram()
+```
+
+## Explore the variables in afghan.village: logs help!
+
+```{r}
+ggplot(afghan.village, aes(x=log(population))) + 
+  geom_histogram()
+```
+
+## Explore the variables in afghan.village
+
+```{r}
+mean(afghan.village$village.surveyed)
+```
+
+## Is the sampling representative of villages?
+
+```{r}
+ggplot(afghan.village, 
+       aes(x=village.surveyed==1, 
+           y = altitude)) + 
+  geom_boxplot()
+```
+
+## Is the sampling representative of villages?
+
+```{r}
+ggplot(afghan.village, 
+       aes(x=village.surveyed==1, 
+           y = log(population))) + 
+  geom_boxplot()
+```
+
+## Is the sampling representative of villages? Alternative plot
+
+```{r size = "tiny"}
+ggplot(afghan.village, 
+       aes(x=log(population))) + 
+  geom_histogram() + 
+  facet_wrap(~ village.surveyed, scales = "free")
+```
+
+## Does item non-response bias estimates of violence by region?
+
+```{r echo = FALSE}
+afghan_item<-afghan %>% 
+  group_by(province) %>% 
+  summarise(ISAF = mean(is.na(violent.exp.ISAF)),
+            Taliban = mean(is.na(violent.exp.taliban))) %>% 
+  gather(focal_org, pct_missing, -province)
+
+ggplot(afghan_item, aes(y = pct_missing, x = focal_org)) + 
+  geom_col() + 
+  facet_wrap(~province)
+```
+
+## Summary
+
+- Unit non-responses can bias survey estimates \pause
+- Item non-response can bias survey estimates \pause
+- Social desirability can bias survey estimates \pause
+- Errors induced by these biases can lead to incorrect conclusions (see polling consensus on 2016 election)
+
+# Returning to the IPV example
+
+## Load the data
+
+```{r size = "tiny"}
+ipv<-read_csv("./data/dhs_ipv.csv")
+## on your machine, path is /slides/data/
+head(ipv)
+```
+
+## Look at bivariate relationships
+
+```{r size = "tiny"}
+ggplot(ipv, aes(x = sec_school, y =no_media, color = region)) + geom_point()
+```
+
+## Is there a change in sec_school by region over time across this sample? Does time matter here?
+
+```{r size = "tiny", fig.height = 3}
+ipv_ts<-ipv %>% 
+  group_by(region, year) %>% 
+  summarise(sec_school=mean(sec_school))
+
+ggplot(ipv_ts, aes(x=year, y = sec_school, color = region)) + 
+  geom_line()
+```
+
+## Correlation
+
+```{r echo = FALSE}
+library(MASS)
+select<-dplyr::select
+cors<-seq(from=0, to =1, by = 0.1)
+cor_plot<-list()
+for(i in 1:length(cors)){
+  cor_plot[[i]] <- mvrnorm(50, 
+                      mu = c(0,0), 
+                      Sigma = matrix(c(1,cors[i],cors[i],1), ncol = 2),
+                      empirical = TRUE)
+  cor_plot[[i]]<-as.data.frame(cor_plot[[i]])
+  cor_plot[[i]]$cor<-cors[i]
+}
+cor_plot<-bind_rows(cor_plot)
+
+ggplot(cor_plot, aes(x=V1, y = V2)) + 
+  geom_point() +
+  facet_wrap(~cor)
+```
+
+## Correlation
+
+```{r echo = FALSE}
+library(MASS)
+select<-dplyr::select
+cors<-seq(from=0, to =1, by = 0.1)
+cor_plot<-list()
+for(i in 1:length(cors)){
+  cor_plot[[i]] <- mvrnorm(50, 
+                      mu = c(0,0), 
+                      Sigma = matrix(c(1,cors[i],cors[i],1), ncol = 2),
+                      empirical = TRUE)
+  cor_plot[[i]]<-as.data.frame(cor_plot[[i]])
+  cor_plot[[i]]$cor<-cors[i]
+}
+cor_plot<-bind_rows(cor_plot)
+
+ggplot(cor_plot, aes(x=V1, y = V2)) + 
+  geom_point() +
+  geom_smooth(method = "lm") +
+  facet_wrap(~cor)
+```
+
+## Correlation (math time): Z-scores
+
+First, we need the variables to be comparable, so we transform them to be on a standard deviation scale.
+
+A $z$-score scales a variable measures the number of standard deviations an observation is away from it's mean.
+
+\[z\textrm{ score of }x_i = \frac{x_i-\bar{x}}{S_x} \]
+
+Where $\bar{x}$ is the mean, and $S_x$ is the standard deviation of variable $x$. Z scores have a mean zero, and a range defined by the range of the data on a standard deviation scale. 
+
+For a normally (Gaussian) distributed variable, this will typically range between $[-3,3]$ 
+
+In R, we can transform a numeric into a $z$-score using \texttt{scale()}
+
+## Z-scores in R
+
+```{r}
+ipv_scale<-ipv %>% 
+  mutate(sec_scale = scale(sec_school)) %>% 
+  select(sec_school, sec_scale) 
+summary(ipv_scale)
+```
+
+## Z-scores in R
+
+```{r size = "tiny"}
+ggplot(ipv_scale, aes(x=sec_school, y=sec_scale)) + geom_point()
+```
+
+## Correlation
+
+Correlation measures the degree to which two variables are associated with each other. We often use the letter $r$ to denote a correlation.
+
+\[r(x,y) = \frac{1}{n}\sum_{i=1}^{n} \frac{x_i-\bar{x}}{S_x} \times \frac{y_i-\bar{y}}{S_y}\]
+
+Note that this is equal to the average of the product of the $z-scores$ of $x$ and $y$
+
+In R, you can use \texttt{cor()}
+
+## Returning to our example: Are sec_school and no_media correlated?
+
+```{r echo = FALSE}
+ggplot(ipv, aes(x = sec_school, y =no_media, color = region)) + geom_point()
+```
+
+## Obtaining the correlation coefficient
+
+```{r}
+cor(ipv$sec_school, ipv$no_media, use="complete")
+## z score method
+mean(scale(ipv$sec_school) * scale(ipv$no_media), na.rm=TRUE)
+```
+
+# Clustering
+
+## Latent structure
+
+Data often *cluster* based on unobserved or unobservable characteristics. We can use *classification methods* to try to uncover these latent structures in data. 
+
+$k$-means is a straightforward method we can use to identify $k$ latent groupings in our data, based on proximity of observations for specified variables.
+
+## The k-means algorithm
+
+An algorithm is a sequential set of steps used to solve a problem.
+
+A *centroid* is the mean value of a cluster within a group.
+
+1. Choose the initial centroids for each of the $k$ clusters
+2. Assign each observation to the cluster with the nearest centroid
+3. Assign a new centroid based on the within-cluster mean for assigned observations
+4. Repeat steps 2 and 3 until the cluster assignments no longer change
+
+We arbitrarily choose the number of clusters $k$, and R randomly selects starting centroid values for step 1.
+
+## The k-means algorithm
+
+![](./vis/kmeans.jpg)
+
+## Implementing k-means for the IPV data
+
+```{r size = "tiny"}
+ipv_scale<-ipv %>%
+  select(sec_school, no_media) %>%
+  mutate(sec_school = scale(sec_school),
+         no_media = scale(no_media)) %>%
+  filter(!(is.na(sec_school)), !(is.na(no_media))) 
+
+ipv_kmeans<-kmeans(ipv_scale,
+                   centers = 3, 
+                   nstart=10)
+```
+
+## Working with the k-means object
+
+```{r size = "tiny"}
+ipv_kmeans
+```
+
+## Pull out what we need from the list
+
+```{r}
+ipv_clusters<-ipv %>%
+  filter(!(is.na(sec_school)), !(is.na(no_media))) %>%
+  mutate(cluster = factor(ipv_kmeans$cluster))
+
+centers<-data.frame(ipv_kmeans$centers)
+
+centers
+```
+
+## Plot it!
+
+```{r size = "tiny", fig.height = 3}
+ggplot(ipv_clusters, aes(x = scale(sec_school),
+                         y =scale(no_media),
+                         color = cluster)) +
+  geom_point() +
+  geom_point(data = centers, 
+             aes(x=sec_school, 
+                 y=no_media),
+             color = "black", size = 4, shape = 3)
+
+```
+
+## What if we thought there were 4 clusters?
+
+```{r echo = FALSE, fig.height = 3}
+ipv_kmeans<-ipv %>%
+  select(sec_school, no_media) %>%
+  mutate(sec_school = scale(sec_school),
+         no_media = scale(no_media)) %>%
+  filter(!(is.na(sec_school)), !(is.na(no_media))) %>%
+  kmeans(centers = 4, nstart=10)
+
+ipv_clusters<-ipv %>%
+  filter(!(is.na(sec_school)), !(is.na(no_media))) %>%
+  mutate(cluster = factor(ipv_kmeans$cluster))
+
+centers<-data.frame(ipv_kmeans$centers)
+
+ggplot(ipv_clusters, aes(x = scale(sec_school),
+                         y =scale(no_media),
+                         color = cluster)) +
+  geom_point() +
+  geom_point(data = centers, aes(x=sec_school, y=no_media),
+             color = "black", size = 4, shape = 3)
+```
+
+## What if we thought there were 10 clusters?
+
+```{r echo = FALSE, fig.height = 3}
+ipv_kmeans<-ipv %>%
+  select(sec_school, no_media) %>%
+  mutate(sec_school = scale(sec_school),
+         no_media = scale(no_media)) %>%
+  filter(!(is.na(sec_school)), !(is.na(no_media))) %>%
+  kmeans(centers = 10, nstart=10)
+
+ipv_clusters<-ipv %>%
+  filter(!(is.na(sec_school)), !(is.na(no_media))) %>%
+  mutate(cluster = factor(ipv_kmeans$cluster))
+
+centers<-data.frame(ipv_kmeans$centers)
+
+ggplot(ipv_clusters, aes(x = scale(sec_school),
+                         y =scale(no_media),
+                         color = cluster)) +
+  geom_point() +
+  geom_point(data = centers, aes(x=sec_school, y=no_media),
+             color = "black", size = 4, shape = 3)
+```
+
+## Summary
+
+- Measurement and design matter!
+- Always check your data, and think about how unit and item non-response may inform your conclusions
+- Think about desirability and other forms of response bias as you interpret your results
+- Design visuals and exploratory analyses to check hypotheses about what's going on in the data
+- Think about the structure of your data, use descriptive statistics like correlations to describe relationships
+- Think about latent structures in your data to capture clustering
+
+# Lab: more data visualization with ggplot
+
+## The mpg data
+
+```{r size = "tiny"}
+head(mpg)
+```
+
+
+## How are these plots similar?
+
+```{r size = "tiny"}
+ggplot(mpg, 
+       aes(x = displ, y = hwy)) + 
+  geom_point()
+```
+
+## How are these plots similar?
+
+```{r size = "tiny"}
+ggplot(mpg,
+       aes(x = displ, y = hwy)) + 
+  geom_smooth()
+```
+
+## Geometric objects (geoms) map data to visual objects
+
+```{r, size = "tiny"}
+ggplot(mpg, 
+       aes(x = displ, y = hwy)) + 
+  geom_point()
+```
+
+## We can layer geoms
+
+```{r, size = "tiny"}
+ggplot(mpg, 
+       aes(x = displ, y = hwy)) + 
+  geom_point() + 
+  geom_smooth()
+```
+
+## Add aesthetics to map variables to visual objects
+
+```{r, size = "tiny"}
+ggplot(mpg,
+       aes(x = displ, y = hwy, lty = drv)) + 
+  geom_point() + 
+  geom_smooth()
+```
+
+## Add aesthetics to map variables to visual objects
+
+```{r, size = "tiny", fig.height = 43}
+ggplot(mpg,
+       aes(x = displ, y = hwy, color = drv)) + 
+  geom_point() + 
+  geom_smooth()
+```
+
+## Global and local aesthetics
+
+```{r, size = "tiny", fig.height = 4}
+## What's the difference from the prior plot?
+## could i make this more compact?
+ggplot(mpg) + 
+  geom_point(aes(x = displ, y = hwy)) + 
+  geom_smooth(aes(x = displ, y = hwy, color = drv))
+```
+
+## Modifying visual objects without variable mapping
+
+```{r, size = "tiny"}
+ggplot(mpg,
+       aes(x = displ, y = hwy)) + 
+  geom_point(color = "pink") + 
+  geom_smooth(color = "magenta")
+
+
+ggplot(mpg,
+       aes(x = displ, y = hwy)) + 
+  geom_point(aes(color = cyl)) + 
+  geom_smooth(color = "brown")
+```
+
+## Modifying data prior to plotting
+
+```{r, size = "tiny"}
+ggplot(mpg %>% 
+         filter(drv !="4"),
+       aes(x = displ, y = hwy, color = drv)) + 
+  geom_point() + 
+  geom_smooth()
+```
+
+## Exercises
+
+- Using the `afghan` data, visualize the relationship between age and educ.years. What is the best geom for examining this relationship?
+
+- Add an additional aesthetic for province
+
+- Add an additional aesthetic for age
+
+- Remove unemployed individuals prior to plotting
+
+- Do you think there is a correlation here? Add a smooth to examine (hint, use method = "lm")
+
+## Prettying up your plots
+
+This is not pretty
+
+```{r, size = "tiny", fig.height = 4}
+ggplot(mpg,
+       aes(x = displ, y = hwy, color = drv)) + 
+  geom_point() + 
+  geom_smooth()
+```
+
+## Axis labels
+
+This is better!
+
+```{r, size = "tiny", fig.height = 4}
+ggplot(mpg,
+       aes(x = displ, y = hwy, color = drv)) + 
+  geom_point() + 
+  geom_smooth() + 
+  labs(x = "Engine Displacement", 
+       y = "Highway MPG",
+       color = "Drive type")
+```
+
+## Titles
+
+```{r, size = "tiny", fig.height = 4}
+ggplot(mpg,
+       aes(x = displ, y = hwy, color = drv)) + 
+  geom_point() + 
+  geom_smooth() + 
+  labs(x = "Engine Displacement", 
+       y = "Highway MPG",
+       color = "Drive type",
+       title = "Miles per gallon and engine displacement by drive type")
+```
+
+## Subtitles
+
+```{r, size = "tiny", fig.height = 4}
+ggplot(mpg,
+       aes(x = displ, y = hwy, color = drv)) + 
+  geom_point() + 
+  geom_smooth() + 
+  labs(x = "Engine Displacement", 
+       y = "Highway MPG",
+       color = "Drive type",
+       title = "Miles per gallon and engine displacement by drive type",
+       subtitle = "Fuel economy data from 1999 to 2008 for 38 popular models of cars")
+```
+
+## Moving things around with theme
+
+```{r, size = "tiny", fig.height = 4}
+ggplot(mpg,
+       aes(x = displ, y = hwy, color = drv)) + 
+  geom_point() + 
+  geom_smooth() + 
+  labs(x = "Engine Displacement", 
+       y = "Highway MPG",
+       color = "Drive type",
+       title = "Miles per gallon and engine displacement by drive type",
+       subtitle = "Fuel economy data from 1999 to 2008 for 38 popular models of cars") + 
+  theme(legend.position = "bottom")
+```
+
+## Improving scatterplots
+
+If two vehicles have identical MPG and displ, they will overlap, and we can't actually see them. A jitter adds a small amount of noise to help us see all the data.
+
+## Improving scatterplots
+
+```{r, size = "tiny", fig.height = 4}
+ggplot(mpg,
+       aes(x = displ, y = hwy, color = drv)) + 
+  geom_point() + 
+  geom_smooth()
+```
+
+## Improving scatterplots
+
+```{r, size = "tiny", fig.height = 4}
+ggplot(mpg,
+       aes(x = displ, y = hwy, color = drv)) + 
+  geom_jitter() + 
+  geom_smooth()
+```
