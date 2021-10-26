@@ -84,7 +84,7 @@ In R, we can transform a numeric into a $z$-score using \texttt{scale()}
 ## Z-scores in R
 
 ```{r}
-ipv<-read_csv("https://raw.githubusercontent.com/f-edwards/intro_stats/master/data/dhs_ipv.csv")
+ipv<-read.csv("https://raw.githubusercontent.com/f-edwards/intro_stats/master/data/dhs_ipv.csv")
 
 ipv_scale<-ipv %>% 
   mutate(sec_scale = scale(sec_school)) %>% 
@@ -502,7 +502,7 @@ polls<-polls %>%
 ## Data for today: election results
 
 ```{r size = "tiny"}
-results<-read_csv("https://raw.githubusercontent.com/f-edwards/intro_stats/master/data/1976-2016-president.csv")
+results<-read.csv("https://raw.githubusercontent.com/f-edwards/intro_stats/master/data/1976-2016-president.csv")
 head(results)
 results<-results %>% 
   filter(year==2016) %>% 
