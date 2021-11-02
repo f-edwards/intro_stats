@@ -35,8 +35,6 @@ the self-assessment question.
 
 where ['name'] was replaced with either Alison, Jane, or Moses.
 
-Load the data using `library(qss)` and `data(vignettes)`
-
 The data set we analyze `vignettes.csv` contains the following variables:
 
 -------------------------------------------------------------------------------
@@ -62,6 +60,14 @@ This approach is not appropriate if, for example, the
 difference between `Unlimited say` and `A lot of say` is 
 not the same as the difference between `Little say` and `No say at all`.  However, relaxing this
 assumption is beyond the scope of this chapter.
+
+```{r}
+#load the data
+library(tidyverse)
+
+dat<-read_csv("https://raw.githubusercontent.com/kosukeimai/qss/master/MEASUREMENT/vignettes.csv")
+```
+
 
 ## Question 1
 

@@ -1,0 +1,33 @@
+---
+title: "hw2 solutions"
+author: "Frank"
+date: "9/21/2021"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(nycflights13)
+```
+
+
+## 5.2.4
+
+1. 
+
+```{r}
+filter(flights, arr_delay>120)
+```
+
+2. 
+
+```{r}
+filter(flights, dest == "IAH" | dest == "HOU")
+```
+
+3.
+
+```{r}
+
+```
+

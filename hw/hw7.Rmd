@@ -1,0 +1,25 @@
+---
+title: "HW7"
+author: "You!"
+due: "11/9/2021"
+output: html_document
+---
+
+## Homework 7; practice with regression
+
+```{r include = F}
+library(tidyverse)
+ipv<-read.csv("https://raw.githubusercontent.com/f-edwards/intro_stats/master/data/dhs_ipv.csv")
+```
+
+1. Estimate a regression with beat_burnfood as the outcome and no_media as the predictor. Interpret the coefficients.
+
+2. Compute the expected value of beat_burnfood when no_media = 50 (you can do this manually, or with the predict() function)
+
+3. Compute the expected value of beat_burnfood when no_media = 90 
+
+4. Compare these findings. Interpret their meaning substantively (in reference to the theoretical question, not just the numbers themselves.)
+
+
+
+
