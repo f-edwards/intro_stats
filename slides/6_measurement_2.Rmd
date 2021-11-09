@@ -141,7 +141,7 @@ Individual takes the survey, but refuses to answer (skips) a particular question
 
 ## Load the data
 
-```{r}
+```{r size = "tiny"}
 ### survey of 
 afghan<-read_csv("https://raw.githubusercontent.com/kosukeimai/qss/master/MEASUREMENT/afghan.csv")
 afghan.village<-read_csv("https://raw.githubusercontent.com/kosukeimai/qss/master/MEASUREMENT/afghan-village.csv")
@@ -231,7 +231,7 @@ mean(afghan.village$village.surveyed)
 
 ## Is the sampling representative of villages?
 
-```{r}
+```{r fig.size = 4}
 ggplot(afghan.village, 
        aes(x=village.surveyed==1, 
            y = altitude)) + 
@@ -282,7 +282,7 @@ ggplot(afghan_item, aes(y = pct_missing, x = focal_org)) +
 ## Load the data
 
 ```{r size = "tiny"}
-ipv<-read_csv("./data/dhs_ipv.csv")
+ipv<-read_csv("https://raw.githubusercontent.com/f-edwards/intro_stats/master/data/dhs_ipv.csv")
 ## on your machine, path is /slides/data/
 head(ipv)
 ```
