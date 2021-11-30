@@ -23,7 +23,7 @@ knitr::opts_chunk$set(warning=FALSE, message=FALSE, tidy = F, size = "tiny")
 ## The basic challenge: Will Obama win Florida in '08?
 
 ```{r echo = F, fig.height = 4}
-data(polls08)
+polls08<-read.csv("https://raw.githubusercontent.com/kosukeimai/qss/master/UNCERTAINTY/polls08.csv")
 temp<-polls08 %>% 
   filter(state=="FL") %>% 
   select(Obama, McCain) %>% 
@@ -239,7 +239,6 @@ It tells us how far away $\bar{x}$ is from $E(x)$ on average
 Let's return to our voter polls. Assume each of these polls is a simple random sample of voters.
 
 ```{r}
-data(polls08)
 fl<-polls08 %>% 
   filter(state=="FL") %>% 
   select(Obama) 
@@ -386,7 +385,7 @@ It does mean if we draw a large number of samples and construct 95 percent inter
 Let's return to the class-size experiment. We can use a confidence interval to show how uncertain our effect estimates are.
 
 ```{r ehco = FALSE, fig.height =3}
-data(STAR)
+STAR<-read.csv("https://raw.githubusercontent.com/kosukeimai/qss/master/UNCERTAINTY/STAR.csv")
 STAR<-STAR %>% 
   mutate(classtype = ifelse(classtype==1, "small", 
                             ifelse(classtype==2, "regular",
