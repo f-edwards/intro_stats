@@ -1,0 +1,35 @@
+---
+title: "HW9"
+author: "Your name here"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+
+polls08<-read.csv("https://raw.githubusercontent.com/kosukeimai/qss/master/UNCERTAINTY/polls08.csv")
+```
+
+This assignment uses the polls08 data from the qss library
+
+Compute quantities of interest using all poll results for the following states: {MI, NM, WI, CA, NY, NJ, ME}
+
+- Visualize the distribution of poll results for each candidate in each of these states (histograms or densities are most appropriate)
+
+- Compute the average poll result $\bar{x}$ for each state for both Obama and McCain support
+
+- Compute the variance of poll results for each candidate and each state
+
+
+- Compute a 90 percent confidence interval for each candidate and each state
+
+
+
+- Describe each candidate's likely vote total as a margin of error with your 90 \% interval for each state
+
+- For each state, conduct the following hypothesis test at the $\alpha = 0.05$ threshold: 
+
+
+$$H_0: \mu_{Obama} - \mu_{McCain} = 0 $$
+
+- What do these tests tell you?
