@@ -1,0 +1,487 @@
+---
+title: "Uncertainty, 2"
+author: "Frank Edwards"
+output: binb::metropolis
+---
+
+```{r setup, include=FALSE}
+rm(list=ls())
+library(MASS)
+library(tidyverse)
+library(qss)
+library(pander)
+library(broom)
+
+select<-dplyr::select
+
+options(xtable.comment = FALSE)
+theme_set(theme_bw())
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, tidy = TRUE, size = "tiny")
+```
+
+## The linear regression model
+
+We can describe the relationship between a predictor variable $X$ and an outcome variable $Y$ with the line:
+
+\[ y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \] 
+
+## The linear regression model
+
+\[ Y = \beta_0 + \beta_1 X + \varepsilon \] \pause
+
+$\beta_0$: The value of $y$ when $x$ is equal to zero \pause
+
+$\beta_1$: The average increase in $y$ when $x$ increases by one unit \pause
+
+$\varepsilon$: The distance between the line $y = \beta_0 + \beta_1 X$ and the actual observed values of $y$. Allows us to estimate the line, even when x and y do not fall exactly on a line. \pause
+
+The line $E(y_i) = \beta_0 + \beta_1 x_i$ provides a prediction for the values of $y_i$ based on the values of $x_i$.
+
+## The linear regression model and prediction
+
+Remember, that we put a $\hat{hat}$ on variables to indicate that they are estimated from the data, or predicted. \pause
+
+In other words, we try to learn about the `true' *regression coefficients* $\beta_1$ and $\beta_0$ by estimating $\hat{\beta_1}$ and $\hat{\beta_0}$. \pause
+
+A regression line predicts values of $Y$, by estimating $\hat{Y}$ with the equation:
+
+$\hat{Y} = \hat{\beta_0} + \hat{\beta_1} X$ \pause
+
+and the residual, or prediction error is the difference between the observed and predicted values of $Y$
+
+$\varepsilon = Y - \hat{Y}$
+
+## Understanding the regression line
+
+```{r echo = FALSE, size = "tiny", fig.height = 2}
+r<-0.95
+sample <- mvrnorm(n=10, 
+                  mu=c(1, 1), 
+                  Sigma=matrix(c(1, r, r, 1), nrow=2), 
+                  empirical=TRUE)
+
+sample<-data.frame(x = sample[,1], y = sample[,2])
+
+m1<-lm(y~x, data = sample)
+coefs<-coef(m1)
+
+as_tibble(sample)
+
+sample$yhat<-coefs[1] + coefs[2] * sample$x
+sample$residual<-sample$y - sample$yhat
+```
+
+$\hat{\beta_0} =$ `r coefs[1]`, $\hat{\beta_1} =$ `r coefs[2]`
+
+- Estimate $\hat{Y}$. Recall that $\hat{Y} = \hat{\beta_0} + \hat{\beta_1} X$
+- Estimate $\varepsilon$. Recall that $\varepsilon = Y - \hat{Y}$
+
+## Understanding the regression line
+
+$\hat{\beta_0} =$ `r coefs[1]`, $\hat{\beta_1} =$ `r coefs[2]`
+
+```{r echo = FALSE, fig.height = 4}
+yhat<-fitted(m1)
+ggplot(sample, aes(x=x,y=y)) + 
+  geom_point() #+ 
+  #geom_abline(slope = coefs[2], intercept = coefs[1]) + 
+  #geom_point(aes(x=x, y = yhat), color = 2)
+```
+
+## Understanding the regression line: adding the fit
+
+$\hat{\beta_0} =$ `r coefs[1]`, $\hat{\beta_1} =$ `r coefs[2]`
+
+```{r echo = FALSE, fig.height = 4}
+yhat<-fitted(m1)
+ggplot(sample, aes(x=x,y=y)) + 
+  geom_point() + 
+  geom_abline(slope = coefs[2], intercept = coefs[1]) #+ 
+  #geom_point(aes(x=x, y = yhat), color = 2)
+```
+
+## Understanding the regression line: adding $\hat{y}$
+
+$\hat{\beta_0} =$ `r coefs[1]`, $\hat{\beta_1} =$ `r coefs[2]`
+
+```{r echo = FALSE, fig.height = 4}
+yhat<-fitted(m1)
+ggplot(sample, aes(x=x,y=y)) + 
+  geom_point() + 
+  geom_abline(slope = coefs[2], intercept = coefs[1]) + 
+  geom_point(aes(x=x, y = yhat), color = 2)
+```
+
+## Understanding the regression line: adding $\varepsilon$
+
+$\hat{\beta_0} =$ `r coefs[1]`, $\hat{\beta_1} =$ `r coefs[2]`
+
+```{r echo = FALSE, fig.height = 4}
+yhat<-fitted(m1)
+ggplot(sample, aes(x=x,y=y)) + 
+  geom_point() + 
+  geom_abline(slope = coefs[2], intercept = coefs[1]) + 
+  geom_point(aes(x=x, y = yhat), color = 2, size = 2)  +
+  geom_segment(aes(x = x, xend =x, y = y, yend = yhat), lty =2)
+```
+
+## Goal of linear regression
+
+1. Estimate causal relationships between some predictor variable $x$ and outcome variable $y$ \pause
+2. Predict changes in some outcome variable $y$ for changes in a system of predictors $X$
+
+## Assumptions of a linear regression model (for causal estimates)
+
+For estimates of $\beta$ to be unbiased and consistent, the following assumptions must be met:
+
+1. The linear model approximates the data generating process \pause
+2. Exogeneity of errors: $E(\varepsilon)=0$, errors uncorrelated with predictors \pause
+3. Linear independence of predictors \pause
+4. Constant error variance (Homoskedasticity): $V(\varepsilon|X)=V(\varepsilon)$
+
+## Assumptions of a linear regression model (for prediction)
+
+For predictions $\hat{y} = \beta X$ to be unbiased and consistent, the following assumptions must be met
+
+1. The linear model approximates the data generating process \pause
+2. Constant error variance (Homoskedasticity): $V(\varepsilon|X)=V(\varepsilon)$
+
+## Guidance
+
+1. When you cannot meet the exogeneity assumption (unmeasured confounding, no randomization) or the linear independence assumption, *you cannot interpret* $\beta$ *as a causal estimate*. \pause
+2. When you cannot meet the assumption of a linear model or constant error variance, *you cannot make valid predictions*
+
+## Ways to express an OLS model 
+
+As linear with Normal errors:
+
+\[y_i = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \cdots \varepsilon \]
+\[\varepsilon \sim N(0,\sigma^2)\]
+\pause
+As Normal, with linear vector of means:
+
+\[y \sim N(\beta X, \sigma^2)\]
+
+# Example: OLS for estimating causal effects
+
+## The Mark of a Criminal Record
+
+```{r}
+### read and format Pager data
+cr<-read_csv("https://raw.githubusercontent.com/f-edwards/intro_stats/master/data/criminalrecord.csv")
+cr<-cr %>% 
+  mutate(
+    race = case_when(
+      black==0 ~ "White",
+      black==1 ~ "Black"),
+    crimrec = as.logical(crimrec)) %>% 
+  select(callback, race, crimrec)
+
+head(cr)
+```
+
+## The sample average treatment effect and its standard error
+
+```{r}
+treatment<-cr %>% 
+  filter(crimrec==T) %>% 
+  group_by(race) %>% 
+  summarise(xbar = sum(callback)/n(),
+            se = sd(callback)/sqrt(n()))  
+
+control<-cr %>% 
+  filter(crimrec==F) %>% 
+  group_by(race) %>% 
+  summarise(xbar = sum(callback)/n(),
+            se = sd(callback)/sqrt(n()))  
+
+SATE<-treatment %>% 
+  mutate(SATE = xbar - control$xbar,
+         SATE_se = sqrt(se^2 + control$se^2))
+
+SATE
+```
+
+## Thinking through the OLS assumptions
+
+For estimates of $\beta$ to be unbiased and consistent, the following assumptions must be met:
+
+1. The linear model approximates the data generating process: *Questionable under binary outcome, but ok* \pause
+2. Exogeneity of errors: $E(\varepsilon)=0$, errors uncorrelated with predictors *Randomization handles this* \pause
+3. Linear independence of predictors *Randomization also handles this* \pause
+4. Constant error variance (Homoskedasticity): $V(\varepsilon|X)=V(\varepsilon)$ *We can generally check this after estimation, but will be violated with binary outcome* 
+
+## Standard errors of $\beta$
+
+If we assume that the errors are Normally distributed with constant variance: $\varepsilon \sim N(0,\sigma^2)$, then we can treat the standard error of $\beta$ as the standard deviation of its sampling distribution. \pause
+
+In other words: $\beta \sim N(\hat{\beta}, SE_\beta^2)$ \pause
+
+The standard error of $\beta$ is calculated as:
+
+\[SE_\beta = \sqrt{\frac{\frac{1}{n}\sum_{i=1}^n \varepsilon_i^2}{\sum_{i=1}^n(x_i - \bar{x})^2}}\]
+
+## Using the central limit theorem to calculate confidence intervals, compute p-values
+
+If the sampling distribution for $\beta$ is defined as:
+
+$\beta \sim N(\hat{\beta}, SE_\beta^2)$ \pause
+
+Then we can construct a CI for $\beta$ with a critical value of $\alpha$ as:
+
+\[\hat{\beta} \pm z_{\alpha/2} \times SE_\beta\] \pause
+
+And conduct a $z$ test for $\beta$ by comparing against the null hypothesis:
+
+$H_0: \beta \sim N(0,SE_\beta^2)$
+
+## Using OLS to estimate the SATE
+
+```{r}
+cr_ols<-lm(callback ~ 
+             race*crimrec,
+           data = cr)
+
+
+summary(cr_ols)
+
+```
+
+## Predicting outcomes from our OLS model
+
+```{r}
+### make a data frame with all possible
+### values in the data
+pred_dat<-data.frame(race=c("Black", "White"), 
+                     crimrec=c(T,F)) %>% 
+  complete(race, crimrec) 
+# complete() makes all possible combinations of listed variables
+pred_dat
+```
+
+## Predicting outcomes from our OLS model
+
+
+```{r}
+### generate predictions
+
+
+yhat<-predict(cr_ols,
+              newdata = pred_dat,
+              interval = "confidence")
+
+cr_ols_yhat<-as.data.frame(predict(cr_ols,
+                     newdata = pred_dat,
+                     interval = "confidence"))
+
+head(cr_ols_yhat)
+
+### append these predictions to the prediction data
+
+pred_dat<-pred_dat %>% 
+  mutate(yhat = cr_ols_yhat$fit,
+         yhat_lwr = cr_ols_yhat$lwr,
+         yhat_upr = cr_ols_yhat$upr)
+```
+
+## Check results
+
+```{r}
+(pred_dat)
+(treatment)
+(control)
+```
+
+## Visualize results - with 95 percent confidence interval
+
+```{r fig.height = 4}
+ggplot(pred_dat,
+       aes(x = race, y = yhat, 
+           ymin=yhat_lwr, ymax=yhat_upr,
+           fill = crimrec)) + 
+  geom_crossbar(alpha = 0.7) 
+```
+
+## Methods using OLS to obtain causal estimates
+
+1. Randomized controlled trial \pause
+2. "Natural experiments": Difference in differences, other matched-group methods (propensity scores, etc) \pause
+3. Instrumental variables \pause
+4. Regression discontinuity
+
+# OLS for prediction and description
+
+## Police and municipal budgets
+
+```{r}
+budgets<-read.csv("https://raw.githubusercontent.com/f-edwards/intro_stats/master/data/police_spending.csv")
+glimpse(budgets)
+```
+
+## Develop a theoretical model to predict police department budgets
+
+\[\textsf{Spending on police per capita} = f(\textsf{Property taxes} + \textsf{Crime} + \textsf{Segregation})\] \pause
+
+Using an OLS model:
+
+\[y \sim N(\beta X, \sigma^2)\]
+
+Where: 
+
+\[\beta X = \hat{y}_i =  \beta_0 + \beta_1 \textsf{taxes}_i + \beta_2 \textsf{crime}_i + \beta_3 \textsf{segregation}_i\]
+
+## Estimate this model in R
+
+```{r}
+budgets_m1<-lm(exp_police_pc ~
+                 rev_prop_tax_pc + 
+                 violent.crime.high +
+                 segregation.bw.high,
+               data = budgets)
+
+tidy(budgets_m1)
+```
+
+## Check the model assumptions
+
+1. A linear model is a reasonable approximation of the data generating process
+
+Q: Is police spending a linear function of property taxes?
+
+```{r fig.height = 3}
+ggplot(budgets,
+       aes(x = rev_prop_tax_pc,
+           y = exp_police_pc)) + 
+  geom_point() + 
+  geom_smooth(method = "lm")
+```
+
+## Check the model assumptions
+
+2. Constant error variance (Homoskedasticity): $V(\varepsilon|X)=V(\varepsilon)$
+
+```{r fig.height=3}
+plot(budgets_m1$model$rev_prop_tax_pc, budgets_m1$residuals,
+     xlab = "Property taxes", ylab = "epsilon")
+abline(0,0)
+```
+
+# Revise the model!
+
+## Model assumptions
+
+1. A linear model is a reasonable approximation of the data generating process. *Not really! Let's try a logarithm of these rate per capita variables* \pause
+
+Q: Is police spending a linear function of property taxes after log transformation?
+
+```{r fig.height = 3}
+ggplot(budgets,
+       aes(x = log(rev_prop_tax_pc),
+           y = log(exp_police_pc))) + 
+  geom_point() + 
+  geom_smooth(method = "lm")
+```
+
+## Log transformations
+
+```{r echo = F}
+log_demo<-budgets %>% 
+  select(exp_police_pc, rev_prop_tax_pc) %>% 
+  gather()
+
+log_demo<- log_demo %>% 
+  bind_rows(log_demo %>% 
+              mutate(key = paste("log", key),
+                     value = log(value)))
+
+ggplot(log_demo, aes(x=value)) + 
+  geom_histogram()+
+  facet_wrap(~key, scales = "free")
+```
+
+## Fit a new model
+
+```{r}
+budgets_m2<-lm(log(exp_police_pc) ~
+                 log(rev_prop_tax_pc) + 
+                 violent.crime.high +
+                 segregation.bw.high,
+               data = budgets)
+
+tidy(budgets_m2)
+```
+
+## Check the model assumptions
+
+2. Constant error variance (Homoskedasticity): $V(\varepsilon|X)=V(\varepsilon)$
+
+```{r fig.height=3}
+plot(budgets_m2$model$`log(rev_prop_tax_pc)`, budgets_m2$residuals,
+     xlab = "log Property taxes", ylab = "epsilon")
+abline(0,0)
+```
+
+## Interpreting the model (descriptive)
+
+```{r}
+tidy(budgets_m2)
+```
+
+We predict that for counties in this sample with similar levels of property taxes, high segregation counties generally spend more on police than do low segregation counties: 95\% CI: $e^{\hat{\beta} \pm z_{\alpha/2} \times SE_\beta =}$ [`r  round((exp(tidy(budgets_m2)$estimate[4]-1.96*tidy(budgets_m2)$std.error[4])-1),2)`, `r round((exp(tidy(budgets_m2)$estimate[4]+1.96*tidy(budgets_m2)$std.error[4])-1),2)`] 
+
+## Interpreting the model using prediction (simulation)
+
+```{r}
+## create possible values for prediction
+rev_prop_tax_pc<-seq(from = quantile(budgets$rev_prop_tax_pc, 0.05), 
+              to = quantile(budgets$rev_prop_tax_pc, 0.95), 
+              length.out = 1000)
+
+violent.crime.high<-c(T,F)
+segregation.bw.high<-c(T,F)
+
+## make all combinations possible
+
+new_dat<-expand_grid(rev_prop_tax_pc, violent.crime.high, segregation.bw.high)
+## calculate predictions
+preds<-as.data.frame(predict(budgets_m2, 
+                             newdata = new_dat,
+                             interval = "confidence"))
+new_dat<-new_dat %>% 
+  mutate(yhat = preds$fit, yhat_lwr = preds$lwr, yhat_upr = preds$upr)
+```
+
+## Interpreting the model using prediction (simulation). Police spending by property tax revenue, segregation, and violent crime levels (high = T,F)
+
+```{r echo = F}
+ggplot(new_dat,
+       aes(x=rev_prop_tax_pc,
+           y = exp(yhat),
+           ymin=exp(yhat_lwr), 
+           ymax=exp(yhat_upr),
+           fill = segregation.bw.high)) + 
+  geom_ribbon(alpha = 0.7) + 
+  facet_wrap(~violent.crime.high)
+```
+
+## Interpretation in this context
+
+- These results are not the causal effect of segregation or of property taxes! We've made no effort to address unmeasured confounders of property taxes, segregation, and police spending (there are many!) \pause
+- They do provide information on the direction, magnitude, and precision of relationships in the observed data \pause
+- In these cases, higher property taxes tend to mean higher police spending. Levels of spending tend to be higher in segregated counties. \pause
+
+## Interpretation in this context
+
+- Confidence intervals provide us with information about the precision of the estimated relationship \pause
+- Don't over-interpret $\beta$: focus on direction (+/-), magnitude (big, little), precision (noisy, consistent) \pause
+- Think about how predictors move together in the real data to constrain your predictions and make them more reasonable. Predictors are correlated!
+
+## Homework 
+
+- HW 11 is in the mother-wage-penalty folder, along with the data you need for the exercise
+- Please complete the course eval if you haven't
