@@ -22,11 +22,11 @@ This is the course syllabus for Introduction to Statistics, Fall 2023. It is a g
 1. Introduce students to statistical computing through the R programming language
 2. Introduce core concepts in probability and statistics
 
-## Book
+## Books
 
-- Imai, Kosuke and Nora Webb Williams. Quantitative Social Science: An Introduction in tidyverse. Princeton: Princeton University Press, 2022.
+- Required: Imai, Kosuke and Nora Webb Williams. Quantitative Social Science: An Introduction in tidyverse. Princeton: Princeton University Press, 2022.
 
-- Alexander, Rohan. Telling Stories with Data. 2023. Available free online at https://tellingstorieswithdata.com/ or print via retailers.
+- Recommended: Alexander, Rohan. Telling Stories with Data. 2023. Available free online at https://tellingstorieswithdata.com/ or print via retailers.
 
 ## Communication
 
@@ -66,7 +66,7 @@ Lastly, I recommend learning some form of version control to ensure your work is
 
 ## Assignments and grading
 
-Course grading is based in part on homework assignments (70%) and in part on a final project (30%). 
+Course grading is based in part on homework assignments (50%) and in part on a final project we will develop incrementally through the semester (50%). 
 
 ### Homeworks
 
@@ -79,19 +79,19 @@ Homework should be uploaded to canvas.
 I expect to see your code, code output, and your interpretations of the results for each question. Please submit your homework as two files in both a compiled .html and raw .Rmd file. 
 
 ## Course schedule, topics, and readings
-
-|9/5| Introduction, math review | Imai 1 (all), Alexander 1 (include recommended readings)|
-|9/12| Causality (1) | Imai 2.1-2.5, Alexander 2|
-|9/19| Causality (2) | Imai 2.5 -2.7, Alexander 3| 
-|9/26| Measurement (1) | Imai 3.1-3.4, Alexander 4|
-|10/3| Measurement (2) | Imai 3.5-3.8, Alexander 5|
-|10/10| Prediction (1) | Imai 4.1-4.2, Alexander 6|
-|10/17| Prediction (2) | Imai 4.3-4.4, Alexander 7| 
-|10/24| Discovery (1) | Imai 5.1-5.2, Alexander 8|
-|10/31| Discovery (2) | Imai 5.3-5.4, Alexander 9|
-|11/7| Probability (1) | Imai 6.1-6.2, Alexander 10|
-|11/14| Probability (2) | Imai 6.3-6.5, Alexander 11|
-|11/21| Uncertainty (1) | Imai 7.1-7.2, Alexander 12| 
-|11/28| No class, University break |  |
-|12/5| Uncertainty (2) | Imai 7.3-7.4, Final Project due|
+|Date|Topic|Reading|Assignments|
+|9/5| Introduction, math review | required: Imai 1 (all), recommended: Alexander 1| HW 1 |
+|9/12| Causality (1) | req: Imai 2.1-2.5, rec: Alexander 2| HW 2 |
+|9/19| Causality (2) | req: Imai 2.5 -2.7, rec: Alexander 3| HW 3, Final Project 1|
+|9/26| Measurement (1) | req: Imai 3.1-3.4, rec: Alexander 4| HW 4|
+|10/3| Measurement (2) | req: Imai 3.5-3.8, rec: Alexander 5| HW 5, Final Project 2|
+|10/10| Prediction (1) | req: Imai 4.1-4.2, rec: Alexander 6| HW 6|
+|10/17| Prediction (2) | req: Imai 4.3-4.4, rec: Alexander 7| HW 7, Final Project 3 |
+|10/24| Discovery (1) | req: Imai 5.1-5.2, rec: Alexander 8| HW 8 |
+|10/31| Discovery (2) | req: Imai 5.3-5.4, rec: Alexander 9| HW 9, Final Project 4 |
+|11/7| Probability (1) | req: Imai 6.1-6.2, rec: Alexander 10| HW 10 |
+|11/14| Probability (2) | req: Imai 6.3-6.5, rec: Alexander 11| HW 11 |
+|11/21| Uncertainty (1) | req: Imai 7.1-7.2, rec: Alexander 12| HW 12 |
+|11/28| Uncertainty (2) | req: Imai 7.3-7.4| HW 13, Final Project 5|
+|12/5| Reflections and moving forward | | Final Project due |
 

@@ -8,7 +8,10 @@ output: html_document
 **Remember: show your code!**
 
 ```{r}
-### this is a comment inside of a code chunk. You can use command + option + i  or ctrl + alt + i to generate a code chunk. Click 'knit' above (or cmd + shift + k) to see the html output file.
+# this is a comment inside of a code chunk. 
+# you should use comments to explain what your code does
+# You can use command + option + i  or ctrl + alt + i to generate a code chunk. 
+# Click 'knit' above (or ctrl (cmd on mac) + shift + k) to see the html output file.
 
 2 + 2
 
@@ -23,47 +26,18 @@ a^b
 
 2. Confirm you have the needed packages installed by loading the `tidyverse` package. Install (if needed) and load the `gapminder` package
 
-```{r}
-library(tidyverse)
-library(gapminder)
-```
+Create a new code chunk with the hotkey ctrl (or cmd on mac) + shift + I, then load these libraries inside the chunk. 
 
 3. Create a new variable in the tibble `gapminder` called `pop1000` that is equal to the population of a country in 1,000s of people (`pop/1000`).
 
-```{r}
-gapminder$pop1000 <- gapminder$pop / 1000
-```
+Create a new code chunk with the hotkey ctrl (or cmd on mac) + shift + I, then write your code for this operation inside the chunk.
 
 4. Compute the mean life expectancy for all observations in the dataset
 
-```{r}
-mean(gapminder$lifeExp)
-```
-
 5. Use the `unique()` function to list all of the countries with observations in the `gapminder` tibble. 
 
-```{r}
-unique(gapminder$country)
-```
+6. Create a scatterplot (using ggplot) showing `lifeExp` on the y axis and `gdpPercap` on the x axis. 
 
-6. Create a scatterplot (using ggplot) showing `lifeExp` on the y axis and `gdpPercap` on the x axis. Provide a brief interpretation of your plot.
-
-```{r}
-ggplot(gapminder, 
-       aes(x = gdpPercap,
-           y = lifeExp)) + 
-  geom_point()
-```
-
-This plot shows that countries with higher levels of economic output, as measured by GDP per capita, tend to have much higher life expectancies than countries with lower levels of economic output. 
+Provide a brief interpretation of your plot outside of the code chunk. Knit your document to confirm that it looks ok.
 
 7. Reproduce the plot from 6, but instead, plot `log(gdpPercap)` on the x axis. Provide a brief interpretation of your plot.
-
-```{r}
-ggplot(gapminder, 
-       aes(x = log(gdpPercap),
-           y = lifeExp)) + 
-  geom_point()
-```
-
-We see here that the relationship between GDP per capita and life expectancy is approximately linear after a log transformation of GDP per capita (log-linear for short). This suggests that small increases in GDP per capita when GDP per capita is low are associated with large increases in life expectancy. When GDP per capita is high, we see relatively smaller increases in life expectancy as GDP per capita increases. In other words, the relationship between economic output and life expectancy is positive, but non-linear. 

@@ -43,81 +43,17 @@ Name                        Description
 
 Begin by loading the data into R and explore the data. How many cases are there in the data? Run summary() to get a sense of things. In how many cases is the tester black? In how many cases is he white?
 
-```{r include = F}
-library(tidyverse)
-```
-
-
-
-```{r message = F}
-dat<-read_csv("criminalrecord.csv")
-
-nrow(dat)
-
-summary(dat)
-
-table(dat$black)
-```
-
-
 ## Question 2  
 
 Now we examine the central question of the study. Calculate the proportion of callbacks for white applicants with and without a criminal record, and calculate this proportion for black applicants with and without a criminal record.
-
-```{r}
-results<-dat %>% 
-  group_by(black, crimrec) %>% 
-  summarize(callback = mean(callback)) %>% 
-  ungroup()
-```
 
 ## Question 3
 
 What is the difference in callback rates between individuals with and without a criminal record within each race. What do these specific results tell us?  Consider both the difference in callback rates and the ratio of callback rates for the subjects with criminal records and those without within each racial group.
 
-```{r}
-black_results<-results %>% 
-  filter(black==1)
-
-br_treatment<-black_results %>% 
-  filter(crimrec==1) %>% 
-  select(callback)
-
-br_control<-black_results %>% 
-  filter(crimrec==0) %>% 
-  select(callback)
-
-### the effect is 
-br_treatment - br_control
-
-## the ratio is 
-1 - br_treatment / br_control
-```
-
-```{r}
-white_results<-results %>% 
-  filter(black!=1)
-
-wr_treatment<-white_results %>% 
-  filter(crimrec==1) %>% 
-  select(callback)
-
-wr_control<-white_results %>% 
-  filter(crimrec==0) %>% 
-  select(callback)
-
-### the effect is 
-wr_treatment - wr_control
-## the proportion difference
-1 - wr_treatment / wr_control
-```
-
-
 ## Question 4
 
 Compare the callback rates of whites *with* a criminal record versus blacks *without* a criminal record. What do we learn from this comparison?
-
-Wow that's messed up
 
 ## Question 5
 

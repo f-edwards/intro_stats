@@ -5,39 +5,17 @@ output:
   pdf_document: default
 ---
 
-Across industrialized countries, it is a well-studied phenomenon 
-that childless women are paid more on average than mothers. In this exercise, 
-we use survey data to investigate how the structural aspects of jobs affect 
-the wages of mothers relative to the wages of childless women.
+Across industrialized countries, it is a well-studied phenomenon  that childless women are paid more on average than mothers. In this exercise,  we use survey data to investigate how the structural aspects of jobs affect the wages of mothers relative to the wages of childless women.
 
-The exercise is based on: Wei-hsin Yu and J
-anet Chen-Lan Kuo. 2017. [The Motherhood Wage Penalty by Work 
-Conditions: How Do Occupational Characteristics Hinder or 
-Empower Mothers?](https://doi.org/10.1177/0003122417712729)" 
-*American Sociological Review* 82(4): 744-769.
+The exercise is based on: Wei-hsin Yu and Janet Chen-Lan Kuo. 2017. [The Motherhood Wage Penalty by Work Conditions: How Do Occupational Characteristics Hinder or Empower Mothers?](https://doi.org/10.1177/0003122417712729)" *American Sociological Review* 82(4): 744-769.
 
-In this paper, the authors examine the association between 
-the so-called *mother wage penalty* (i.e., the pay gap between mothers 
-and non-mothers) and occupational characteristics. Three prominent 
-explanations for the motherhood wage penalty--"stressing work-family conflict 
-and job performance," "compensating differentials," and "employer 
-discrimination"--provide hypotheses about the relationship 
-between penalty changes and occupational characteristics.
-The authors use data from 16 waves of the National Longitudinal 
-Survey of Youth to estimate the effects of five occupational 
-characteristics on the mother wage penalty and to test these 
-hypotheses. 
+In this paper, the authors examine the association between the so-called *mother wage penalty* (i.e., the pay gap between mothers and non-mothers) and occupational characteristics. Three prominent explanations for the motherhood wage penalty--"stressing work-family conflict and job performance," "compensating differentials," and "employer discrimination"--provide hypotheses about the relationship between penalty changes and occupational characteristics.
+The authors use data from 16 waves of the National Longitudinal Survey of Youth to estimate the effects of five occupational characteristics on the mother wage penalty and to test these hypotheses. 
 
-This paper uses a type of data known as 'panel data.' Panel data consist of 
-observations on the same people over time. In this example, we are going to 
-analyze the same women over multiple years. When analyzing panel data, each 
-time period is referred to as a *wave*, so here each year is a wave. 
-The most general form of model for working with panel data is the 
-*two-way fixed effects model*, in which there is a fixed effect each 
-woman and for each wave.
+This paper uses a type of data known as 'panel data.' Panel data consist of observations on the same people over time. In this example, we are going to analyze the same women over multiple years. When analyzing panel data, each 
+time period is referred to as a *wave*, so here each year is a wave. The most general form of model for working with panel data is the *two-way fixed effects model*, in which there is a fixed effect each woman and for each wave.
 
-The data file is `yu2017sample.csv`, which is a CSV file. The names 
-and descriptions of variables are:
+The data file is `yu2017sample.csv`, which is a CSV file. The names and descriptions of variables are:
 
  -------------------------------------------------------------------------------
  Name                 Description
@@ -89,45 +67,32 @@ and descriptions of variables are:
  `teamwork`           Teamwork requirements measure for the job (between 1 and 5)
  -------------------------------------------------------------------------------
 
-## Question 1
-
-What years are included in the data?  How many women are included, and how
-many person-years are included? Briefly comment on the results.
-
 ```{r}
 library(tidyverse)
 yu<-read_csv("https://raw.githubusercontent.com/f-edwards/intro_stats/master/data/yu2017sample.csv")
 ```
 
+## Question 1
 
+What years are included in the data?  How many women are included, and how many person-years are included? Briefly comment on the results.
 
 ## Question 2
 
-Create a new variable called `logwage` that is the log of `wage`. 
-Explain why it might be important to use such a variable
-in the study at hand. Calculate and comment on the correlations 
-between `logwage`, `numChildren`, `experience`, and at least two other 
-continuous variables in the data, e.g., `competitiveness`, `autonomy`,
+Create a new variable called `logwage` that is the log of `wage`. Explain why it might be important to use such a variable in the study at hand. Calculate and comment on the correlations  between `logwage`, `numChildren`, `experience`, and at least two other  continuous variables in the data, e.g., `competitiveness`, `autonomy`,
 `teamwork`.
-
-```{r}
-cor(log(yu$wage), yu$experience, use = "complete.obs")
-```
 
 
 ## Question 3
 
 Run a model that includes factor(region) + factor(year) as predictors, (this is called a fixed-effects model)  where the outcome is the log wage and the predictor is the number of children that a woman has. Briefly interpret the meaning of these estimated parameters.
 
-Add `numChildren` as a predictor of `logwage` in your model. What is the estimated coefficient on the variable `numChildren`? Provide a brief substantive interpretation of the 
-coefficient.
+Add `numChildren` as a predictor of `logwage` in your model. What is the estimated coefficient on the variable `numChildren`? Provide a brief substantive interpretation of the coefficient.
 
 ## Question 4
 
 What is the standard error of the coefficient for `numChildren`?
 
-What is the value of the estimate divided by the standard error 
-and what does that mean?  
+What is the value of the estimate divided by the standard error and what does that mean?  
 
 If you have the null hypothesis that this coefficient is equal to zero, would you reject the null hypothesis when $\alpha = 0.05$? 
 
@@ -147,7 +112,4 @@ Introduce the following variables in the regression model:
 * Job Characteristics (`fullTime`, `firmSize`, `multipleLocations`, `unionized`, 
   `industry`)
   
-Report the coefficient and standard error of `numChildren` now. Is
-the coefficient statistically significant? Provide a brief substantive
-interpretation of this coefficient and the coefficients for any two
-other variables.
+Report the coefficient and standard error of `numChildren` now. Is the coefficient statistically significant? Provide a brief substantive interpretation of this coefficient and the coefficients for any two other variables.
