@@ -2,10 +2,12 @@
 layout: default
 ---
 
-| Intermediate Statistics   | 27:202:542 |  
+| Introduction to Statistics   | 27:202:542 |  
 | Lecture: Tuesday, 1:00-3:40PM   | Room: HIL 215 |
+| Instructor: Frank Edwards | frank.edwards@rutgers.edu|
 | Office hours: Monday, 10:00-12:00 | Room: CLJ 547 |
-| TA: Chloe Sudduth | Office hours: TBA | 
+| TA: Chloe Sudduth | cms722@newark.rutgers.edu |
+| Office hours: TBA | Room: TBA | 
 
 ## Quick links
 
@@ -66,7 +68,7 @@ Lastly, I recommend learning some form of version control to ensure your work is
 
 ## Assignments and grading
 
-Course grading is based in part on homework assignments (50%) and in part on a final project we will develop incrementally through the semester (50%). 
+Course grading is based in part on homework assignments (50%) and in part on a final project we will develop incrementally through the semester (50%). Guidelines for the final project will be provided for you during the second week of class.
 
 ### Homeworks
 
@@ -79,19 +81,20 @@ Homework should be uploaded to canvas.
 I expect to see your code, code output, and your interpretations of the results for each question. Please submit your homework as two files in both a compiled .html and raw .Rmd file. 
 
 ## Course schedule, topics, and readings
-|Date|Topic|Reading|Assignments|
-|9/5| Introduction, math review | required: Imai 1 (all), recommended: Alexander 1| HW 1 |
-|9/12| Causality (1) | req: Imai 2.1-2.5, rec: Alexander 2| HW 2 |
-|9/19| Causality (2) | req: Imai 2.5 -2.7, rec: Alexander 3| HW 3, Final Project 1|
-|9/26| Measurement (1) | req: Imai 3.1-3.4, rec: Alexander 4| HW 4|
-|10/3| Measurement (2) | req: Imai 3.5-3.8, rec: Alexander 5| HW 5, Final Project 2|
-|10/10| Prediction (1) | req: Imai 4.1-4.2, rec: Alexander 6| HW 6|
-|10/17| Prediction (2) | req: Imai 4.3-4.4, rec: Alexander 7| HW 7, Final Project 3 |
-|10/24| Discovery (1) | req: Imai 5.1-5.2, rec: Alexander 8| HW 8 |
-|10/31| Discovery (2) | req: Imai 5.3-5.4, rec: Alexander 9| HW 9, Final Project 4 |
-|11/7| Probability (1) | req: Imai 6.1-6.2, rec: Alexander 10| HW 10 |
-|11/14| Probability (2) | req: Imai 6.3-6.5, rec: Alexander 11| HW 11 |
-|11/21| Uncertainty (1) | req: Imai 7.1-7.2, rec: Alexander 12| HW 12 |
-|11/28| Uncertainty (2) | req: Imai 7.3-7.4| HW 13, Final Project 5|
-|12/5| Reflections and moving forward | | Final Project due |
+|Date|Topic|Reading|HW|
+|----|-----|-------|--|
+|9/5| Introduction, math review | required: Alexander 1| HW 1 |
+|9/12| Introduction, R |required: Imai 1 (all), recommended: Alexander 2| HW 2 | 
+|9/19| Causality (1) | req: Imai 2.1-2.4, rec: Alexander 3| HW3 |
+|9/26| Causality (2) | req: Imai 2.5-2.7, rec: Alexander 4| HW 4, Final Project 1|
+|10/3| Measurement (1) | req: Imai 3.1-3.4, rec: Alexander 5| HW 5|
+|10/10| Measurement (2) | req: Imai 3.5-3.9, rec: Alexander 6| HW 6, Final Project 2|
+|10/17| Prediction (1) | req: Imai 4.1-4.2, rec: Alexander 7| HW 7|
+|10/24| Prediction (2) | req: Imai 4.3-4.5, rec: Alexander 8| HW 8, Final Project 3 |
+|10/31| Probability (1) | req: Imai 6.1-6.2, Alexander 9| HW 9 |
+|11/7| Probability (2) | req: Imai 6.3-6.5, rec: Alexander 10| HW 10, Final Project 4 |
+|11/14| Uncertainty (1) | req: Imai 7.1-7.2, rec: Alexander 11| HW 11 |
+|11/21| Uncertainty (2) | req: Imai 7.3-7.4, rec: Alexander 12| HW 12 |
+|11/28| Looking forward (1) | | |
+|12/5| Final Project Presentations | | Final Project due|
 
