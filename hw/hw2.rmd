@@ -1,0 +1,14 @@
+---
+title: "HW 2"
+author: "Frank"
+date: "YOUR DATE HERE"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(nycflights13)
+```
+
+1. Read chapter 5 of R for Data Science, Wickham (https://r4ds.had.co.nz/transform.html)
+2. Complete the following exercises: 5.2.4 (Question 1); 5.3.1 (all); 5.4.1 (Questions 1 and 2); 5.5.2 (Questions 1-5); 5.6.7 (Question 5); 5.7.1 (Questions 1, 2, 3, 4, 7)
