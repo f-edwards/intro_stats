@@ -81,6 +81,7 @@ Homework should be uploaded to canvas.
 I expect to see your code, code output, and your interpretations of the results for each question. Please submit your homework as two files in both a compiled .html and raw .Rmd file. 
 
 ## Course schedule, topics, and readings
+
 |Date|Topic|Reading|HW|
 |----|-----|-------|--|
 |9/5| Introduction, math review | required: Alexander 1| HW 1 |
