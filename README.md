@@ -1,1 +1,1 @@
-This is the course page for Introduction to Statistics, Fall 2020. It is a graduate level introduction to conducting quantitative social science research, and is the first part of a two-semester sequence. 
+This is the course page for Introduction to Statistics, Fall 2024. It is a graduate level introduction to conducting quantitative social science research, and is the first part of a two-semester sequence. 
