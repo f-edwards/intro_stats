@@ -14,3 +14,4 @@ Write a new R script titled HW1.R for this assignment. Please email me your vers
 - Set popcorn equal to popcorn plus 3.8
 - Compute the square of popcorn
 - Add a code comment briefly explaining what happened to popcorn there!
+- Read Alexander Ch 1 and OpenIntro Ch 1 (this isn't a coding task)
