@@ -101,26 +101,26 @@ Life happens. All students are granted two free extensions on homework, no quest
 
 Reading: Alexander Ch1; OI 1
 
-- 9/5: Lecture - Introduction to the course and math review 1
+- 9/5: Lab - Introduction to the course and intro to R
 	- Review the syllabus and course format
-    - Algebra: order of operations, exponents and logarithms, polynomials, plotting functions on a cartesian plane
-    - Linear algebra: vectors and matrices, scalar operations
-
+	- Installation and FOSS principles
+    - Familiarizing yourself with the RStudio workspace
+    - File formats: R Scripts, RMarkdown
+    - R: basic math operations, creating atomic objects
+    
 - HW 1: Due 9/9 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw1.Rmd)
 
 **Week 2**
 
 Reading: OI 2; Healy 1 and 2
 
-- 9/10: Lecture - Math review 2
+- 9/10: Lecture - Math review 
+	- Algebra: order of operations, exponents and logarithms, polynomials, plotting functions on a cartesian plane
+    - Linear algebra: vectors and matrices, scalar operations
 	- Functions and limits
 	- The basics of derivitaves and integrals
 
-- 9/12: Lab - - Introducing R and RStudio
-    - Installation and FOSS principles
-    - Familiarizing yourself with the RStudio workspace
-    - File formats: R Scripts, RMarkdown
-    - R: basic math operations, creating atomic objects
+- 9/12: Lab - Working with vectors in R  
 	- Vectors, matrices, and data.frames
 	- Indexing
 	- Vector operations
