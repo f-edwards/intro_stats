@@ -35,11 +35,11 @@ For statistics, we will review core mathematical concepts in algebra, linear alg
 
 ## Books
 
-- Open Intro to Statistics
+- Open Intro to Statistics. 2019. https://www.openintro.org/book/os/
 
-- Healy, Data Visualization
+- Healy, Data Visualization. 2018. https://socviz.co/
 
-- Alexander, Rohan. Telling Stories with Data. 2023. Available free online at https://tellingstorieswithdata.com/ or print via retailers.
+- Alexander, Rohan. Telling Stories with Data. 2023. https://tellingstorieswithdata.com/ 
 
 ## Communication
 
