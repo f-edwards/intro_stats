@@ -1,10 +1,7 @@
 ---
 title: "2: Foundational math for statistics"
-format: 
-  revealjs:
-    incremental: true
-execute: 
-  echo: true
+author: "Frank Edwards"
+output: binb::metropolis
 ---
 
 # Welcome back: math time!
@@ -219,11 +216,11 @@ The equation for a line is $y = mx + b$
 
 The slope is computed as $m = \frac{y2-y1}{x2-x1}$
 
-The y intercept is $ b = y_1 - m \cdot x_1$
+The y intercept is $b = y_1 - m \cdot x_1$
 
-1. (2,3), (5,6)
-2. (-2,4), (0, 2)
-3. (10, 12), (-5, -2)
+1. $(2,3), (5,6)$
+2. $(-2,4), (0, 2)$
+3. $(10, 12), (-5, -2)$
 
 # Functions
 
@@ -323,7 +320,7 @@ Compute the following by hand, and then in R
 
 $$\sum_{x=3}^8 (x+1)$$
 
-$$\sum_{x=1}^4 2x $$
+$$\sum_{x=1}^4 2x$$
 
 ## Exercises (solutions)
 
@@ -335,7 +332,7 @@ x<-3:8 # or c(3, 4, 5, 6, 7, 8)
 sum(x+1)
 ```
 
-$$\sum_{x=1}^4 2x $$
+$$\sum_{x=1}^4 2x$$
 
 ```{r eval = F}
 x<-c(1, 2, 3, 4) # or 1:4
