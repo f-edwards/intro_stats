@@ -187,7 +187,7 @@ Create a new vector (any name is fine) that contains the elements 4, 6, 22, 3, 5
 - Access the 3rd element of your vector
 - Use the `length` function to see how long your vector is
 - Use the `mean` function to compute the mean of your vector
-- Use `sum` to compute sum; confirm that this is equal to mean / length
+- Use `sum` to compute sum; confirm that this is equal to mean * length
 
 ## Data frames 
 
@@ -301,7 +301,7 @@ Using `iris`
 - Compute the sum of all petal lengths
 - Compute the mean sepal width
 - How many rows are in the data frame? 
-= How many columns? 
+- How many columns? 
 
 ## Introducing Tidyverse
 
