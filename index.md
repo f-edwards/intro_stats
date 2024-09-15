@@ -130,13 +130,13 @@ Reading: OI 2; Healy 1 and 2
 
 **Week 3**
 
-Reading: OI 3; Healy 3; Alexander 2 (recommended)
+Reading: OI 3
 
 - 9/17: Lecture - Probability 
 	- Making probability statements, computing probabilities (marginal, conditional, joint)
 	- Basics of set theory
 
-- 9/19: Lab - Introduction to visualization with ggplot2
+- 9/19: Lab - group_by and ggplot basics
 	- Theory: grammar of graphics
 	- Importing tabular data
 	- Basic univariate visuals: densities, histograms, barplots
@@ -147,7 +147,7 @@ Reading: OI 3; Healy 3; Alexander 2 (recommended)
 
 **Week 4**
 
-Reading: OI 4; Alexander 3 (recommended)
+Reading: OI 4; Alexander 2, 3 (recommended)
 
 
 - 9/24: Random variables and moments
