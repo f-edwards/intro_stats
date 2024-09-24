@@ -1,0 +1,607 @@
+---
+title: "Probability, 2"
+author: "Frank Edwards"
+output: binb::metropolis
+---
+
+```{r setup, include=FALSE}
+rm(list=ls())
+library(tidyverse)
+library(pander)
+library(qss)
+
+options(xtable.comment = FALSE)
+theme_set(theme_bw())
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, tidy = F, size = "tiny")
+```
+
+# Three kinds of probability
+
+## Joint probability
+
+The joint probability of two events (A and B) occurring is expressed as
+
+\[P(A \textnormal{ and } B)\]
+
+## Marginal probability
+
+The marginal probability of an event B is 
+
+\[P(B)\]
+
+## Conditional probability
+
+The conditional probability of event $A$ occurring given that event $B$ occurred is the ratio of the joint probability of A and B divided by the marginal probability of B
+
+\[P(A|B) = \frac{P(A \textnormal{ and } B)}{P(B)}\]
+
+# Working with some real data
+
+## Voter files
+
+```{r}
+data("FLVoters")
+voters<-na.omit(FLVoters)
+head(voters)
+```
+
+## Marginal probability
+
+What is the probability that a randomly sampled voter in the population is Black: $P(Black) = ?$
+
+```{r}
+voters %>% 
+  count(race, name = "voters") %>% 
+  mutate(p = voters/sum(voters))
+```
+
+Is a woman: $P(Woman)= ?$
+
+```{r}
+voters %>% 
+  count(gender) %>% 
+  mutate(n = n/sum(n))
+```
+
+## Joint probability
+
+What is the probability that a voter is a Black woman: $P(\textnormal{Black and woman}) = ?$
+
+```{r}
+voters %>% 
+  count(gender, race) %>% 
+  mutate(n = n/sum(n)) %>% 
+  pivot_wider(names_from = gender, values_from = n)
+```
+
+## What is the probability that a voter is a woman? 
+
+```{r echo = FALSE}
+voters %>% 
+  count(gender, race) %>% 
+  mutate(n = n/sum(n)) %>% 
+  pivot_wider(names_from = gender, values_from = n)
+```
+
+Use the law of total probability:
+
+\[P(A) = P(A \textnormal{ and } B) + P(A \textnormal{ and not } B)\]
+
+put differently, for all categories of B $i$:
+
+\[P(A) = \sum_{i=1}^n{P(A \textnormal{ and } B_i)}\]
+
+## Conditional probability
+
+If a voter is a man, what is the probability that he is Asian: $P(\textnormal{Asian|man})= ?$
+
+```{r}
+voters %>% 
+  filter(gender=="m") %>% 
+  count(race) %>% 
+  mutate(n=n/sum(n))
+```
+
+## Conditional probability
+
+Alternatively, we can use the definition of conditional probability as the ratio of the joint probability to the marginal probability: 
+
+\[P(\textnormal{Asian|man}) = \frac{P(\textnormal{Asian and man})}{P(\textnormal{man})}\]
+
+```{r}
+voters %>% 
+  count(gender, race) %>% 
+  mutate(n = n/sum(n))%>% 
+  pivot_wider(names_from = gender, values_from = n)
+```
+
+## Conditioning on more than one variable
+
+What is the probability that a male voter over age 60 is white?
+
+\[P(\textnormal{white|male and over 60)}\]
+
+```{r}
+voters %>% 
+  mutate(over60=age>60) %>% 
+  count(over60, gender, race) %>% 
+  mutate(n=n/sum(n)) %>% 
+  pivot_wider(names_from = gender, values_from = n) 
+
+```
+
+```{r}
+#P(black and male) = .0566
+#P(black) = 0.0744 + 0.0566
+#P(male) = 0.0101 + 0.0566 + 0.0577 + 0.00132 + 0.0167 + 0.322
+p_b<-0.0744 + 0.0566
+p_m<-0.0101 + 0.0566 + 0.0577 + 0.00132 + 0.0167 + 0.322
+```
+
+
+## Conditioning on more than one variable
+
+In general:
+
+\[P(A \textnormal{ and }B|C) = \frac{P(A \textnormal{ and } B \textnormal{ and } C)}{P(C)}\]
+
+and 
+
+\[P(A|B \textnormal{ and }C) = \frac{P(A \textnormal{ and } B \textnormal{ and } C)}{P(B \textnormal{ and } C)}\]
+
+## Independence
+
+Two events are independent if knowledge of one event gives us no information about the other event. 
+
+$P(A|B)=P(A)$ and $P(B|A)=P(B)$
+
+\[ A \perp B \] 
+
+if and only if 
+
+\[P(A \textnormal{ and } B) = P(A)P(B)\]
+
+## Bayes' rule
+
+Recall that a Bayesian perspective treats probability as a subjective opinion about how likely an event is. How should we change our beliefs after we make observations about the world? \pause
+
+Bayes' rule formalizes how we should update our beliefs based on evidence:
+
+\[P(A|B) = \frac{P(B|A)P(A)}{P(B)}\]
+
+\pause
+
+## Prior beliefs and evidence
+
+If we have a *prior* belief that event A has $P(A)$ chance of occurring, then we observe some data, represented as event $B$, we update our beliefs and obtain a *posterior probability* $P(A|B)$. 
+
+\[P(A|B) = \frac{P(B|A)P(A)}{P(B)}\]
+
+## Example: Detecting breast cancer
+
+How good is a mammogram at detecting breast cancer? 
+
+What we know: One percent of women have breast cancer. 80 percent of people who have cancer and take a mammogram test positive. 9.6 percent of people who take a mammogram get a positive result when they do not have breast cancer.  \pause
+
+If you take a mammogram and get a positive result, what is the probability that you have breast cancer?
+
+## Rewriting as probabilities
+
+One percent of women have breast cancer
+
+\[P(\textnormal{Cancer}) = 0.01\] \pause
+
+80 percent of people who have cancer and take a mammogram test positive
+
+\[P(\textnormal{Test positive|Cancer}) = 0.8\] \pause
+
+9.6 percent of people who take a mammogram get a positive result when they do not have breast cancer
+
+\[P(\textnormal{Test positive|No cancer}) = 0.096\]
+
+## Using Bayes' rule
+
+The prior probability of having cancer is 0.01. How should we update our belief that someone has cancer based on a positive test?
+
+\[P(A|B) = \frac{P(B|A)P(A)}{P(B)}\]
+
+Using the law of total probability, we can rewrite the denominator as:
+
+\[P(B) = P(B|A)P(A) + P(B|\textnormal{ not A})P(\textnormal{not }A)\]
+
+## Using Bayes' rule
+
+We can apply Bayes' rule for A = Cancer, B = positive test:
+
+\[P(\textnormal{Cancer|Test positive})=\] 
+
+\[\frac{P(\textnormal{Test positive|Cancer})P(\textnormal{Cancer})} {P(\textnormal{Test positive)}}\]
+
+\[P(\textnormal{Cancer|Test positive})=\frac{0.8 \times 0.01}{0.8 \times 0.01 +  0.096 \times 0.99}\]
+
+```{r}
+(0.8 *  0.01)/(0.8 *  0.01 + 0.096 * 0.99)
+```
+
+The probability that someone has cancer given a prior probability of one percent and a positive test is about 0.078. What would the probability of a true positive be if the test were more sensitive? Say 0.95?
+
+# Random Variables
+
+## Random Variables
+
+- Random variables assign values to events \pause
+- Each value is mutually exclusive \pause
+- The set of all values is exhaustive (the sample space $\Omega$) \pause
+- Discrete random variables take a finite number of values (e.g. TRUE, FALSE) \pause
+- Continuous random variables are real numbers, and take on an infinite number of values 
+
+## The simplest random variable: the binary Bernoulli
+
+Any random variable with two values is called a Bernoulli random variable. \pause
+
+Bernoulli (binary) variables are typically represented as $[0,1]$ or $[T,F]$. They can also be two-level character variables, like $[\textsf{pass, fail}]$ or $[\textsf{plaid, stripes}]$.
+
+## A coin flip as a Bernoulli random variable
+
+A coin flip can be defined as a discrete random variable $X$ \pause
+
+- If the coin lands on heads, $X=1$
+- If the coin lands on tails, $X=0$ \pause
+
+The probability of a Bernoulli variable is the probability of success, or $X=1$ \pause
+
+$P(X=1) = p$
+
+## Random variable (probability distribution) notation
+
+\[X \sim Bernoulli(p)\] \pause
+
+Reads: X is a Bernoulli distributed random variable with probability p \pause
+
+In this notation, we name the variable $X$, note that it is randomly distributed $\sim$, name the distribution it follows $Bernoulli$, and list the parameters for that distribution $p$.
+
+## Let's flip some coins
+
+```{r}
+set.seed(12345)
+sample_of_flips<-rbinom(5, 1, 0.5)
+table(sample_of_flips)
+```
+\pause
+
+This is the result of taking 5 draws from a Bernoulli random variable with probability $0.5$. 
+
+## Describing a probability distribution: probability mass
+
+We use a probability mass function to show how likely each value is in a random variable
+
+The probability mass function (PMF) of a variable $X$ is defined as the probability that a variable takes on a particular value $x$. 
+
+\[PMF(x) = P(X=x)\]
+
+For a Bernoulli variable, $PMF(X=1)=p$ and $PMF(X=0)=1-p$
+
+## The probability mass function for our coin flip
+
+\[PMF(X=1)=p=0.5\]
+
+\[PMF(X=0)=1-p=0.5\]
+
+```{r echo=FALSE, fig.height=3}
+
+temp_dat<-data.frame(x=c("0","1"), p=0.5)
+ggplot(temp_dat, aes(x=x, y=p)) +
+  geom_col()
+
+```
+
+## The probability mass function for passing the bar in NJ (p=0.653)
+
+\[PMF(X=1)=p=0.653\]
+
+\[PMF(X=0)=1-p=0.347\]
+
+```{r echo=FALSE, fig.height=3}
+temp_dat<-data.frame(x=c("0","1"), p=c(0.347,0.653))
+ggplot(temp_dat, aes(x=x, y=p)) +
+  geom_col()
+```
+
+## Describing a probability distribution: cumulative probability
+
+How likely is a variable to take a value less than or equal to a specified value? 
+
+We define the cumulative distribution function as the sum of all probabilities up to a value x
+
+\[CDF(X) = P(X \leq x) = \sum_{k \leq x}^x PMF(k)\]
+
+The CDF always ranges from 0 to 1, and never decreases as $x$ increases. 
+
+
+## Uniform random variables
+
+Uniform random variables have an equal probability of taking any real value within a given interval $[a,b]$. \pause
+
+What does $X \sim Uniform(0,10)$ look like? \pause
+
+## Uniform random variables
+
+Let's simulate it! 10 draws
+
+```{r fig.height=3}
+unif_draws<-runif(10, min=0, max=10)
+unif_draws
+hist(unif_draws, freq=F)
+```
+
+## Uniform random variable: 100 draws
+
+```{r echo=F}
+unif_draws<-runif(100, min=0, max=10)
+hist(unif_draws, freq=F)
+```
+
+## Uniform random variable: 10000 draws
+
+```{r echo=F}
+unif_draws<-runif(10000, min=0, max=10)
+hist(unif_draws, freq=F)
+```
+
+## Properties of uniform random variables
+
+For a uniform random variable on the interval $[a,b]$, the probability of drawing any value between $a$ and $b$ is
+
+\[\frac{1}{b-a}\]
+
+Formally, the PDF (density, not mass for continuous) and CDF are defined as 
+
+\[ \textsf{PDF:}  \begin{cases}
+                  \frac{1}{b - a} & \text{for } x \in [a,b]  \\
+                  0               & \text{otherwise}
+                \end{cases} \]
+                
+ \[\textsf{CDF:} \begin{cases}
+                  0               & \text{for } x < a \\
+                  \frac{x-a}{b-a} & \text{for } x \in [a,b) \\
+                  1               & \text{for } x \ge b
+                \end{cases} \]
+                
+## Probability Density function for $X \sim Uniform(0,10)$
+
+```{r echo = F}
+b<-10; a<-0
+p<-1/(b-a)
+temp_dat<-data.frame(x1=c(-5, 0, 10),
+                     x2=c(0, 10, 15),
+                     y1=c(0, p, 0),
+                     y2=c(0, p, 0))
+ggplot(temp_dat, aes(x=x1, xend=x2, y=y1, yend=y2)) + 
+  geom_segment() + 
+  xlab("x") + 
+  ylab("Density of P(x=X)")
+```
+
+## Cumulative Distribution Function for $X \sim Uniform(0,10)$
+
+```{r echo = F}
+b<-10; a<-0
+p<-1/(b-a)
+temp_dat<-data.frame(x1=c(-5, 0, 10),
+                     x2=c(0, 10, 15),
+                     y1=c(0, 0, 1),
+                     y2=c(0, 1, 1))
+ggplot(temp_dat, aes(x=x1, xend=x2, y=y1, yend=y2)) + 
+  geom_segment() + 
+  xlab("x") + 
+  ylab("P(x<=X)")
+```
+
+## A note on CDF for continuous variables                
+
+Recall that a CDF for a discrete variable is the sum of all probabilities for values $x\leq X$
+
+We can't sum over each value when $X$ is continuous. Instead, we'll take the integral
+
+\[CDF(x) = P(x\leq X) = \int_{-\infty}^x PDF(x) dx \]
+
+## The expectation of a random variable
+
+The expectation of a random variable $E(X)$ is the mean of a random variable. 
+
+Be careful not to confuse $E(X)$ and $\bar{x}$. \pause
+
+For a discrete variable, the expectation is the sum of all values of $x$ weighted by their probability, given by the PDF $f(x)$.
+
+\[E(X) = \sum_x x \times f(x)\]
+
+Because continuous variables take on an infinite number of values, we compute the expectation with an integral
+
+\[\int x \times f(x) dx\]
+
+## Variance and standard deviation of a random variable
+
+The standard deviation $sd$ is
+
+\[sd = \sqrt{\frac{1}{n}\sum_{i=1}^n{(x_i-\bar{x}})^2}\]
+
+And the sample variance is $sd^2$ \pause
+
+For a random variable $X$, the variance is defined via the expectation instead of sample mean
+
+\[V(X) = E[\{X-E(X)\}^2]\] \pause
+
+Note the similarities in the two equations
+
+## The Normal Distribution
+
+The Normal (Gaussian) distribution is continuous, and takes on values from $[-\infty, \infty]$. It has two parameters, the mean $\mu$ and standard deviation $\sigma$ (or variance $\sigma^2$).
+
+- $\mu$ determines the location of the distribution
+- $\sigma$ determines the spread of the distribution
+
+## The Normal PDF
+
+```{r echo = F}
+sequence<-seq(-8,8,0.001)
+n1<-data.frame(x=sequence, y=dnorm(sequence, 0, 1), 
+               name = "Mu=0, sd=1")
+n2<-data.frame(x=sequence, y=dnorm(sequence, 2, 1), 
+               name = "Mu=2, sd=1")
+n3<-data.frame(x=sequence, y=dnorm(sequence, 0, 2), 
+               name = "Mu=0, sd=2")
+
+
+plot_dat<-bind_rows(n1, n2, n3)
+
+ggplot(plot_dat,
+       aes(x = x, y = y, color = name)) + 
+  geom_line() + 
+  ylab("Density of P(X=x)")
+```
+
+## The Normal CDF
+
+```{r echo = F}
+sequence<-seq(-8,8,0.001)
+n1<-data.frame(x=sequence, y=pnorm(sequence, 0, 1), 
+               name = "Mu=0, sd=1")
+n2<-data.frame(x=sequence, y=pnorm(sequence, 2, 1), 
+               name = "Mu=2, sd=1")
+n3<-data.frame(x=sequence, y=pnorm(sequence, 0, 2), 
+               name = "Mu=0, sd=2")
+
+
+plot_dat<-bind_rows(n1, n2, n3)
+
+ggplot(plot_dat,
+       aes(x = x, y = y, color = name)) + 
+  geom_line() + 
+  ylab("Density of P(X=x)")
+```
+
+## Special features of Normal distributions: 
+
+- The sum of many random variables from other distributions are often Normal
+- For $X \sim N(\mu, \sigma^2)$, $Z=X+c$ is also Normal: $Z \sim (\mu +c, \sigma^2)$
+- $Z=cX$ is distributed $Z\sim N(c\mu, (c\sigma)^2)$
+- Z-scores of a Normal random variable are $N(0,1)$
+
+## Area under the curve: interpreting the PDF and CDF
+
+```{r echo = F}
+ggplot(data.frame(x=c(-4,4)), aes(x)) +
+  stat_function(fun=dnorm) 
+```
+
+## Area under the curve: interpreting the PDF and CDF
+
+```{r echo = F}
+ggplot(data.frame(x=c(-4,4)), aes(x)) +
+  stat_function(fun=dnorm) +
+  stat_function(fun=dnorm,
+                xlim=c(-4,0),
+                geom="area",
+                fill="blue",
+                alpha = 0.5)+
+  ggtitle(pnorm(0,0,1))
+```
+
+## Area under the curve: interpreting the PDF and CDF
+
+```{r echo = F}
+ggplot(data.frame(x=c(-4,4)), aes(x)) +
+  stat_function(fun=pnorm) +
+  geom_point(aes(x=0, y=0.5), color = "blue", size=2)
+```
+
+## Area under the curve: interpreting the PDF and CDF
+
+```{r echo = F}
+ggplot(data.frame(x=c(-4,4)), aes(x)) +
+  stat_function(fun=dnorm) +
+  stat_function(fun=dnorm,
+                xlim=c(-4,-1),
+                geom="area",
+                fill="blue",
+                alpha = 0.5) +
+  ggtitle(round(pnorm(-1,0,1),3))
+```
+
+## Area under the curve: interpreting the PDF and CDF
+
+```{r echo = F}
+ggplot(data.frame(x=c(-4,4)), aes(x)) +
+  stat_function(fun=pnorm) +
+  geom_point(aes(x=-1, y=0.159), color = "blue", size=2)
+```
+
+## Z-scores and area under the curve
+
+To obtain a z-score, we subtract the mean and divide by the standard deviation:
+
+\[\textsf{z-score} = \frac{X-\mu}{\sigma}\]
+
+For a Normal variable, z-scores are distributed $z \sim N(0,1)$ \pause
+
+What does a z-score of 0 indicate? \pause -1? \pause 2?
+
+## 
+
+```{r echo=F}
+ggplot(data.frame(x=c(-4,4)), aes(x)) +
+  stat_function(fun=dnorm) +
+  stat_function(fun=dnorm,
+                xlim=c(-1,1),
+                geom="area",
+                fill="blue",
+                alpha = 0.5) +
+  ggtitle(paste("Mean +/- 1 SD = ",round(pnorm(1,0,1) - pnorm(-1,0,1),3)))
+```
+
+##
+
+```{r echo=F}
+ggplot(data.frame(x=c(-4,4)), aes(x)) +
+  stat_function(fun=dnorm) +
+  stat_function(fun=dnorm,
+                xlim=c(-2,2),
+                geom="area",
+                fill="blue",
+                alpha = 0.5) +
+  ggtitle(paste("Mean +/- 2 SD = ",round(pnorm(2,0,1) - pnorm(-2,0,1),3)))
+```
+
+## 
+
+```{r echo=F}
+ggplot(data.frame(x=c(-4,4)), aes(x)) +
+  stat_function(fun=dnorm) +
+  stat_function(fun=dnorm,
+                xlim=c(-3,3),
+                geom="area",
+                fill="blue",
+                alpha = 0.5) +
+  ggtitle(paste("Mean +/- 3 SD = ",round(pnorm(3,0,1) - pnorm(-3,0,1),3)))
+```
+
+## Useful probability distribution functions
+
+```{r}
+### Normal(0,1) probability density function
+dnorm(x = 0, mean = 0, sd = 1)
+### Normal(0,1) cumulative distribution function
+pnorm(q = 0, mean = 0, sd = 1)
+### Random draw from a normal(0,1) distribution
+rnorm(n = 1, mean = 0, sd = 1)
+### CDF position for a given probability (quantile)
+qnorm(p = 0.75, mean = 0, sd = 1)
+### You can also use dbinom(), pbinom(), rbinom(), qbinom()
+```
+
+
