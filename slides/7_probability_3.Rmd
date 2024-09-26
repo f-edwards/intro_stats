@@ -1,5 +1,5 @@
 ---
-title: "Probability, 2"
+title: "Probability, 3"
 author: "Frank Edwards"
 output: binb::metropolis
 ---
