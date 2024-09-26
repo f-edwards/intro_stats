@@ -420,10 +420,6 @@ For a discrete variable, the expectation is the sum of all values of $x$ weighte
 
 \[E(X) = \sum_x x \times f(x)\]
 
-Because continuous variables take on an infinite number of values, we compute the expectation with an integral
-
-\[\int x \times f(x) dx\]
-
 ## Variance and standard deviation of a random variable
 
 The standard deviation $sd$ is
@@ -432,11 +428,16 @@ The standard deviation $sd$ is
 
 And the sample variance is $sd^2$ \pause
 
+## Variance defined
+
 For a random variable $X$, the variance is defined via the expectation instead of sample mean
 
 \[V(X) = E[\{X-E(X)\}^2]\] \pause
 
 Note the similarities in the two equations
+
+\[V(X) = \frac{1}{n}\sum_{i=1}^n{(x_i-\bar{x}})^2\]
+
 
 ## The Normal Distribution
 

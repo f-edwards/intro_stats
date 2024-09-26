@@ -1,0 +1,25 @@
+---
+title: "HW4"
+author: "Frank Edwards"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+# Part 1
+
+Read Open Intro to Statistics Chapter 3 and 4.1
+
+Complete the following exercises (submit your work on paper, some drawing is involved)
+
+3.29, 3.34, 3.38, 3.40
+4.1 - 4.3, 4.5, 4.7
+
+# Part 2
+
+Create a new RMarkdown document and complete the following exercises (copy + paste the questions into your document). Create a new code chunk for each section and explain your results in markdown text outside of the code chunk. Submit your rendered (knit) html document and code. 
+
+1. Load the iris data with `data(iris)` and produce a `summary()` of the data.
+2. Compute the mean and standard deviation of `Sepal.length` for the full data. What do you find?
+3. Compute the mean and standard deviation of `Sepal.length` for each species. What do you find? 
+4. Plot a histogram of `Sepal.length` for the full data. How would you describe this distribution? Is it approximately Normal?
+5. Plot a histogram of `Sepal.length` for each species separately. How do these histograms differ in shape and location from the histogram you produced for question 4? 
