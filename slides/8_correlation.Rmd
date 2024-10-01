@@ -1,7 +1,6 @@
 ---
 title: "Correlation"
 author: "Frank Edwards"
-date: "10/26/2021"
 output: binb::metropolis
 ---
 
