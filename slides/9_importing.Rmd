@@ -1,0 +1,139 @@
+---
+title: "Measurement and visualization, 2"
+author: "Frank Edwards"
+date: "10/26/2021"
+output: binb::metropolis
+---
+
+```{r setup, include=FALSE}
+rm(list=ls())
+library(tidyverse)
+library(MASS)
+select<-dplyr::select
+set.seed(1)
+
+options(xtable.comment = FALSE)
+theme_set(theme_bw())
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, tidy = F, size = "small")
+```
+
+# Pull ACS Data from IPUMS
+
+## Setting up your data pull
+
+- Create an account
+- Select the most recent ACS (1-year) data for your sample
+- Select the following person-level variables: Age; Race; Hispanic ethnicity; Educational attainment; Employment status; poverty status; Wage and salary income; Interest dividend, and rental income 
+- Select the following household-level variables: Total Household Income
+- Create data extract (format as comma separated .csv)
+- Move to project directory
+
+## Extract data 
+
+- (optional for windows) Install Git for Windows
+  - Set git bash as default terminal in tools-> global options -> terminal
+  - or use 7zip or other archive utility
+- on terminal `gunzip usa_001.tar.gz`
+- create `./data/` and move the .csv file there
+
+## Import data
+
+We can use `read` functions to import data. Here we will use `read_csv`. For now, just give it one argument, the file path, and assign it to an object
+ 
+```{r}
+acs<-read_csv("./data/usa_00082.csv")
+```
+
+
+## Correlation
+
+```{r echo = FALSE}
+library(MASS)
+select<-dplyr::select
+cors<-seq(from=0, to =1, by = 0.1)
+cor_plot<-list()
+for(i in 1:length(cors)){
+  cor_plot[[i]] <- mvrnorm(50, 
+                      mu = c(0,0), 
+                      Sigma = matrix(c(1,cors[i],cors[i],1), ncol = 2),
+                      empirical = TRUE)
+  cor_plot[[i]]<-as.data.frame(cor_plot[[i]])
+  cor_plot[[i]]$cor<-cors[i]
+}
+cor_plot<-bind_rows(cor_plot)
+
+ggplot(cor_plot, aes(x=V1, y = V2)) + 
+  geom_point() +
+  facet_wrap(~cor)
+```
+
+## Correlation
+
+```{r echo = FALSE}
+library(MASS)
+select<-dplyr::select
+cors<-seq(from=0, to =1, by = 0.1)
+cor_plot<-list()
+for(i in 1:length(cors)){
+  cor_plot[[i]] <- mvrnorm(50, 
+                      mu = c(0,0), 
+                      Sigma = matrix(c(1,cors[i],cors[i],1), ncol = 2),
+                      empirical = TRUE)
+  cor_plot[[i]]<-as.data.frame(cor_plot[[i]])
+  cor_plot[[i]]$cor<-cors[i]
+}
+cor_plot<-bind_rows(cor_plot)
+
+ggplot(cor_plot, aes(x=V1, y = V2)) + 
+  geom_point() +
+  geom_smooth(method = "lm") +
+  facet_wrap(~cor)
+```
+
+## Correlation (math time): Z-scores
+
+First, we need the variables to be comparable, so we transform them to be on a standard deviation scale.
+
+A $z$-score scales a variable measures the number of standard deviations an observation is away from it's mean.
+
+\[z\textrm{ score of }x_i = \frac{x_i-\bar{x}}{S_x} \]
+
+Where $\bar{x}$ is the mean, and $S_x$ is the standard deviation of variable $x$. Z scores have a mean zero, and a range defined by the range of the data on a standard deviation scale. 
+
+For a normally (Gaussian) distributed variable, this will typically range between $[-3,3]$ 
+
+In R, we can transform a numeric into a $z$-score using \texttt{scale()}
+
+## Z-scores in R
+
+```{r}
+ipv<-read.csv("https://raw.githubusercontent.com/f-edwards/intro_stats/master/data/dhs_ipv.csv")
+
+ipv_scale<-ipv %>% 
+  mutate(sec_scale = scale(sec_school)) %>% 
+  select(sec_school, sec_scale) 
+summary(ipv_scale)
+```
+
+## Z-scores in R
+
+```{r size = "tiny"}
+ggplot(ipv_scale, aes(x=sec_school, y=sec_scale)) + geom_point()
+```
+
+## Correlation
+
+Correlation measures the degree to which two variables are associated with each other. We often use the letter $r$ to denote a correlation.
+
+\[r(x,y) = \frac{1}{n}\sum_{i=1}^{n} \frac{x_i-\bar{x}}{S_x} \times \frac{y_i-\bar{y}}{S_y}\]
+
+Note that this is equal to the average of the product of the $z-scores$ of $x$ and $y$
+
+In R, you can use \texttt{cor()}
+
+
