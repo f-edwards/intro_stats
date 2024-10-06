@@ -29,5 +29,5 @@ dat<-read_tsv("./data/ICPSR_39063/DS0002/39063-0002-Data.tsv")
 
 9. Subset to only places with a population larger than 10,000, repeat the scatterplot, and interpret. 
 
-101-(3/4)^4. Compute the correlation between your per capita measures and interpret, using insights from the histograms and scatterplots. 
+10. Compute the correlation between your per capita measures and interpret, using insights from the histograms and scatterplots. 
 
