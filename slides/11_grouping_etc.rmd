@@ -69,8 +69,7 @@ dat_clean<-dat_clean %>%
   mutate(distance_binary2 = ifelse(
     distance < median(distance), 
     "near",
-    "far"
-  ))
+    "far"))
 ```
 
 ## Making a recode with multiple conditions
@@ -87,6 +86,7 @@ q1; q2; q3
 ## Making a recode with multiple conditions: case_when()
 
 ```{r size = "tiny"}
+
 ### make factor variable
 dat_clean <- dat_clean %>% 
   mutate(distance_quartile = 
@@ -96,6 +96,7 @@ dat_clean <- dat_clean %>%
              distance < q3 ~ "3rd",
              distance >= q3 ~ "4th"
            ))
+
 ```
 
 ## Practice recodes

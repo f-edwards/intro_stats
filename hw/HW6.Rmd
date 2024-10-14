@@ -52,6 +52,15 @@ Now we examine the central question of the study. Calculate the proportion of ca
 
 What is the difference in callback rates between individuals with and without a criminal record within each race. What do these specific results tell us?  Consider both the difference in callback rates and the ratio of callback rates for the subjects with criminal records and those without within each racial group.
 
+```{r}
+dat<-read_csv("data/criminalrecord.csv")
+
+dat_agg<-dat %>% 
+  group_by(crimrec, black) %>% 
+  summarize(callback_prop = mean(callback))
+```
+
+
 ## Question 4
 
 Compare the callback rates of whites *with* a criminal record versus blacks *without* a criminal record. What do we learn from this comparison?
