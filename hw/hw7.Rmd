@@ -1,0 +1,26 @@
+---
+title: "HW7"
+author: "Frank Edwards"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+Use the UCR 2022 Arrests by Age, Sex, and Race data for this assignment. You will need to refer to the included codebook for this assignment. 
+
+```{r}
+dat<-read_tsv("./data/ICPSR_39063/DS0002/39063-0002-Data.tsv")
+```
+
+1. Load the 12-month data into R using the `read_tsv` command
+
+2. Using the variables `AW`, `AB`, `AI`, `AA`, `OFFENSE` and `POP`, create a new data frame that includes a variable called `arrests_Per100k` that computes the arrest rate per 100,000 population for each agency in the data. Consider how you will handle missing values, and agencies that report no population.
+
+3. Subset this data frame to include only agencies covering more than 10,000 population and only arrests for fraud and for forgery and counterfeiting. How many fewer rows does this new data frame contain when compared to the original data?
+
+4. Use pivot_wider to create two new columns: one for the fraud arrest rate and another for the forgery and counterfeiting arrest rate. Then scatterplot these two arrest rates and describe their joint distribution.
+
+5. For each state, compute the average agency-level arrest rates for both fraud and counterfeiting. Create a barplot to show your findings and interpret. 
+
+6. Now, for each state compute the state-level average arrest rate for both fraud and counterfeiting. Create a barplot to show your findings. 
+
+7. Consider carefully the difference between agency-level and state-level arrest rates, and explain the differences you observe between the two plots. (Hint: a supplemental histogram or two might be very helpful to figure out what's going on)
