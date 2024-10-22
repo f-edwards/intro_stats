@@ -1,0 +1,323 @@
+---
+title: "Sampling and inference"
+author: "Frank Edwards"
+output: binb::metropolis
+---
+
+```{r setup, include=FALSE}
+rm(list=ls())
+library(tidyverse)
+
+options(xtable.comment = FALSE)
+theme_set(theme_bw())
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, tidy = TRUE, size = "tiny")
+```
+
+# Large sample (asymptotic) theorems
+
+## The law of large numbers
+
+As a sample of draws from a random variable increases, the sample mean converges to the population mean $E(X)$
+
+\[\bar{x}_n \rightarrow E(X) \]
+
+## Monte Carlo simulation for the mean of a binomial variable
+
+To test the law of large numbers, let's draw from a binomial variable with varying sample sizes. 
+
+We expect that $\bar{x}$ will converge to $E(X)$ as the sample size $n$ increases
+
+## n = 10-50
+
+```{r echo = F}
+## MC simulation, 1000 reps 
+sims<-5
+## Take 1000 draws from binomial(0.3, 10)
+x<-rbinom(sims, p = 0.3, size = 10)
+### output df
+out<-data.frame(n=1:sims, xbar = NA)
+for(i in 1:sims){
+  out$xbar[i]<-sum(x[1:i])/i
+}
+## or use xbar<-cumsum(x)/1:sims
+ggplot(out, aes(y=xbar, x=n * 10)) +
+  geom_line() +
+  geom_abline(slope=0, intercept = 3, lty=2) + 
+  coord_cartesian(ylim= c(1, 5)) + 
+  labs(x = "Number of observations",
+       y = expression(bar(x)))
+```
+
+## n = 10-100
+
+```{r echo = F}
+## MC simulation, 1000 reps 
+sims<-10
+## Take 1000 draws from binomial(0.3, 10)
+x<-rbinom(sims, p = 0.3, size = 10)
+### output df
+out<-data.frame(n=1:sims, xbar = NA)
+for(i in 1:sims){
+  out$xbar[i]<-sum(x[1:i])/i
+}
+## or use xbar<-cumsum(x)/1:sims
+ggplot(out, aes(y=xbar, x=n * 10)) +
+  geom_line() +
+  geom_abline(slope=0, intercept = 3, lty=2) + 
+  coord_cartesian(ylim= c(1, 5)) + 
+  labs(x = "Number of observations",
+       y = expression(bar(x)))
+```
+
+## n = 10-1000
+
+```{r echo = F}
+## MC simulation, 1000 reps 
+sims<-100
+## Take 1000 draws from binomial(0.3, 10)
+x<-rbinom(sims, p = 0.3, size = 10)
+### output df
+out<-data.frame(n=1:sims, xbar = NA)
+for(i in 1:sims){
+  out$xbar[i]<-sum(x[1:i])/i
+}
+## or use xbar<-cumsum(x)/1:sims
+ggplot(out, aes(y=xbar, x=n * 10)) +
+  geom_line() +
+  geom_abline(slope=0, intercept = 3, lty=2) + 
+  coord_cartesian(ylim= c(1, 5)) + 
+  labs(x = "Number of observations",
+       y = expression(bar(x)))
+```
+
+
+## n = 10 - 10000
+
+```{r echo = F}
+## MC simulation, 1000 reps 
+sims<-1000
+## Take 1000 draws from binomial(0.3, 10)
+x<-rbinom(sims, p = 0.3, size = 10)
+### output df
+out<-data.frame(n=1:sims, xbar = NA)
+for(i in 1:sims){
+  out$xbar[i]<-sum(x[1:i])/i
+}
+## or use xbar<-cumsum(x)/1:sims
+ggplot(out, aes(y=xbar, x=n * 10)) +
+  geom_line() +
+  geom_abline(slope=0, intercept = 3, lty=2) + 
+  coord_cartesian(ylim= c(1, 5)) + 
+  labs(x = "Number of observations",
+       y = expression(bar(x)))
+```
+
+## n = 10 - 100000
+
+```{r echo = F}
+## MC simulation, 1000 reps 
+sims<-1000
+## Take 1000 draws from binomial(0.3, 10)
+x<-rbinom(sims, p = 0.3, size = 10)
+### output df
+out<-data.frame(n=1:sims, xbar = NA)
+for(i in 1:sims){
+  out$xbar[i]<-sum(x[1:i])/i
+}
+## or use xbar<-cumsum(x)/1:sims
+ggplot(out, aes(y=xbar, x=n * 10)) +
+  geom_line() +
+  geom_abline(slope=0, intercept = 3, lty=2) + 
+  coord_cartesian(ylim= c(1, 5)) + 
+  labs(x = "Number of observations",
+       y = expression(bar(x)))
+```
+
+
+## The Central Limit Theorem 
+
+- As $n$ increases, the distribution of the sample mean $\bar{x}$ approaches a Normal distribution. \pause
+- This relationship holds for many distributions (Bernoulli, Binomial, Normal, others we'll discuss later) \pause
+- If our samples are independent, and each observation within the sample is iid, the distribution of z-scores of sample means converges to a $Normal(0,1)$ distribution \pause
+- The Central Limit Theorem allows us to make statements about uncertainty when we haven't observed the population mean or variance
+
+## Monte Carlo simulations of a binomial variable p=0.7, n=10
+
+```{r echo = F}
+### Binomial random variable, 10 observations, probability of success = 0.7
+## simulate each sample size for 1000 replications
+n<-10 # 10 students in a class
+p<-0.7 # 70% chance of a 1
+xbar_10<-rep(NA, 10)
+xbar_100<-rep(NA, 100)
+xbar_1000<-rep(NA, 1000)
+
+for(i in 1:10){
+  x_10<-rbinom(10, p=p, size=n)
+  xbar_10[i]<-(mean(x_10))
+}
+
+for(i in 1:100){
+  x_100<-rbinom(100, p=p, size=n)
+  xbar_100[i]<-(mean(x_100))
+}
+
+for(i in 1:1000){
+  x_1000<-rbinom(1000, p=p, size=n)
+  xbar_1000[i]<-(mean(x_1000))
+}
+
+```
+
+```{r echo = FALSE}
+ggplot(data.frame(z_score=scale(xbar_10)), 
+       aes(x=z_score))+
+  geom_histogram(aes(y = ..density..)) + 
+  stat_function(fun=dnorm) +
+  ggtitle("10 samples") +
+  xlim(c(-3,3))
+```
+
+## 
+
+```{r echo = FALSE}
+ggplot(data.frame(z_score=scale(xbar_100)), 
+       aes(x=z_score))+
+  geom_histogram(aes(y = ..density..)) + 
+  stat_function(fun=dnorm) +
+  ggtitle("100 samples")+
+  xlim(c(-3,3))
+```
+
+## 
+
+```{r echo = FALSE}
+ggplot(data.frame(z_score=scale(xbar_1000)), 
+       aes(x=z_score))+
+  geom_histogram(aes(y = ..density..)) + 
+  stat_function(fun=dnorm) +
+  ggtitle("1000 samples")+
+  xlim(c(-3,3))
+```
+
+## Exercise - simulation and the central limit theorem
+
+- Let's write a quick sampler as a group to test the central limit theorem
+- Our variable is $y \sim Binomial(10, 0.5)$
+- So we need to 1) construct many random samples of y and compute the mean and 2) visualize the distribution of these means
+- Assume the central limit theorem is true. Draw 100 samples of y and make an inference about the true parameter $\mu = np$ based on your observations of $\bar{y}$
+
+## Point estimates
+
+$\bar{y}$ is our point estimate for the mean of the random variable $y$. 
+
+A point estimate is a *statistic* that reflects our best guess about the location of an unknown *parameter*
+
+But point estimates alone are incomplete. What else do we need to know?
+
+## Uncertainty
+
+*Uncertainty* statements quantify how much information we have about a statistical parameter. Uncertainty statements communicate information about the *precision* of our point estimate. 
+
+## Return to our simulation exercise
+
+- How much *uncertainty* do we have about the mean of our random variable when we simulate 10 trials?
+- Visualize the distribution of $\bar{y}$ with 10 simulations. Now with 100 simulations. What do you notice?
+- What summary statistic could help us quantify uncertainty? 
+- Compute this statistic for $\bar{y}$ with 10 simulations, and again with 100 simulations. What do you notice?
+
+## The standard deviation
+
+Recall that we define a standard deviation as 
+
+\[ \sigma = \sqrt{\sum_{i=1}^n\frac{(x_i - \mu^2)}{n}} \]
+
+We will define $\sigma$ as the **parameter**, and $s$ as the estimated **statistic** for the standard deviation
+
+## Uncertainty statements
+
+How certain are we about our estimate of the mean of the random variable? 
+
+- We know that for a sufficiently large sample $\bar{y} \sim \textrm{Normal}(\mu, \sigma^2)$
+- Identify which part of this claim can be attributed to the law of large numbers, and which part can be attributed to the central limit theorem
+
+## Confidence intervals: the basic logic
+
+If we know that $\bar{y} \lim{n \to +\infty} \mu$ (law of large numbers) and that the distribution of our point estimate $\bar{y}$ is approximately Normal for a large sample (central limit theorem), we can make *inferences* about the possible location of an unknown *parameter* using our estimated *statistics*
+
+## Return to the Normal PDF
+
+```{r echo=F}
+ggplot(data.frame(x=c(-4,4)), aes(x)) +
+  stat_function(fun=dnorm) +
+  stat_function(fun=dnorm,
+                xlim=c(-1,1),
+                geom="area",
+                fill="blue",
+                alpha = 0.5) +
+  ggtitle(paste("Mean +/- 1 SD = ",round(pnorm(1,0,1) - pnorm(-1,0,1),3)))
+```
+
+## Return to the Normal PDF
+
+```{r echo=F}
+ggplot(data.frame(x=c(-4,4)), aes(x)) +
+  stat_function(fun=dnorm) +
+  stat_function(fun=dnorm,
+                xlim=c(-2,2),
+                geom="area",
+                fill="blue",
+                alpha = 0.5) +
+  ggtitle(paste("Mean +/- 2 SD = ",round(pnorm(2,0,1) - pnorm(-2,0,1),3)))
+```
+
+## Defining our uncertainty bounds
+
+95% is a conventional threshold to use for uncertainty (though there's nothing magic about it!)
+
+To obtain 95% of a Normal pdf with a center at the mean (symmetric) we can simply compute 
+
+```{r}
+# compute location below which 2.5% of the Normal PDF falls
+qnorm(0.025, 0, 1)
+# compute location below which 97.5% of the Normal PDF falls
+qnorm(0.975, 0, 1)
+```
+
+These two points define a symmetric region between which 95% of the area of the Normal(0,1) PDF lies. 
+
+## Now, compute a confidence interval for our simulation
+
+Let's begin with our simulation with 10 samples (each of which has 10 trials)
+
+Recipe to bake a confidence interval
+
+1. Compute the sample mean ($\bar{y}$)
+2. Compute the standard deviation of the sample mean
+3. Define your critical values (0.95 is conventional, resulting in critical values of +/- 1.96)
+4. Compute $\bar{y} \pm 1.96 \times s$
+
+What do you obtain? 
+
+## What were our estimated intervals for 10 samples?
+
+- No seriously, let's list them. 
+- Then plot them
+- If we had enough of us in the class, 95% of these intervals would contain $\mu$!
+
+## Interpretation of a confidence interval
+
+- If we repeated the experiment many times, and computed many confidence intervals, 95% of the intervals would contain the **parameter** $\mu$.
+- There is NOT a 95% chance your interval contains $\mu$. This is a subtle point that is often mistaken
+
+## Precision and confidence intervals
+
+- Provide your confidence interval for $\mu$ with our simulation under n = 10 
+- Now n = 100
+- Now n = 1000
+- What is happening and why is it happening?
