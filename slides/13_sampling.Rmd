@@ -7,14 +7,13 @@ output: binb::metropolis
 ```{r setup, include=FALSE}
 rm(list=ls())
 library(tidyverse)
-
-options(xtable.comment = FALSE)
-theme_set(theme_bw())
 def.chunk.hook  <- knitr::knit_hooks$get("chunk")
 knitr::knit_hooks$set(chunk = function(x, options) {
   x <- def.chunk.hook(x, options)
   ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
 })
+# set global options
+theme_set(theme_bw())
 knitr::opts_chunk$set(warning=FALSE, message=FALSE, tidy = TRUE, size = "tiny")
 ```
 
@@ -76,7 +75,7 @@ ggplot(out, aes(y=xbar, x=n * 10)) +
 
 ## n = 10-1000
 
-```{r echo = F}
+```{r echo = F, message = F}
 ## MC simulation, 1000 reps 
 sims<-100
 ## Take 1000 draws from binomial(0.3, 10)
