@@ -1,0 +1,164 @@
+---
+title: "Linear Regression part 2"
+author: "Frank Edwards"
+output: binb::metropolis
+---
+
+```{r setup, include=FALSE}
+rm(list=ls())
+library(tidyverse)
+library(qss)
+library(MASS)
+select<-dplyr::select
+set.seed(1)
+
+options(xtable.comment = FALSE)
+theme_set(theme_bw())
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, tidy = F, size = "small")
+```
+
+## Linear regression with multiple predictors
+
+We can extend the linear regression model:
+
+\[ y = \beta_0 + \beta_1X + \varepsilon\] \pause
+
+to include more than one predictor. We rewrite the equation as:
+
+\[ y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 \cdots \beta_p x_p + \varepsilon\] \pause
+
+## In matrix notation
+
+To be more compact:
+
+\[ Y = \beta X + \varepsilon\]
+
+Where $Y$ is the vector of predictors, $\beta$ is the vector of coefficients (including the intercept), $X$ is the matrix of all predictors, and $\varepsilon$ is the error term.
+
+## Estimating a multiple linear regression in R
+
+```{r}
+library(gapminder)
+gm_model<-lm(lifeExp ~log(gdpPercap) + continent, 
+               data = gapminder)
+```
+
+## Interpreting a regression model with multiple coefficients
+
+```{r size = "tiny"}
+broom::tidy(gm_model)
+```
+
+## Interpreting a regression model with multiple coefficients
+
+```{r size = "tiny"}
+broom::tidy(gm_model)
+```
+
+Recall that $\hat{y} = \beta_0 + \beta_1 x_1 + \beta_2 x_2$
+
+What is our expected value for life expectancy:
+
+- if GDP per capita = 1000 and continent = Europe \pause
+- if GDP per capita = 2000 and continent = Asia \pause
+- if GDP per capita = 3000 and continent = Africa
+
+## Visualizing the model
+
+```{r echo = FALSE}
+coefs<-coef(gm_model)
+
+ggplot(gapminder,
+       aes(x = log(gdpPercap), 
+           y = lifeExp, color = continent)) + 
+  geom_point(alpha = 0.5) + 
+  geom_abline(aes(intercept = coefs[1], slope = coefs[2]), color ="#F8766D") + 
+  geom_abline(aes(intercept = coefs[1] + coefs[3], slope = coefs[2]), color ="#7CAE00") + 
+  geom_abline(aes(intercept = coefs[1] + coefs[4], slope = coefs[2]), color ="#00BFC4") + 
+  geom_abline(aes(intercept = coefs[1] + coefs[5], slope = coefs[2]), color ="#C77CFF") 
+```
+
+## Let's try this with different data
+
+```{r}
+### load in the 'mtcars' data
+data(mtcars)
+head(mtcars)
+```
+
+## Variables in the mtcars data
+
+- mpg	Miles/(US) gallon
+-	cyl	Number of cylinders
+-	disp	Displacement (cu.in.)
+-	hp	Gross horsepower
+-	drat	Rear axle ratio
+-	wt	Weight (1000 lbs)
+-	qsec	1/4 mile time
+-	vs	Engine (0 = V-shaped, 1 = straight)
+-	am	Transmission (0 = automatic, 1 = manual)
+-	gear	Number of forward gears
+-	carb	Number of carburetors
+
+## Let's build a model for fuel efficiency with this data (theory!)
+
+Our outcome of interest is `mpg`. What measured features of these cars do we think might be related to fuel efficiency?
+
+## Start simple
+
+$$ \textrm{E}[\textrm{mpg}_i] = \beta_0 + \beta_1 \textrm{hp}_i $$ \pause
+$$\textrm{mpg}_i = \beta_0 + \beta_1 \textrm{hp}_i + \varepsilon $$
+How would we estimate this model in R? 
+
+## Now let's add complexity
+
+$$ \textrm{E}[\textrm{mpg}_i] = \beta_0 + \beta_1 \textrm{hp}_i + \beta_2 \textrm{wt}_i $$ \pause
+
+# Build up and interpret an MPG model
+
+## Interactions
+
+The prior model allowed each continent to have its own intercept fpr life expectancy. What if we thought the relationship of between GDP and life expectancy varied by continent? 
+
+We can add *interaction terms* to our model to model processes where we believe the relationship between $y$ and $x_1$ is a function of $x_2$. 
+
+\[ y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2 + \varepsilon\]
+
+## Estimating interactions in R
+
+```{r size = "tiny"}
+gm_model2<-lm(lifeExp ~ log(gdpPercap) * continent,
+               data = gapminder)
+```
+
+### Interpreting an interaction model
+
+```{r}
+broom::tidy(gm_model2)
+```
+
+- What is the expected value for life expectancy in the Americas when GDP per capita is 1500? 
+- In Asia when GDP per capita is 1500?
+
+## Visualizing interactions
+
+```{r echo = FALSE}
+coefs<-coef(gm_model2)
+
+ggplot(gapminder,
+       aes(x = log(gdpPercap), y = lifeExp, color = continent)) + 
+  geom_point(alpha = 0.25) + 
+  geom_abline(aes(intercept = coefs[1], 
+                  slope = coefs[2]), color ="#F8766D") + 
+  geom_abline(aes(intercept = coefs[1] + coefs[3], 
+                  slope = coefs[2] + coefs[7]), color ="#7CAE00") + 
+  geom_abline(aes(intercept = coefs[1] + coefs[4], 
+                  slope = coefs[2] + coefs[8]), color ="#00BFC4") + 
+  geom_abline(aes(intercept = coefs[1] + coefs[5], 
+                  slope = coefs[2] + coefs[9]), color ="#C77CFF")
+```
