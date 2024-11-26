@@ -1,5 +1,5 @@
 ---
-title: "Sampling and inference"
+title: "Regression and uncertainty"
 author: "Frank Edwards"
 output: binb::metropolis
 ---
