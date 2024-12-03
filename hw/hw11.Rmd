@@ -1,0 +1,16 @@
+---
+title: "HW11"
+author: "Frank Edwards"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+1. Using IPUMS and the 2023 ACS (one year) sample, create a pull with the following variables: INCTOT (person level, income), EDUC (person level, education), UHRSWORK (person level, work), and AGE (person level, demographic)
+
+2. Explain in plain language a basic theory for how education, age, and hours of work relate to income. 
+
+3. Write a regression equation to operationalize your theory explained in (2)
+
+4. Estimate that regression model. Interpret the coefficients, describe whether estimates are statistically significant, and describe the precision of your estimates (as 95 percent confidence intervals for Beta estimates)
+
+5. Visualize your findings by using predict to generate expected values. Interpret this visual with at least 3-4 sentences. 
