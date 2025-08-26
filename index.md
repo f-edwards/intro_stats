@@ -43,7 +43,7 @@ For statistics, we will review core mathematical concepts in algebra, linear alg
 
 ## Communication
 
-We will use Slack for course discussion and communication. Email is my preferred mode of one-on-one communication.
+We will use Canvas for course discussion and communication. Email is my preferred mode of one-on-one communication.
 
 ## Expectations
 
@@ -59,11 +59,11 @@ We will use Slack for course discussion and communication. Email is my preferred
 
 - Document your code. Explain what your code does in lots of detail. It helps you and helps us to evaluate your work. 
 
-- Don't use AI tools, they won't help you learn how to do data analysis or write better papers. Also they are burning the planet.
+- Don't use AI tools. If you want to learn to become a data analyst, you must learn to code. AI tools will make you sloppy and will often produce wrong code. Plus they are burning the planet. 
 
 ## Prerequisites
 
-No prior statistics or programming experience is assumed. I assume that you are comfortable with algebra, geometry, and basic calculus.
+No prior statistics or programming experience is assumed. Statistics requires a basic grasp of algebra, geometry, matrix algebra, and calculus. We'll be reviewing the foundational math throughout the semester. 
 
 ## Software
 
@@ -85,7 +85,7 @@ All students who work hard and complete the assignments can expect to receive an
 
 ### Homeworks
 
-I will assign homework each week. Assignments are due the day before class. The deadline for homework submission is each Monday before class at 11:59PM. 
+I will assign homework each week. Assignments are due the day before class. The deadline for homework submission is each Wednesday before class at 10:00AM. Email your homework assignments (output and source code) to me and the course TA.
 
 Problem sets provide you an opportunity to directly apply what we've learned to real-world data analysis and statistical problems. Don't wait until the last minute to get started. These homeworks should take you on average between 2 and 6 hours of work to complete. Space that work out and give yourself time to ask for help from your peers and your instructor.
 
@@ -101,167 +101,167 @@ Life happens. All students are granted two free extensions on homework, no quest
 
 Reading: Alexander Ch1; OI 1
 
-- 9/5: Lab - Introduction to the course and intro to R
+- 9/3: Lab - Introduction to the course and intro to R
 	- Review the syllabus and course format
 	- Installation and FOSS principles
     - Familiarizing yourself with the RStudio workspace
     - File formats: R Scripts, RMarkdown
     - R: basic math operations, creating atomic objects
     
-- HW 1: Due 9/9 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw1.Rmd)
+- HW 1: Due 9/10 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw1.Rmd)
 
 **Week 2**
 
 Reading: OI 2; Healy 1 and 2
 
-- 9/10: Lecture - Math review 
+- 9/8: Lecture - Math review 
 	- Algebra: order of operations, exponents and logarithms, polynomials, plotting functions on a cartesian plane
     - Linear algebra: vectors and matrices, scalar operations
 	- Functions and limits
 	- The basics of derivitaves and integrals
 
-- 9/12: Lab - Working with vectors in R  
+- 9/10: Lab - Working with vectors in R  
 	- Vectors, matrices, and data.frames
 	- Indexing
 	- Vector operations
 	- Commonly used functions for vectors
 
-- HW 2: Due 9/16 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw2.Rmd)
+- HW 2: Due 9/17 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw2.Rmd)
 
 **Week 3**
 
 Reading: OI 3
 
-- 9/17: Lecture - Probability 
+- 9/15: Lecture - Probability 
 	- Making probability statements, computing probabilities (marginal, conditional, joint)
 	- Basics of set theory
 
-- 9/19: Lab - group_by and ggplot basics
+- 9/17: Lab - group_by and ggplot basics
 	- Theory: grammar of graphics
 	- Importing tabular data
 	- Basic univariate visuals: densities, histograms, barplots
 	- Introduction to plain text editing with markdown
     - Writing math with LaTeX
 
-- HW 3: Due 9/23 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw3.Rmd)
+- HW 3: Due 9/24 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw3.Rmd)
 
 **Week 4**
 
 Reading: OI 4; Alexander 2, 3 (recommended)
 
 
-- 9/24: Random variables and moments
+- 9/22: Random variables and moments
 	- The Normal distribution and Normal random variables
 	- Simulating Normal variables
 	- Measures of central tendency: mean, median, mode
 	- Measures of dispersion: variance, standard deviation, quantiles
 
-- 9/26: Lab - Visualizing more than one variable, basics of tidy data
+- 9/24: Lab - Visualizing more than one variable, basics of tidy data
 	- Tidy data principles
 	- Manipulating data frames with mutate(), select(), and filter()
 	- Scatterplots
 
-- HW 4: Due 9/30 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw4.Rmd)
+- HW 4: Due 10/1 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw4.Rmd)
 
 **Week 5**
 
 Reading: Healy 3
 
-- 10/1: Lecture - Types of variables and measures of association
+- 9/29: Lecture - Types of variables and measures of association
 	- Continuous, integer, binary, categorical, and ordinal measures
 	- Correlation
 	- Assessing bivariate distributions with crosstabs and scatterplots
 
-- 10/3: Lab - Summary operations
+- 10/1: Lab - Summary operations
 	- Intermediate vector operations: group_by() and summarize()
 	- Comparing means for causal inference
 	- Visualization for comparing groups
 
-- HW 5: Due 10/7 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw5.Rmd)
+- HW 5: Due 10/8 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw5.Rmd)
 
 **Week 6**
 
 Reading: Alexander 4
 
-- 10/8: Lecture - Causal inference in experimental designs
+- 10/6: Lecture - Causal inference in experimental designs
 	- The fundamental problem of causal inference
 	- Thinking counterfactually
 	- Experimental design and randomization
 	- Comparing means and the sample average treatment effect
 
-- 10/10: Lab - Summary operations
+- 10/8: Lab - Summary operations
 	- Intermediate vector operations: group_by() and summarize()
 	- Comparing means for causal inference
 	- Computing the SATE
 	- Visualization for comparing groups
 
-- HW 6: Due 10/14 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw6.Rmd)
+- HW 6: Due 10/15 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw6.Rmd)
 
 **Week 7** 
 
 Reading: Healy 4, Alexander 7, 11 (6, 8 recommended)
 
-- 10/15: Lecture - Observational data and bivariate association
+- 10/13: Lecture - Observational data and bivariate association
 	- Correlation
 	- Kinds of observational data: cross-sectional, panel, longitudinal
 	- Natural experiments and basic causal inference
 	- Descriptive vs causal analysis
 
-- 10/17: Lab - Data visualization with more than two variables
+- 10/15: Lab - Data visualization with more than two variables
 	- Using additional ggplot aesthetics: color and fill
 	- Adding multiple geoms to visuals
 
-- HW 7: Due 10/21 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw7.Rmd)
+- HW 7: Due 10/22 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw7.Rmd)
 
 **Week 8** 
 
 Reading: OI 5, Alexander 9-10
 
-- 10/22: Lecture - Generalizing from samples to populations
+- 10/20: Lecture - Generalizing from samples to populations
 	- Measurement: theoretical constructs and operational measures
 	- Basic principles of inference: parameters and statistics
 	- Internal and external validity
 	- Ethics of measurement and inference in social science, epistemic humility
 
-10/24: Lab - working with more than one object
+10/22: Lab - working with more than one object
 	- Harmonizing tables
 	- Joins
 
-- HW 8: Due 10/28 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw8.Rmd)
+- HW 8: Due 10/29 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw8.Rmd)
 
 **Week 9** 
 
 Reading: OI 8.1, 
 
-- 10/29: Lecture - Introducing the linear regression model
+- 10/27: Lecture - Introducing the linear regression model
 	- Basic theory of linear regression
 	- The structural component of the model
 	- Theorizing and visualizing relationships as linear
 	- Deterministic predictions
 
-- 10/31: Lab - lm()
+- 10/29: Lab - lm()
 	- Introduction to lm() syntax
 	- Estimating and interpreting the model
 
-- HW 9: Due 11/4 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw9.Rmd)
+- HW 9: Due 11/5 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw9.Rmd)
 
 **Week 10** 
 
 Reading: OI 8.2-8.4, Alexander 12
 
-- 11/5: Lecture - The stochastic (random) component of the linear regression model
+- 11/3: Lecture - The stochastic (random) component of the linear regression model
 	- Anatomy of a linear regression model
 	- What is error? 
 	- Ordinary Least Squares as an estimation approach
 	- The meaning of stochastic error
 	- Prediction with error
 
-- 11/7: Lab - more lm()
+- 11/5: Lab - more lm()
 	- OLS diagnostics
 	- Using fit to compare models 
 	- predict()
 
-- HW 10: Due 11/18 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw10.Rmd)
+- HW 10: Due 11/21 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw10.Rmd)
 
 **Week 11** 
 
@@ -271,58 +271,61 @@ Reading: OI 8.2-8.4, Alexander 12
 
 Reading: OI 6, 7
 
-- 11/19: Inference and regression
+- 11/17: Inference and regression
 	- The law of large numbers
 	- The central limit theorem
 	- Standard errors of parameters
 	- The logic of frequentist hypothesis testing
 	- t-tests for OLS parameters
 
-- 11/21: Inference for OLS in R
+- 11/19: Inference for OLS in R
 	- summary.lm()
 	- Interpretation and writing up OLS results
 
-- HW 11: Due 11/25 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw11.Rmd)
+- HW 11: Due 11/26 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw11.Rmd)
 
 **Week 13** 
 
 Reading: Alexander 12
 
-- 11/26: Confidence intervals, prediction with error
+- 11/24: Confidence intervals, prediction with error
 	- The logic of confidence intervals
 	- Interpretation of confidence intervals (danger!)
 	- Using regression models for expected values with error
 	- Using regression models for prediction with error
 
-- 11/28: Holiday
+- 11/26: Lab - inference and uncertainty
+	- Using predict() for uncertainty
+	- Expected value intervals, prediction intervals
+	- The bootstrap
 
-- HW 12: Due 11/25 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw12.Rmd)
+- HW 12: Due 12/3 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw12.Rmd)
 
 **Week 14**
 
 Reading: OI 9.1, Healy 6
 
-- 12/3: Multiple regression
+- 12/1: Multiple regression
 	- Confounding
 	- Visualizing causal relationships with Directed Acyclic Graphs 
 	- OLS with multiple additive predictors
 
-- 12/5: Lab
+- 12/3: Lab
 	- lm() with multiple predictors
 	- prediction with multiple predictors
 	- Visualizing OLS predictions
 
-- HW 13: Due 11/25 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw13.Rmd)
+- HW 13: Due 12/10 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw13.Rmd)
 
 **Week 15**
 
 Reading: OI 9.2-9.4, Healy 6
 
-- 12/10: Multiple regression part 2
+- 12/8: Multiple regression part 2
 	- Interactions
 	- Regression as a tool for modeling the data generating process
 
-- 12/12: Advanced lm()
+- 12/10: Advanced lm()
 	- Estimating interactions
 	- Visualizing interactions
 
