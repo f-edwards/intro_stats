@@ -3,9 +3,9 @@ layout: default
 ---
 
 | Introduction to Statistics   | 27:202:542 |  
-| Lecture: Tuesday, Thursday 10:00 - 11:20   | Room: CLJ 574 |
+| Lecture: Monday, Wednesday 1:00 - 2:20   | Room: CLJ 574 |
 | Instructor: Frank Edwards | frank.edwards@rutgers.edu|
-| Office hours: Friday, 10:00-12:00 | Room: CLJ 579B |
+| Office hours: Tuesday 9:30-12:30 | Room: CLJ 579B |
 
 ## Quick links
 
