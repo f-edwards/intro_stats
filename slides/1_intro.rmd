@@ -8,9 +8,9 @@ output: binb::metropolis
 
 <https://f-edwards.github.io/intro_stats>
 
-## Course communication on Slack
+## Course communication on Canvas
 
-<https://introstatsfall2024.slack.com>
+<https://canvas.rutgers.edu>
 
 ## Books for class
 
