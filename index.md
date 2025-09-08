@@ -85,13 +85,13 @@ All students who work hard and complete the assignments can expect to receive an
 
 ### Homeworks
 
-I will assign homework each week. Assignments are due the day before class. The deadline for homework submission is each Wednesday before class at 10:00AM. Email your homework assignments (output and source code) to me and the course TA.
+I will assign homework each week. Assignments are Fridays by 7pm. Email your homework assignments (output and source code) to me and the course TA.
 
 Problem sets provide you an opportunity to directly apply what we've learned to real-world data analysis and statistical problems. Don't wait until the last minute to get started. These homeworks should take you on average between 2 and 6 hours of work to complete. Space that work out and give yourself time to ask for help from your peers and your instructor.
 
 Group work is strongly encouraged for homework. I recommend scheduling a time to meet with your classmates to work on the problem sets. Each week, I will open a channel on the course Slack page for you to ask coding and technical questions. Quantitative research is a team sport, but I still do expect you to write your own code and interpretation. Don't just copy/paste from your peers, the internet, or a chatbot. 
 
-Homework should be submited to me via email with all attached code and code output. Generally, this means I want to see two files: your script and your rendered output.
+Homework should be submited via canbas with attached code and code output. Generally, this means I want to see two files: your script and your rendered output.
 
 Life happens. All students are granted two free extensions on homework, no questions asked. Just email prior to the due date and let me know you'll be taking an extension and when I should expect your submission.
 
@@ -120,7 +120,7 @@ Reading: OI 2; Healy 1 and 2
 	- Functions and limits
 	- The basics of derivitaves and integrals
 
-- 9/10: Lab - Working with vectors in R  
+- 9/9: Lab - Working with vectors in R  
 	- Vectors, matrices, and data.frames
 	- Indexing
 	- Vector operations
@@ -136,7 +136,7 @@ Reading: OI 3
 	- Making probability statements, computing probabilities (marginal, conditional, joint)
 	- Basics of set theory
 
-- 9/17: Lab - group_by and ggplot basics
+- 9/16: Lab - group_by and ggplot basics
 	- Theory: grammar of graphics
 	- Importing tabular data
 	- Basic univariate visuals: densities, histograms, barplots
@@ -156,7 +156,7 @@ Reading: OI 4; Alexander 2, 3 (recommended)
 	- Measures of central tendency: mean, median, mode
 	- Measures of dispersion: variance, standard deviation, quantiles
 
-- 9/24: Lab - Visualizing more than one variable, basics of tidy data
+- 9/23: Lab - Visualizing more than one variable, basics of tidy data
 	- Tidy data principles
 	- Manipulating data frames with mutate(), select(), and filter()
 	- Scatterplots
@@ -172,7 +172,7 @@ Reading: Healy 3
 	- Correlation
 	- Assessing bivariate distributions with crosstabs and scatterplots
 
-- 10/1: Lab - Summary operations
+- 9/30: Lab - Summary operations
 	- Intermediate vector operations: group_by() and summarize()
 	- Comparing means for causal inference
 	- Visualization for comparing groups
@@ -189,7 +189,7 @@ Reading: Alexander 4
 	- Experimental design and randomization
 	- Comparing means and the sample average treatment effect
 
-- 10/8: Lab - Summary operations
+- 10/7: Lab - Summary operations
 	- Intermediate vector operations: group_by() and summarize()
 	- Comparing means for causal inference
 	- Computing the SATE
@@ -207,7 +207,7 @@ Reading: Healy 4, Alexander 7, 11 (6, 8 recommended)
 	- Natural experiments and basic causal inference
 	- Descriptive vs causal analysis
 
-- 10/15: Lab - Data visualization with more than two variables
+- 10/14: Lab - Data visualization with more than two variables
 	- Using additional ggplot aesthetics: color and fill
 	- Adding multiple geoms to visuals
 
@@ -223,7 +223,7 @@ Reading: OI 5, Alexander 9-10
 	- Internal and external validity
 	- Ethics of measurement and inference in social science, epistemic humility
 
-10/22: Lab - working with more than one object
+10/21: Lab - working with more than one object
 	- Harmonizing tables
 	- Joins
 
@@ -239,7 +239,7 @@ Reading: OI 8.1,
 	- Theorizing and visualizing relationships as linear
 	- Deterministic predictions
 
-- 10/29: Lab - lm()
+- 10/28: Lab - lm()
 	- Introduction to lm() syntax
 	- Estimating and interpreting the model
 
@@ -256,7 +256,7 @@ Reading: OI 8.2-8.4, Alexander 12
 	- The meaning of stochastic error
 	- Prediction with error
 
-- 11/5: Lab - more lm()
+- 11/4: Lab - more lm()
 	- OLS diagnostics
 	- Using fit to compare models 
 	- predict()
@@ -278,7 +278,7 @@ Reading: OI 6, 7
 	- The logic of frequentist hypothesis testing
 	- t-tests for OLS parameters
 
-- 11/19: Inference for OLS in R
+- 11/18: Inference for OLS in R
 	- summary.lm()
 	- Interpretation and writing up OLS results
 
@@ -294,7 +294,7 @@ Reading: Alexander 12
 	- Using regression models for expected values with error
 	- Using regression models for prediction with error
 
-- 11/26: Lab - inference and uncertainty
+- 11/25: Lab - inference and uncertainty
 	- Using predict() for uncertainty
 	- Expected value intervals, prediction intervals
 	- The bootstrap
@@ -310,7 +310,7 @@ Reading: OI 9.1, Healy 6
 	- Visualizing causal relationships with Directed Acyclic Graphs 
 	- OLS with multiple additive predictors
 
-- 12/3: Lab
+- 12/2: Lab
 	- lm() with multiple predictors
 	- prediction with multiple predictors
 	- Visualizing OLS predictions
@@ -325,7 +325,7 @@ Reading: OI 9.2-9.4, Healy 6
 	- Interactions
 	- Regression as a tool for modeling the data generating process
 
-- 12/10: Advanced lm()
+- 12/9: Advanced lm()
 	- Estimating interactions
 	- Visualizing interactions
 
