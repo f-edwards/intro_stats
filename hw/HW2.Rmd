@@ -5,8 +5,6 @@ date: "`r Sys.Date()`"
 output: html_document
 ---
 
-Write a new R script titled HW2.R for this assignment. Please email me your version of HW2.R and your console output. 
-
 Use the data.frame USArrests for all of your responses. Try typing ?USArrests on your console for the help file, which includes variable descriptions
 
 - Compute the mean murder rate for US states in 1973
