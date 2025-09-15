@@ -8,10 +8,25 @@ output: html_document
 Write a new R script titled HW1.R for this assignment. Please email me your version of HW1.R and your console output (copy and paste the output into notepad or a similar text editor and save as HW1.txt).
 
 - Create an object in R called popcorn. Set popcorn equal to 97.2
+```{r}
+popcorn <- 97.2
+```
+
+
 - Compute the square of popcorn
+```{r}
+# this is a comment
+popcorn^2
+```
+
+## this is not a comment, it is a section header
+
 - Create a new object called nonsense, and set it equal to popcorn squared divided by two
 - Compute nonsense minus popcorn
 - Set popcorn equal to popcorn plus 3.8
 - Compute the square of popcorn
 - Add a code comment briefly explaining what happened to popcorn there!
 - Read Alexander Ch 1 and OpenIntro Ch 1 
+
+
+<!-- this is a comment in markdown -->
