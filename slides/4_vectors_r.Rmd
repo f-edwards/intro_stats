@@ -1,5 +1,5 @@
 ---
-title: "3. Vectors and intro to the Tidyverse"
+title: "4. Vectors and intro to the Tidyverse"
 author: "Frank Edwards"
 output: binb::metropolis
 
