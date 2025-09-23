@@ -104,7 +104,8 @@ If a voter is a man, what is the probability that he is Asian: $P(\textnormal{As
 voters %>% 
   filter(gender=="m") %>% 
   count(race) %>% 
-  mutate(n=n/sum(n))
+  mutate(prop=n/sum(n))
+
 ```
 
 ## Conditional probability

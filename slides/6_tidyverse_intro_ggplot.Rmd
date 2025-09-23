@@ -1,5 +1,5 @@
 ---
-title: "5. More tidyverse and intro to ggplot"
+title: "6. More tidyverse and intro to ggplot"
 author: "Frank Edwards"
 output: binb::metropolis
 
