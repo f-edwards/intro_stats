@@ -1,0 +1,243 @@
+---
+title: "Correlation"
+author: "Frank Edwards"
+output: binb::metropolis
+---
+
+```{r setup, include=FALSE}
+rm(list=ls())
+library(tidyverse)
+library(MASS)
+select<-dplyr::select
+set.seed(1)
+
+options(xtable.comment = FALSE)
+theme_set(theme_bw())
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, tidy = F, size = "small")
+```
+
+
+## Correlation (math time): Z-scores
+
+First, we need the variables to be comparable, so we transform them to be on a standard deviation scale.
+
+A $z$-score scales a variable measures the number of standard deviations an observation is away from it's mean.
+
+\[z\textrm{ score of }x_i = \frac{x_i-\bar{x}}{S_x} \]
+
+Where $\bar{x}$ is the mean, and $S_x$ is the standard deviation of variable $x$. Z scores have a mean zero, and a range defined by the range of the data on a standard deviation scale. 
+
+For a normally (Gaussian) distributed variable, this will typically range between $[-3,3]$ 
+
+In R, we can transform a numeric into a $z$-score using \texttt{scale()}
+
+## Z-scores in R
+
+```{r}
+iris %>% 
+  mutate(Sepal.Length.sc = scale(Sepal.Length)) %>% 
+  select(Sepal.Length, Sepal.Length.sc)
+```
+
+## Z-score transformed distributions have the same shape as the original data
+
+```{r echo = F, message = F}
+library(patchwork)
+p1<-ggplot(iris,
+           aes(x = Sepal.Length)) + 
+  geom_histogram() + 
+  labs(subtitle = "Untransformed")
+p2<-ggplot(iris,
+           aes(x = scale(Sepal.Length))) + 
+  geom_histogram() + 
+  labs(subtitle = "Z-transformed")
+
+p1+p2
+```
+
+## Correlation
+
+Correlation measures the degree to which two variables are associated with each other. We often use the letter $r$ to denote a correlation.
+
+\[r(x,y) = \frac{1}{n}\sum_{i=1}^{n} \frac{x_i-\bar{x}}{S_x} \times \frac{y_i-\bar{y}}{S_y}\]
+\[ = E[z(x) \times z(y)] \]
+
+In R, you can use \texttt{cor()}
+
+## Evaluate correlations using cor()
+
+- Compute the correlation between Sepal.Length and Sepal.Width. What does it mean?
+- Compute the correlation between Petal.Length and Petal.Width. What does it mean?
+- Compute the correlation between Petal.Length and Sepal.Width. What does it mean?
+
+# Bivariate visuals for continuous data: Scatterplots
+
+## Make a scatterplot
+
+```{r fig.height = 4}
+ggplot(iris,
+       aes(x = Sepal.Length, y = Sepal.Width)) + 
+  geom_point()
+```
+
+## Scatterplot ingredients
+
+- a `data.frame` with two continuous variables
+- `aes()` with an x and y parameter
+- `geom_point()`
+
+## Practice
+
+- Scatterplot petal length on the x and petal width on the y
+- Flip the axes (move length to y, width to x)
+
+## Scatterploting with clusters
+
+We often have bivariate measures that are *clustered*, or have some structure caused by a third (often categorical) variable. \pause
+
+Do we see structure here? What could be causing it?
+
+```{r size = "tiny", fig.height = 4}
+ggplot(iris,
+       aes(x = Sepal.Length, y = Sepal.Width)) + 
+  geom_point()
+```
+
+## Two solutions to plotting clustered data: aesthetics
+
+Use the clustering variable to add another aesthetic element to our plot, like color
+
+```{r size = "tiny", fig.height = 4}
+ggplot(iris,
+       aes(x = Sepal.Length, y = Sepal.Width,
+           color = Species)) + 
+  geom_point()
+```
+
+## Two solutions to plotting clustered data: facets
+
+```{r size = "tiny", fig.height = 4}
+ggplot(iris,
+       aes(x = Sepal.Length, y = Sepal.Width)) + 
+  geom_point() + 
+  facet_wrap(~Species)
+```
+
+# Interpreting relationships with scatterplots
+
+## Correlation and scatterplots
+
+```{r echo = FALSE}
+library(MASS)
+select<-dplyr::select
+cors<-seq(from=0, to =1, by = 0.1)
+cor_plot<-list()
+for(i in 1:length(cors)){
+  cor_plot[[i]] <- mvrnorm(50, 
+                      mu = c(0,0), 
+                      Sigma = matrix(c(1,cors[i],cors[i],1), ncol = 2),
+                      empirical = TRUE)
+  cor_plot[[i]]<-as.data.frame(cor_plot[[i]])
+  cor_plot[[i]]$cor<-cors[i]
+}
+cor_plot<-bind_rows(cor_plot)
+
+ggplot(cor_plot, aes(x=V1, y = V2)) + 
+  geom_point() +
+  facet_wrap(~cor)
+```
+
+## Correlation and scatterplots
+
+```{r echo = FALSE}
+library(MASS)
+select<-dplyr::select
+cors<-seq(from=0, to =1, by = 0.1)
+cor_plot<-list()
+for(i in 1:length(cors)){
+  cor_plot[[i]] <- mvrnorm(50, 
+                      mu = c(0,0), 
+                      Sigma = matrix(c(1,cors[i],cors[i],1), ncol = 2),
+                      empirical = TRUE)
+  cor_plot[[i]]<-as.data.frame(cor_plot[[i]])
+  cor_plot[[i]]$cor<-cors[i]
+}
+cor_plot<-bind_rows(cor_plot)
+
+ggplot(cor_plot, aes(x=V1, y = V2)) + 
+  geom_point() +
+  geom_smooth(method = "lm", se = F) + 
+  facet_wrap(~cor)
+```
+
+## Correlation and scatterplots
+
+```{r echo = FALSE}
+library(MASS)
+select<-dplyr::select
+cors<-seq(from=-1, to =0, by = 0.1)
+cor_plot<-list()
+for(i in 1:length(cors)){
+  cor_plot[[i]] <- mvrnorm(50, 
+                      mu = c(0,0), 
+                      Sigma = matrix(c(1,cors[i],cors[i],1), ncol = 2),
+                      empirical = TRUE)
+  cor_plot[[i]]<-as.data.frame(cor_plot[[i]])
+  cor_plot[[i]]$cor<-cors[i]
+}
+cor_plot<-bind_rows(cor_plot)
+
+ggplot(cor_plot, aes(x=V1, y = V2)) + 
+  geom_point() +
+  facet_wrap(~cor)
+```
+
+## Correlation and Scatterplots
+
+```{r echo = FALSE}
+library(MASS)
+select<-dplyr::select
+cors<-seq(from=-1, to =0, by = 0.1)
+cor_plot<-list()
+for(i in 1:length(cors)){
+  cor_plot[[i]] <- mvrnorm(50, 
+                      mu = c(0,0), 
+                      Sigma = matrix(c(1,cors[i],cors[i],1), ncol = 2),
+                      empirical = TRUE)
+  cor_plot[[i]]<-as.data.frame(cor_plot[[i]])
+  cor_plot[[i]]$cor<-cors[i]
+}
+cor_plot<-bind_rows(cor_plot)
+
+ggplot(cor_plot, aes(x=V1, y = V2)) + 
+  geom_point() +
+  geom_smooth(method = "lm", se = F) + 
+  facet_wrap(~cor)
+```
+
+## Return to iris
+
+- Scatterplot Sepal.Width and Petal.Width
+- How would you describe the relationship between the variables?
+- Estimate the correlation
+- Describe what you find using both the estimated correlation and your interpretation of the scatterplot
+
+# Why we visualize
+
+## Exercise
+
+- load `data("anscombe")
+- Compute correlations for each pair x1, y1; x2, y2; ...
+- What do you find?
+- Now scatterplot each pair using ggplot
+
+## Homework prep
+
+- Download the Uniform Crime Reports Arrests by Age, Sex, and Race 2022 data from NACJD in delimited format: https://www.icpsr.umich.edu/web/NACJD/studies/39063
+- Move the data into a subdirectory of your intro_stats folder called ./data/
+

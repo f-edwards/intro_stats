@@ -11,7 +11,7 @@ Read Open Intro to Statistics Chapter 3 and 4.1
 
 Complete the following exercises (submit your work on paper, some drawing is involved)
 
-3.29, 3.34, 3.38, 3.40
+3.29, 3.38, 3.40
 4.1 - 4.3, 4.5, 4.7
 
 # Part 2

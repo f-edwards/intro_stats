@@ -12,3 +12,161 @@ Complete the following exercises:
 3.1 - 3.12; 3.13 - 3.22
 
 You can complete your homework either on paper (to be turned in during class), in R with code comments, or in a regular word processor.
+
+## 3.1
+
+a) False. This is the gambler's fallacy, next flid will be heads, they are independent
+b) False. There are red cards that are face cards.
+c) True. Aces are not face cards.
+
+## 3.2
+
+a) 18/38 = 0.47
+b) 18/38 - 0.47 
+c) I suspect an unfair wheel in b) because 300 reds in a row is incredibly unlikely! p = 0.47^ 300 ~ 0
+
+## 3.3 
+
+a) 10 flips, much more likely to see a 0.6 with a small sample
+b) 100, very likely to see value near 0.5 with large sample
+c) 100, less deviation in mean for large sample
+d) 10, greater chance of extreme sample with small sample
+
+## 3.4
+
+1/6 * 1/6 = 1/6 * 1/6; equal probability of any two exact combinations
+
+## 3.5
+
+a) 0.5^10 = 0.001 
+b) 0.5^10 = 0.001
+c) 1 - 0.5^10 = 0.999
+
+## 3.6
+
+a) 0; no combinations can produce this value
+b) of 36 possible combinations: 2:3; 3:2, 1:4; 4:1; so 4/36 = 0.11
+c) 6:6; 1/36 = 0.028
+
+## 3.7
+
+n = 2373; p(independent) = 0.35; p(swing) = 0.23; p(independent, swing) = 0.11
+
+a) no, they aren't disjoint because the joint probability is greater than 0
+b) imagine intersecting circles here
+c) P(independent|swing = 0); P(independent) - p(independent, swing = 1) = 0.24
+d) P(independent or swing) = P(independent) + P(swing) - P(independent, swing) = 0.47
+e) 1 - 0.47 = 0.53
+f) No; p(independent, swing) != p(swing)p(independent)
+
+## 3.8 
+
+p(poor) = 0.146; p(language) = 0.207; p(poor, language) = 0.042
+
+a) No, p(poor, language) > 0
+b) circles!
+c) p(poor, !language) = p(poor) - p(poor, language) = 0.146 - 0.042 = 10.4 percent
+d) p(poor or language) = p(poor) + p(language) - p(poor, language) = 0.146 + 0.207 - 0.042 = 31.1 percent
+e) p(!poor, !language) = 1 - p(poor or language) = 0.689
+f) p(poor)p(language) < p(poor, language), not independent
+
+## 3.9
+
+a) independent (assuming no curve)
+b) neither
+c) no 
+
+## 3.10
+
+a) p(wrong)^4 * p(right); (3/4)^4 * (1/4) = 0.08
+b) p(right)^5 = 0.25^5 = 0.001
+c) 1 - p(wrong^5) = 1 - 0.75^5 = 0.76
+
+## 3.11
+
+a) 0.16 + 0.09 = 0.25
+b) 0.17 + 0.09 = 0.26
+c) assuming education is independent of marriage partner selection; 0.25 * 0.26 = 0.065.
+d) No; definitely not reasonable. assortative mating is well documented
+
+## 3.12
+
+a) 1 - (0.25 + 0.15 + 0.28) = 0.32
+b) 0.25 + 0.32 = 0.57
+c) 0.25 + 0.15 + 0.28 = 0.68
+d) assuming independence (unlikely) 0.32 * 0.32 = 0.10
+e) assuming independence (unlikely) 0.68 * 0.68 = 0.46
+f) nope, not reasonable
+
+## 3.13
+
+a) yes if assuming independence; 0.3 * 0.7; no otherwise
+b) 
+  i) 0.3 * 0.7 = 0.21 
+  ii) P(A or B) = P(A) + P(B) - P(A and B) = 0.3 + 0.7 - 0.21 = 0.79
+  iii) P(A|B) = P(A) = 0.3
+c) No, because 0.1 != 0.21
+d) P(A|B) = P(A and B) / P(B) = 0.1 / 0.7 = 0.143
+
+## 3.14 
+
+p(j|pb) = p(pb and j) / p(pb) = 0.975
+
+## 3.15
+
+a) No, 0.18 of respondents fall into this combination.
+b) P(earth is warming or liberal Democrat) =
+= P(earth is warming) + P(liberal Democrat) - P(earth is warming and liberal Democrat) = 0.60 + 0.20 - 0.18 = 0.62
+c) P(earth is warming | liberal Democrat) = 0.18/0.20 = 0.9
+d) P(earth is warming | conservative Republican) = 0.11/0.33 = 0.33
+(e) No, the two appear to be dependent. 
+f) P(moderate/liberal Republican | not warming) = 0.06/0.34 = 0.18
+
+## 3.16
+
+a) No, there are individuals who are both excellent in health and have health coverage.
+b) P(excellent health) = 0.2329
+c) P(excellent health | health coverage) = 0.2099 / 0.8738 = 0.24
+d) P(excellent health | no health coverage) = 0.0230 / 0.1262 = 0.18
+e) No, because the probability that a person has excellent health varies between the two health coverage categories (24% vs 18%). 
+
+## 3.17
+
+a) No; there are women who like 5 guys
+b) 162 / 248 = 0.65
+c) 181 / 252 = 0.72
+d) assuming independence 0.65 * 0.72 = 0.47
+e) P(Umami or female) = P(Umami) + P(female) - P(Umami and female) = (6+ 252−1) / 500 = 0.514.
+
+## 3.18
+
+a) P(man or partner has blue eyes) = (108 + 114 - 78) / 204 = 0.7059
+b) P(partner with blue eyes | man with blue eyes) = 78 / 114 = 0.6842
+c) P(partner with blue eyes | man with brown eyes) = 19 / 54 = 0.3519
+P(partner with blue eyes | man with green eyes) = 11 / 36 = 0.3056
+d) It is much more likely for a man with blue eyes to have a partner with blue eyes than a man with another eye color to have a partner with blue eyes. Therefore it appears that eye colors of males and their partners are not independent.
+
+## 3.19
+
+a) pretty tree diagram here!
+b) P(can construct | pass) = P(pass and can construct)/ P(pass) = 0.84
+
+## 3.20
+
+a) pretty tree diagram here!
+b)  (pre | positive) = P (pre and positive) / P (positive)
+= 0.0297 / (0.0297 + 0.0194)
+= 0.6049
+
+## 3.21 
+
+a) pretty tree diagram here!
+b) P (lupus|positive) = P (lupus and positive) / P (positive)
+= 0.0196 /  (0.0196 + 0.2548)
+= 0.0714
+
+## 3.22
+
+a) pretty tree diagram here!
+b) 
+
