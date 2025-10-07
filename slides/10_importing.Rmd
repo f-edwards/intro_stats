@@ -1,0 +1,59 @@
+---
+title: "Importing data"
+author: "Frank Edwards"
+output: binb::metropolis
+---
+
+```{r setup, include=FALSE}
+rm(list=ls())
+library(tidyverse)
+library(MASS)
+select<-dplyr::select
+set.seed(1)
+
+options(xtable.comment = FALSE)
+theme_set(theme_bw())
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, tidy = F, size = "small")
+```
+
+# Pull ACS Data from IPUMS
+
+## Setting up your data pull
+
+- Create an account
+- Select the most recent ACS (1-year) data for your sample
+- Select the following person-level variables: Age; Race; Hispanic ethnicity; Educational attainment; Employment status; poverty status; Wage and salary income; Interest dividend, and rental income 
+- Select the following household-level variables: Total Household Income
+- Create data extract (format as comma separated .csv)
+- Move to project directory
+
+## Extract data 
+
+- (optional for windows) Install Git for Windows
+  - Set git bash as default terminal in tools-> global options -> terminal
+  - or use 7zip or other archive utility
+- on terminal `gunzip usa_001.tar.gz`
+- create `./data/` and move the .csv file there
+
+## File paths
+
+- Use `getwd()` to identify your file path
+- Use the file browser to locate your working directory in the GUI
+- Paths and relative paths: Note the differences between `.` and `~`
+
+## Import data
+
+We can use `read` functions to import data. Here we will use `read_csv`. For now, just give it one argument, the file path, and assign it to an object
+ 
+```{r}
+acs<-read_csv("./data/usa_00082.csv")
+```
+
+# Commence analysis!
+
+
