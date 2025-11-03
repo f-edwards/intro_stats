@@ -1,0 +1,26 @@
+---
+title: "HW8"
+author: "Frank Edwards"
+output: html_document
+---
+
+In this homework, we'll practice fitting a variety of linear regression models.
+
+## Question 1
+
+For this question, use the `iris` data built into R. 
+
+1. Create a scatterplot of (`Sepal.Length`) and  (`Petal.Length`). Interpret the scatterplot. Do you think this might be a good candidate for a linear model?
+
+2. Estimate a linear regression model with `Sepal.Length` as the outcome and `Petal.Length` as a predictor. Interpret the intercept and slope coefficients.
+
+3. Scatterplot sepal and petal length again, but this time with a facet or color aesthetic for species. Interpret.
+
+4. Add `Species` as a predictor to the model. Has $\beta_1$ changed between model 2 and model 4? What do the Species $\Beta$ parameters tell you?
+
+5. Which model do you find more convincing? Model 4 or Model 2? Why? 
+
+Read chapter 8 of OpenIntro to Statistics, then complete the following exercises:
+
+8.3, 8.6, 8.21, 8.22, 8.25 (a-c), 8.26 (a-c), 8.31 (a-b), 8.32 (a-b)
+
