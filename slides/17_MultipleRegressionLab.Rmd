@@ -1,0 +1,48 @@
+---
+title: "Introducing multiple regression"
+author: "Frank Edwards"
+output: binb::metropolis
+---
+
+```{r setup, include=FALSE}
+rm(list=ls())
+library(tidyverse)
+library(qss)
+library(MASS)
+select<-dplyr::select
+set.seed(1)
+
+options(xtable.comment = FALSE)
+theme_set(theme_bw())
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, tidy = F, size = "small")
+```
+
+## Linear regression with multiple predictors
+
+We can extend the linear regression model:
+
+\[ y = \beta_0 + \beta_1X + \varepsilon\] \pause
+
+to include more than one predictor. We rewrite the equation as:
+
+\[ y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 \cdots \beta_p x_p + \varepsilon\] \pause
+
+## In matrix notation
+
+To be more compact:
+
+\[ Y = \beta X + \varepsilon\]
+
+Where $Y$ is the vector of predictors, $\beta$ is the vector of coefficients (including the intercept), $X$ is the matrix of all predictors, and $\varepsilon$ is the error term.
+
+## Exercises
+
+- Fit a multiple regression of Petal.Width using `iris` 
+- Fit Pager's main model using the crimrec data
+- Interpret multiple regression
+- Visualize inference using predict()
