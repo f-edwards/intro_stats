@@ -1,0 +1,36 @@
+---
+title: "Multiple regression part 2"
+author: "Frank Edwards"
+output: binb::metropolis
+---
+
+```{r setup, include=FALSE}
+rm(list=ls())
+library(MASS)
+library(tidyverse)
+library(broom)
+library(patchwork)
+library(dagitty)
+select<-dplyr::select
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+# set global options
+theme_set(theme_bw())
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, tidy = TRUE, size = "tiny")
+```
+
+## Data for today
+
+```{r size = "tiny"}
+dat<-read_csv("https://www.openintro.org/data/csv/acs12.csv")
+glimpse(dat)
+```
+
+## Agenda
+
+1. Propose a theoretical model and construct a DAG
+2. Estimate a series of regression models with varying specifications that reflect our DAG
+3. Generate expected values and visuals to interpret our models

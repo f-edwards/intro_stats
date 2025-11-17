@@ -1,0 +1,422 @@
+---
+title: "Multiple regression part 2"
+author: "Frank Edwards"
+output: binb::metropolis
+---
+
+```{r setup, include=FALSE}
+rm(list=ls())
+library(MASS)
+library(tidyverse)
+library(broom)
+library(patchwork)
+library(dagitty)
+select<-dplyr::select
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+# set global options
+theme_set(theme_bw())
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, tidy = TRUE, size = "tiny")
+```
+
+## The linear regression model
+
+\[ Y = \beta_0 + \beta_1 X + \varepsilon \] \pause
+
+$\beta_0$: The value of $y$ when $x$ is equal to zero \pause
+
+$\beta_1$: The average increase in $y$ when $x$ increases by one unit \pause
+
+$\varepsilon$: The distance between the line $y = \beta_0 + \beta_1 X$ and the actual observed values of $y$. Allows us to estimate the line, even when x and y do not fall exactly on a line. \pause
+
+## Data for today
+
+```{r size = "tiny"}
+dat<-read_csv("https://www.openintro.org/data/csv/acs12.csv")
+glimpse(dat)
+```
+
+## Let's look at income for this ACS 2012 sample
+
+```{r fig.height = 4, size = "tiny"}
+ggplot(dat,
+       aes(x = income)) + 
+  geom_histogram()
+```
+
+## OK, what could cause variation in income? 
+
+```{r}
+glimpse(dat)
+```
+
+## Visual checks
+
+Causation requires association (though it's not always unconditional!). Looks promising here!
+
+```{r fig.height = 4}
+ggplot(dat,
+       aes(y = income, x = age)) + 
+  geom_point() 
+```
+
+## Visual checks
+
+```{r fig.height = 4}
+ggplot(dat,
+       aes(x = income)) + 
+  geom_histogram() + 
+  facet_wrap(~race, scales = "free_y")
+```
+
+## Visual checks
+
+```{r fig.height = 4}
+ggplot(dat,
+       aes(x = income)) + 
+  geom_histogram() + 
+  facet_wrap(~gender, scales = "free_y")
+```
+
+## Visual checks
+
+```{r fig.height = 4}
+ggplot(dat,
+       aes(x = income)) + 
+  geom_histogram() + 
+  facet_wrap(~edu, scales = "free_y")
+```
+
+
+
+## Visual checks
+
+```{r fig.height = 4}
+ggplot(dat,
+       aes(x = income, y = hrs_work)) + 
+  geom_point()
+```
+
+Let's build a **causal model** to formalize what we think causes variation in income across the population. \pause
+
+To do this, we'll use *Directed Acyclic Graphs*, or *DAGs* for short.
+
+## Let's start with a simple model
+
+Based on our deep scientific knowledge we suspect that *hours worked* $t$ has direct effects on *income* $I$
+
+```{r fig.height = 2}
+library(dagitty)
+d1<-dagitty("dag {
+            t->I
+            t [exposure]
+            I [outcome]
+            }") 
+plot(graphLayout(d1))
+```
+
+## Basic features of a DAG
+
+DAGs contain *nodes* that represent variables, and *edges* that represent causal relationships between variables. In this case, we have two nodes, hours worked and income, and one edge, representing the effect of time spent working on income. 
+
+```{r fig.height = 2, size = "tiny"}
+plot(graphLayout(d1))
+```
+
+## Basic features of a DAG
+
+DAGs compactly represent our theoretical models. What is the theory presented here and do we believe it is adequate?
+
+```{r fig.height = 2, size = "tiny", echo = F}
+plot(graphLayout(d1))
+```
+
+## Adding complexity
+
+Let's add level of education to our model. What theoretical relationships does this model suggest? 
+
+```{r fig.height = 2}
+d2<-dagitty("dag {
+            E->I
+            t->I
+            E [exposure]
+            I [outcome]
+            }") 
+
+plot(graphLayout(d2))
+```
+
+## The importance of theory
+
+Which model is more plausible? 
+
+```{r fig.height = 2, echo = T}
+d3<-dagitty("dag {
+            E->I
+            t->I
+            E->t
+            E [exposure]
+            I [outcome]
+            }") 
+
+plot(graphLayout(d3))
+```
+
+## Confounding
+
+We cannot obtain a valid estimate of the effect of $t$ on $I$ if DAG 3 is correct, unless we adjust for $E$. 
+
+This is a case of *confounding*. A relationship between two variables $X$ and $Y$ is confounded when a third variable $Z$ also causes $X$ and $Y$. 
+
+```{r fig.height = 2, echo = F}
+par(mfrow=c(1, 2))
+plot(graphLayout(d2))
+plot(graphLayout(d3))
+```
+
+## Let's try it: unconditional linear relationship
+
+```{r}
+m0<-lm(income ~ hrs_work,
+       data = dat)
+summary(m0)
+```
+
+## Let's try it: additive linear relationship
+
+```{r}
+m1<-lm(income ~ hrs_work + 
+         edu,
+       data = dat)
+summary(m1)
+```
+
+## Multiple regression (regression with more than 1 predictor)
+
+We can generalize the linear regression 
+
+$$Y = \beta_0 + \beta_1 X + \varepsilon$$
+$$varepsilon \sim N(0, \sigma^2)$$ \pause
+
+as 
+
+$$Y = \beta_0 + \beta_1 x_1 \cdots \beta_k x_k + \varepsilon\]
+\[\varepsilon \sim N(0, \sigma^2)$$
+
+Where $k$ is the number of predictor variables we include in the model. Our only constraint is that $k$ must be smaller than the number of observations $n$ in our data. 
+
+## Our model for income
+
+Our theoretical model tells us that if we want to learn about $t \rightarrow I$, we must adjust for the effects that $E$ has on both $t$ and $I$. 
+
+We tried this with the model:
+
+$$E(\textrm{income}) = \beta_0 + \beta_1 \textrm{hrs} + \beta_2 \textrm{edu}$$
+(Keep in mind that `edu` is going to be treated as the number of categories in the variable - 1 extra parameters). 
+
+## Interpreting this model
+
+```{r size = "tiny"}
+table(dat$edu)
+summary(m1)
+```
+
+## To understand what the model says, let's visualize y-hat
+
+```{r size = "tiny"}
+# set up prediction data with values of interest
+hrs_work<-0:60
+edu<-c("college", "hs or lower", "grad")
+pred_dat<-expand_grid(hrs_work, edu)
+# generate expected values and CI, join pred_dat
+e_y<-predict(m1, 
+             newdata = pred_dat,
+             interval = "confidence") |> 
+  bind_cols(pred_dat)
+# inspect
+head(e_y)
+```
+
+## Visualizing model expectations
+
+```{r fig.height = 4, size = "tiny"}
+ggplot(e_y,
+       aes(y = fit,
+           ymin = lwr,
+           ymax = upr,
+           x = hrs_work,
+           fill = edu,
+           color = edu)) + 
+  geom_ribbon(alpha = 0.5) + 
+  geom_line() 
+```
+
+## Multiple regression basics
+
+1. Categorical predictors act as intercepts, or differences in level
+2. Continuous predictors act as slopes
+
+## Regression with more than one slope and multiple intercepts
+
+Maybe we think age also plays a role. Let's assume this causal model, where $A$ is age. Now, we have to condition on $A$ and $E$ to close all *back door* paths between $t$ and $I$ and adjust for confounding
+
+```{r fig.height = 2}
+d4<-dagitty("dag {
+            E->I
+            t->I
+            E->t
+            A->I
+            A->t
+            A->E
+            t [exposure]
+            I [outcome]
+            }") 
+
+plot(graphLayout(d4))
+```
+
+## Estimating the model
+
+$$E(\textrm{income}) = \beta_0 + \beta_1 \textrm{hrs} + \beta_2 \textrm{edu} + \beta_3 \textrm{age}$$
+
+```{r}
+m2<-lm(income ~ hrs_work + 
+         edu + 
+         age,
+       data = dat)
+tidy(m2)
+```
+
+## Visualizing model expectations: setup
+
+```{r size = "tiny"}
+# set up prediction data with values of interest
+hrs_work<-c(0:60)
+age<-c(18:65)
+edu<-c("college", "hs or lower", "grad")
+pred_dat<-expand_grid(hrs_work, edu, age)
+# generate expected values and CI, join pred_dat
+e_y<-predict(m2, 
+             newdata = pred_dat,
+             interval = "confidence") |> 
+  bind_cols(pred_dat)
+# inspect
+head(e_y)
+```
+
+## Visualizing model expectations
+
+```{r echo = F}
+p1<-ggplot(e_y |> 
+             filter(age == 35),
+       aes(y = fit,
+           ymin = lwr,
+           ymax = upr,
+           x = hrs_work,
+           fill = edu,
+           color = edu)) + 
+  geom_line() + 
+  geom_ribbon(alpha = 0.5) + 
+  labs(subtitle = "Age 35") + 
+  coord_cartesian(ylim = c(0,120000))
+
+p2<-ggplot(e_y |> 
+             filter(hrs_work == 40),
+       aes(y = fit,
+           ymin = lwr,
+           ymax = upr,
+           x = age,
+           fill = edu,
+           color = edu)) + 
+  geom_line() + 
+  geom_ribbon(alpha = 0.5) + 
+  labs(subtitle = "40 hours per week")+ 
+  coord_cartesian(ylim = c(0,120000))
+
+p1 + p2 + plot_layout(guides = "collect")
+```
+
+## The difference between a DAG and a specification
+
+This DAG can help us theorize how to adjust our models, but it does not tell us the correct regression specification. Is the relationship between $A$ and $I$ linear? 
+
+```{r fig.height = 2}
+d4<-dagitty("dag {
+            E->I
+            t->I
+            E->t
+            A->I
+            A->t
+            A->E
+            t [exposure]
+            I [outcome]
+            }") 
+
+plot(graphLayout(d4))
+```
+
+## Adding complexity: quadratic terms
+
+We know that earnings for people less than age 18 and greater than age 70 tend to be very low (or zero). We can try to use a parabola (a quadratic equation) to model this process. 
+
+Quadratics take a form that looks like this
+
+```{r fig.height = 4}
+x<- -100:100
+y<- 5 + 2 * x + x^2
+plot(x, y, type = "l")
+```
+
+## Adding complexity: negative sign
+
+```{r fig.height = 4}
+x<- -100:100
+y<- 5 + 2 * x - x^2
+plot(x, y, type = "l")
+```
+
+## Fitting a quadratic term
+
+We use the I() function to require R to evaluate math statements inside formula objects
+
+```{r}
+m3<-lm(income ~ hrs_work + 
+         edu +
+         (age + 
+         I(age^2)),
+       data = dat)
+tidy(m3)
+```
+
+## Visualizing model expectations
+
+```{r echo = F}
+# set up prediction data with values of interest
+hrs_work<-c(0:60)
+age<-c(18:65)
+edu<-c("college", "hs or lower", "grad")
+pred_dat<-expand_grid(hrs_work, edu, age)
+# generate expected values and CI, join pred_dat
+e_y<-predict(m3, 
+             newdata = pred_dat,
+             interval = "confidence") |> 
+  bind_cols(pred_dat)
+# inspect
+head(e_y)
+
+ggplot(e_y |> 
+             filter(hrs_work == 40),
+       aes(y = fit,
+           ymin = lwr,
+           ymax = upr,
+           x = age,
+           fill = edu,
+           color = edu)) + 
+  geom_line() + 
+  geom_ribbon(alpha = 0.5) + 
+  labs(subtitle = "40 hours per week")+ 
+  coord_cartesian(ylim = c(0,120000))
+```
