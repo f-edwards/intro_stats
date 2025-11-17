@@ -7,32 +7,129 @@ output: html_document
 
 Use the UCR 2022 Arrests by Age, Sex, and Race data for this assignment. You will need to refer to the included codebook for this assignment. 
 
+1. Load the 12-month data into R using the `read_tsv` command
+
 ```{r}
+library(tidyverse)
 dat<-read_tsv("./data/ICPSR_39063/DS0002/39063-0002-Data.tsv")
 ```
 
-1. Load the 12-month data into R using the `read_tsv` command
-
 2. Use select() to create a new data frame that includes only the following variables: `STATE`, `AGENCY`, `POP`, `OFFENSE`, `M25_29`, `F25_29`
+
+```{r}
+dat <- dat |> 
+  select(STATE, AGENCY, POP, OFFENSE, M25_29, F25_29)
+```
 
 3. Using the codebook, identify the cases with missing values on the focal variables. Use filter() to remove rows with missing values from your data frame.
 
+```{r}
+dat <- dat |> 
+  filter(!(is.na(M25_29)), !(is.na(F25_29)), M25_29 != 999998, F25_29 != 999998) |> 
+  filter(POP>0) # also remove zero pop places, can't compute rates there
+```
+
 4. Use filter() to subset the data frame you created to only include the offense category 'Murder and non-negligent manslaughter'
+
+```{r}
+dat <- dat |> 
+  filter(OFFENSE == "011")
+```
 
 5. Create two new variables that measure Male age 25-29 arrests per 100,000 population, and Female age 25-29 arrests per 100,000 population. 
 
+```{r}
+dat <- dat |> 
+  mutate(M25_29_per100k = M25_29/POP * 1e5, 
+         F25_29_per100k = F25_29/POP * 1e5)
+```
+
 6. Create histograms for each of these two per capita arrest measures. Interpret the histograms
+
+```{r}
+ggplot(dat, 
+       aes(x = M25_29_per100k)) + 
+  geom_histogram() + 
+  labs(title = "Male arrests per 100,000")
+
+ggplot(dat,
+       aes(x = F25_29_per100k)) +
+  geom_histogram() + 
+  labs(title = "Female arrests per 100,000")
+```
 
 7. Repeat these histograms, but subset to only those places with greater than 10,000 population. Interpret the histograms.
 
+```{r}
+dat_cities <- dat |> 
+  filter(POP>10000)
+
+ggplot(dat_cities, 
+       aes(x = M25_29_per100k)) + 
+  geom_histogram() + 
+  labs(title = "Male arrests per 100,000, cities over 10,000 population")
+
+ggplot(dat_cities,
+       aes(x = F25_29_per100k))+ 
+  geom_histogram() + 
+  labs(title = "Female arrests per 100,000, cities over 10,000 population")
+```
+
 8. Scatterplot your two per capita arrest measures. Interpret this scatterplot.
+
+```{r}
+ggplot(dat,
+       aes(x = M25_29_per100k,
+           y = F25_29_per100k)) + 
+  geom_point() + 
+  labs(title = "Arrest rates per capita, male (x), female (y), all agencies")
+```
 
 9. Subset to only places with a population larger than 10,000, repeat the scatterplot, and interpret. 
 
+```{r}
+ggplot(dat_cities,
+       aes(x = M25_29_per100k,
+           y = F25_29_per100k)) + 
+  geom_point() + 
+  labs(title = "Arrest rates per capita, male (x), female (y), all agencies, cities over 10,000 population")
+```
+
 10. Compute the correlation between your per capita measures and interpret, using insights from the histograms and scatterplots. 
+
+```{r}
+cor(dat_cities$M25_29_per100k, dat_cities$F25_29_per100k)
+```
 
 11. Compute the mean of the agency-level arrest rates for Male arrests by state. Plot the distribution of these means. 
 
+```{r}
+dat_st <- dat |> 
+  group_by(STATE) |> 
+  summarize(M25_29_mn = mean(M25_29_per100k, na.rm=T))
+
+ggplot(dat_st,
+       aes(x = M25_29_mn)) + 
+  geom_histogram() + 
+  labs(title = "State-level average agency arrest rates")
+```
+
 12. Compute a 95 percent confidence interval for average agency-level Male arrests rates by state. What does this interval mean? 
+
+```{r}
+dat_st <- dat |> 
+  group_by(STATE) |> 
+  summarize(M25_29_mn = mean(M25_29_per100k, na.rm=T),
+            M25_29_sd = sd(M25_29_per100k),
+            n_agencies = n())
+
+# compute SE
+dat_st <- dat_st |> 
+  mutate(se = M25_29_sd/sqrt(n_agencies))
+# compute CI
+dat_st <- dat_st |> 
+  mutate(ci_lwr = M25_29_mn - se * 1.96,
+         ci_upr = M25_29_mn + se * 1.96)
+```
 
 13. Does the central limit theorem apply here? Why or why not? How should that impact our interpretation of the confidence interval above? 

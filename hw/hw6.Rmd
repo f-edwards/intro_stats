@@ -1,5 +1,5 @@
 ---
-title: "HW7"
+title: "HW6"
 author: "Frank Edwards"
 date: "`r Sys.Date()`"
 output: html_document
@@ -11,11 +11,45 @@ The data are available for download here: https://www.icpsr.umich.edu/web/NACJD/
 
 1. Load the 12-month data into R using the `read_tsv` command
 
+```{r}
+library(tidyverse)
+ucr <- read_delim("../data/ICPSR_39063/DS0002/39063-0002-Data.tsv")
+```
+
+
 2. Using the variables `AW`, `AB`, `AI`, `AA`, and `POP`, create a new data frame that includes a variable called `arrests_Per100k` that computes the arrest rate per 100,000 population for each agency in the data. Consider how you will handle missing values, and agencies that report no population.
+
+```{r}
+ucr <- ucr |> 
+  filter(POP>0) |> 
+  mutate(AW = ifelse(AW == max(AW), NA, AW),
+         AB = ifelse(AB == max(AB), NA, AB),
+         AI = ifelse(AI == max(AI), NA, AI),
+         AA = ifelse(AA == max(AA), NA, AA)) |> 
+  mutate(arrests_Per100k = (AW + AB + AI + AA) / POP * 1e5)
+```
+
 
 3. Subset this data frame to include only agencies covering more than 10,000 population and only arrests for fraud and for forgery and counterfeiting. How many fewer rows does this new data frame contain when compared to the original data?
 
+```{r}
+ucr <- ucr |> 
+  filter(POP>=1e4,
+         (OFFENSE == "100" | OFFENSE == "110"))
+```
+
+
 4. Use pivot_wider to create two new columns: one for the fraud arrest rate and another for the forgery and counterfeiting arrest rate. Then scatterplot these two arrest rates and describe their joint distribution.
+
+```{r}
+ucr_wide <- ucr |> 
+  select(ORI, YEAR, STATE, OFFENSE, arrests_Per100k) |> 
+  pivot_wider(names_from = OFFENSE,
+              values_from = arrests_Per100k) |> 
+  rename("fraud" = "110",
+         "forgery" = "100")
+```
+
 
 5. For each state, compute the average agency-level arrest rates for both fraud and counterfeiting. Create a barplot to show your findings and interpret. 
 

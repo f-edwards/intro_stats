@@ -45,15 +45,15 @@ Compute, display, and interpret mean callback rates for subjects by race and by 
 
 ## Question 2  
 
-Estimate a linear regression for the effect of criminal records on callback rates. Display your model results with tidy() from the broom package. Write your model as a mathematical equation. Interpret the parameter estimates. Evaluate whether these estimates are statistically significant at the 0.05 level, and interpret the meaning of this significance test.
+First, let's assume criminal records affect callbacks. Draw a DAG to reflect this theory. Estimate a linear regression for the effect of criminal records on callback rates. Write your model as a mathematical equation. Interpret the parameter estimates. Evaluate whether these estimates are statistically significant at the 0.05 level, and interpret the meaning of this significance test.
 
 ## Question 3
 
-Estimate a linear regression for the effect of race on callback rates. Describe and evaluate the model as in question 2.
+Second, let's assume race affects callbacks (exclude crimrec for now). Draw a DAG to reflect this theory. Estimate a linear regression for the effect of race on callback rates. Describe and evaluate the model as in question 2.
 
 ## Question 4
 
-Estimate a linear regression for callback rates that includes an interaction term for race and criminal record.
+Finally, let's assume that callback and crimrec affect callbacks and draw a revised DAG. Estimate a linear regression for callback rates that includes an interaction term for race and criminal record. 
 
 We call this a 'treatment heterogeneity' approach. What do you think that means? Try to explain theoretically what our model is saying about the impact of criminal records on callback rates under this specification.
 
