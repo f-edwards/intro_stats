@@ -5,21 +5,8 @@ output: binb::metropolis
 ---
 
 ```{r setup, include=FALSE}
-rm(list=ls())
-library(MASS)
 library(tidyverse)
-library(broom)
-library(patchwork)
 library(dagitty)
-select<-dplyr::select
-def.chunk.hook  <- knitr::knit_hooks$get("chunk")
-knitr::knit_hooks$set(chunk = function(x, options) {
-  x <- def.chunk.hook(x, options)
-  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
-})
-# set global options
-theme_set(theme_bw())
-knitr::opts_chunk$set(warning=FALSE, message=FALSE, tidy = TRUE, size = "tiny")
 ```
 
 ## Data for today

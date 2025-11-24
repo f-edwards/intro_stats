@@ -385,8 +385,8 @@ We use the I() function to require R to evaluate math statements inside formula 
 ```{r}
 m3<-lm(income ~ hrs_work + 
          edu +
-         (age + 
-         I(age^2)),
+         age + 
+         I(age^2),
        data = dat)
 tidy(m3)
 ```
