@@ -1,0 +1,28 @@
+---
+title: "HW8"
+author: "Frank Edwards"
+output: html_document
+---
+
+In this homework, we'll practice fitting and comparing regression models
+
+Use the ACS data we've been working with in class
+
+```{r}
+dat<-read_csv("https://www.openintro.org/data/csv/acs12.csv")
+```
+
+We will build a model to predict hrs_work. 
+
+1. Using the variables available in the data, draw a DAG to summarize your theory on what might cause variation in hours worked
+
+2. Fit a model with only additive terms that represents your theory. Explain what the parameters mean and interpret statistical significance. 
+3. Now, fit a model that includes at least one interaction. Explain what the parameters mean. 
+
+4. Compare these models using $R^2$ and BIC. What do you find?
+
+5. Visualize the regression model against the observed data. Any concerns?
+
+6. Consider other model specifications and repeat 4-5
+
+7. Which model do you prefer? Why?

@@ -1,0 +1,462 @@
+---
+title: "Descriptive regression and model fit"
+author: "Frank Edwards"
+output: binb::metropolis
+---
+
+```{r setup, include=FALSE}
+rm(list=ls())
+library(MASS)
+library(tidyverse)
+library(broom)
+select<-dplyr::select
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+# set global options
+theme_set(theme_bw())
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, tidy = TRUE, size = "tiny")
+```
+
+
+## The use of regression
+
+Sometimes we use regression to estimate causal relationships (e.g. The Mark of a Criminal Record).
+
+Sometimes we use regression for pure prediction (e.g. election forecasts)
+
+**Sometimes we use regression to help us better understand and describe a process that depends on many variables.**
+
+## Building a model to approximate the data generating process
+
+1. Develop an explicit theoretical model
+2. Evaluate data availability and quality
+3. Experiment with model specification
+  1. Evaluate goodness-of-fit metrics
+  2. Evaluate the *predictive distribution* relative to the *empirical distribution*
+
+## So what processes *cause* income to vary across people?
+
+```{r echo = F}
+library(dagitty)
+d1<-dagitty("dag {
+            Education->Income
+            Race->Income
+            Gender->Income
+            Age->Income
+            Race->Education
+            Age->Education
+            Disability->Income
+            Age->Disability
+            Race->Disability
+            Gender->Disability
+            Income [outcome]
+            Education [exposure]
+            }") 
+plot(graphLayout(d1))
+```
+
+## Let's check our data
+
+```{r size = "tiny"}
+dat<-read_csv("https://www.openintro.org/data/csv/acs12.csv")
+### subset to in labor force
+dat <- dat |> 
+  filter(employment != "not in labor force")
+glimpse(dat)
+```
+
+## The distribution of income among those in the labor forceit ad
+
+```{r fig.height = 4, size = "tiny"}
+summary(dat$income)
+ggplot(dat,
+       aes(x = income)) + 
+  geom_histogram() + 
+  scale_x_sqrt()
+```
+
+
+## Let's check our data
+
+```{r}
+dat |> group_by(race, gender) |> 
+  summarize(n = n()) |> 
+  knitr::kable()
+```
+
+
+## Fitting a preliminary model
+
+Our theory tells us that income is a function of age, disability, education, race, and gender. It doesn't tell us what form those function take though!
+
+Let's start simple and additive
+
+```{r}
+m0<-lm(income ~ edu + age + 
+         race + disability + gender,
+       data = dat)
+```
+
+This model can be written as
+
+$$y_i = \beta_0 + \beta_1 edu_i + \beta_2 age_i + \beta_3 race_i + \beta_4 disability_i + \beta_5 gender_i + \varepsilon_i$$
+
+## Evaluating our model fit with R^2
+
+```{r sizy = "tiny", echo = F}
+summary(m0)
+```
+
+## Proportion of variance explained
+
+The coefficient of determination, $R^2$, provides one measure of *goodness-of-fit*. 
+
+$$R^2 = \frac{\sum (y_i - \hat{y})^2}{\sum (y_i - \bar{y})^2} $$ 
+
+$R^2$ tells us how much of the variation in $y$ is explained by the regression line $y = \beta X$ compared to the line $y = \bar{y}$
+
+## GoF basics
+
+```{r}
+mod1<-lm(income ~ age, data = dat)
+summary(mod1)$r.squared
+mod2<-lm(income ~ hrs_work, data = dat)
+summary(mod2)$r.squared
+```
+
+Which model is a better fit? 
+
+## Have we improved our fit compared to guessing the mean (dotted line)? 
+
+```{r echo = F}
+library(patchwork)
+p1<-ggplot(dat,
+           aes(x = age, y = income)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = F) + 
+  geom_hline(yintercept = mean(dat$income, na.rm=T), lty = 2) + 
+  labs(title = "Age vs income", subtitle = "regression in blue, mean dashed")
+
+p2<-ggplot(dat,
+           aes(x = hrs_work, y = income)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = F) + 
+  geom_hline(yintercept = mean(dat$income, na.rm=T), lty = 2) + 
+  labs(title = "Hours worked vs income", subtitle = "regression in blue, mean dashed")
+
+p1+p2
+
+```
+
+## GoF as reduction in error
+
+```{r}
+## How much residual error is there in model 1?
+sum(mod1$residuals^2)
+## and how much in model 2?
+sum(mod2$residuals^2)
+```
+
+## So let's estimate and compare some models
+
+```{r}
+# our additive model
+m0<-lm(income ~ edu + age + 
+         race + disability + gender,
+       data = dat)
+# maybe education-> income varies by gender?
+m1<-lm(income ~ edu * gender + 
+         age + race + disability,
+       data = dat)
+
+summary(m0)$r.squared
+summary(m1)$r.squared
+```
+
+## So let's estimate and compare some models
+
+```{r}
+# maybe education-> income varies by gender and race?
+m2<-lm(income ~ edu * (gender + race) + 
+         age + disability,
+       data = dat)
+
+summary(m1)$r.squared
+summary(m2)$r.squared
+```
+
+## So let's estimate and compare some models
+
+```{r}
+# maybe education-> income varies by race/gender pairs?
+m3<-lm(income ~ edu * (gender * race) + 
+         age + disability,
+       data = dat)
+
+summary(m3)$r.squared
+summary(m2)$r.squared
+```
+
+## Let's go nuts
+
+```{r}
+# maybe education-> income varies by race/gender pairs?
+m4<-lm(income ~ edu * (gender * race * 
+         age * disability),
+       data = dat)
+
+summary(m3)$r.squared
+summary(m4)$r.squared
+```
+
+## When are we just overfitting?
+
+The Bayesian Information Criterion (BIC) provides a check against overfitting. It evaluates goodness of fit with a penalty for complexity (count of model parameters), based on the log-likelihood of the model. The first term $k\ln(n)$ adjusts for model complexity with $n$ as the number of observations and $k$ as the number of model parameters ($\beta$)
+
+$$BIC = k \ln(n)  - 2\ln(\hat{L})$$
+
+```{r}
+BIC(m0, m1, m2, m3, m4)
+```
+
+## Visualizing observed versus expected Model 0
+
+```{r echo = F}
+# get expected values from observed data
+preds0<-dat %>% 
+  bind_cols(predict(m0, 
+            interval = "confidence"))
+  
+ggplot(preds0 %>% 
+         filter(disability == "no"),
+       aes(y = fit,
+           ymin = lwr,
+           ymax = upr,
+           x = age,
+           color = edu,
+           fill = edu)) + 
+  geom_ribbon(alpha = 0.5) +
+  geom_point(aes(y = income),
+             alpha = 0.25) + 
+  facet_wrap(gender~race, ncol = 4) +
+  scale_y_sqrt() + 
+  labs(subtitle = "Disability = no") 
+
+```
+
+## Visualizing observed versus expected Model 1
+
+```{r echo = F}
+# get expected values from observed data
+preds1<-dat %>% 
+  bind_cols(predict(m1, 
+            interval = "confidence"))
+  
+ggplot(preds1 %>% 
+         filter(disability == "no"),
+       aes(y = fit,
+           ymin = lwr,
+           ymax = upr,
+           x = age,
+           color = edu,
+           fill = edu)) + 
+  geom_ribbon(alpha = 0.5) +
+  geom_point(aes(y = income),
+             alpha = 0.25) + 
+  facet_wrap(gender~race, ncol = 4) +
+  scale_y_sqrt() + 
+  labs(subtitle = "Disability = no") 
+
+```
+
+## Visualizing observed versus expected Model 2
+
+```{r echo = F}
+# get expected values from observed data
+preds2<-dat %>% 
+  bind_cols(predict(m2, 
+            interval = "confidence"))
+  
+ggplot(preds2 %>% 
+         filter(disability == "no"),
+       aes(y = fit,
+           ymin = lwr,
+           ymax = upr,
+           x = age,
+           color = edu,
+           fill = edu)) + 
+  geom_ribbon(alpha = 0.5) +
+  geom_point(aes(y = income),
+             alpha = 0.25) + 
+  facet_wrap(gender~race, ncol = 4) +
+  scale_y_sqrt() + 
+  labs(subtitle = "Disability = no") 
+
+```
+
+## Visualizing observed versus expected Model 3
+
+```{r echo = F}
+# get expected values from observed data
+preds3<-dat %>% 
+  bind_cols(predict(m3, 
+            interval = "confidence"))
+  
+ggplot(preds3 %>% 
+         filter(disability == "no"),
+       aes(y = fit,
+           ymin = lwr,
+           ymax = upr,
+           x = age,
+           color = edu,
+           fill = edu)) + 
+  geom_ribbon(alpha = 0.5) +
+  geom_point(aes(y = income),
+             alpha = 0.25) + 
+  facet_wrap(gender~race, ncol = 4) +
+  scale_y_sqrt() + 
+  labs(subtitle = "Disability = no") 
+
+```
+
+## Visualizing observed versus expected Model 4
+
+```{r echo = F}
+# get expected values from observed data
+preds4<-dat %>% 
+  bind_cols(predict(m4, 
+            interval = "confidence"))
+  
+ggplot(preds4 %>% 
+         filter(disability == "no"),
+       aes(y = fit,
+           ymin = lwr,
+           ymax = upr,
+           x = age,
+           color = edu,
+           fill = edu)) + 
+  geom_ribbon(alpha = 0.5) +
+  geom_point(aes(y = income),
+             alpha = 0.25) + 
+  facet_wrap(gender~race, ncol = 4) +
+  scale_y_sqrt() + 
+  labs(subtitle = "Disability = no") 
+
+```
+
+## Fitted vs observed plots can be very informative: Model 0
+
+```{r echo = F}
+ggplot(preds0,
+       aes(x = income,
+           y = fit,
+           color = edu,
+           shape = disability)) + 
+  geom_point() + 
+  geom_abline() + 
+  scale_x_sqrt() + 
+  scale_y_sqrt() + 
+  facet_wrap(gender~race, ncol = 4) + 
+  coord_cartesian(xlim=c(0, max(dat$income, na.rm=T)),
+                  ylim=c(0, max(dat$income, na.rm=T))) + 
+  labs(x = "Observed", y = "Expected") + 
+  coord_cartesian(xlim = c(0, 450000),
+                  ylim = c(0, 450000))
+```
+
+## Fitted vs observed plots can be very informative: Model 1
+
+```{r echo = F}
+ggplot(preds1,
+       aes(x = income,
+           y = fit,
+           color = edu,
+           shape = disability)) + 
+  geom_point() + 
+  geom_abline() + 
+  scale_x_sqrt() + 
+  scale_y_sqrt() + 
+  facet_wrap(gender~race, ncol = 4) + 
+  coord_cartesian(xlim=c(0, max(dat$income, na.rm=T)),
+                  ylim=c(0, max(dat$income, na.rm=T))) + 
+  labs(x = "Observed", y = "Expected")
+```
+
+## Fitted vs observed plots can be very informative: Model 2
+
+```{r echo = F}
+ggplot(preds2,
+       aes(x = income,
+           y = fit,
+           color = edu,
+           shape = disability)) + 
+  geom_point() + 
+  geom_abline() + 
+  scale_x_sqrt() + 
+  scale_y_sqrt() + 
+  facet_wrap(gender~race, ncol = 4) + 
+  coord_cartesian(xlim=c(0, max(dat$income, na.rm=T)),
+                  ylim=c(0, max(dat$income, na.rm=T))) + 
+  labs(x = "Observed", y = "Expected")
+```
+
+## Fitted vs observed plots can be very informative: Model 3
+
+```{r echo = F}
+ggplot(preds3,
+       aes(x = income,
+           y = fit,
+           color = edu,
+           shape = disability)) + 
+  geom_point() + 
+  geom_abline() + 
+  scale_x_sqrt() + 
+  scale_y_sqrt() + 
+  facet_wrap(gender~race, ncol = 4) + 
+  coord_cartesian(xlim=c(0, max(dat$income, na.rm=T)),
+                  ylim=c(0, max(dat$income, na.rm=T))) + 
+  labs(x = "Observed", y = "Expected")
+```
+
+## Fitted vs observed plots can be very informative: Model 4
+
+```{r echo = F}
+ggplot(preds4,
+       aes(x = income,
+           y = fit,
+           color = edu,
+           shape = disability)) + 
+  geom_point() + 
+  geom_abline() + 
+  scale_x_sqrt() + 
+  scale_y_sqrt() + 
+  facet_wrap(gender~race, ncol = 4) + 
+  coord_cartesian(xlim=c(0, max(dat$income, na.rm=T)),
+                  ylim=c(0, max(dat$income, na.rm=T))) + 
+  labs(x = "Observed", y = "Expected")
+```
+
+## Which model is best?
+
+It depends on our target!
+
+```{r echo = F}
+tab_out <- data.frame(model = 0:4, r2 = c(summary(m0)$r.squared, summary(m1)$r.squared, summary(m2)$r.squared, summary(m3)$r.squared, summary(m4)$r.squared),
+                      BIC = BIC(m0, m1, m2, m3, m4))
+
+knitr::kable(tab_out)
+```
+
+
+## General advice
+
+When fitting a model for *descriptive* or *predictive* purposes
+
+1. Choose predictors based on theory
+2. Experiment with varying function forms (additive, interactive, nonlinear)
+3. Compare goodness of fit using $R^2$, but also use BIC and other criteria robust to overfitting (leave-one-out is gold standard)
+4. Evaluate expected versus observed, evaluate regression line against empirical data
+5. Next time: simulate new data from your regression and evaluate it against the observed
