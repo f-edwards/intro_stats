@@ -288,7 +288,7 @@ Reading: ROS Ch 11
 	- Goodness of fit
 	- Cross validation
 
-- 10/27: 
+- 10/27: Lab - diagnostics and fit
 	- Visualization for diagnostics
 	- Simulation from model fit
 	- `BIC()`, `AIC()`
