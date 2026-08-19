@@ -3,330 +3,400 @@ layout: default
 ---
 
 | Introduction to Statistics   | 27:202:542 |  
-| Lecture: Monday, Wednesday 1:00 - 2:20   | Room: CLJ 574 |
+| Monday, Tuesday 1:00 - 2:20PM | Room: CLJ 574 |
 | Instructor: Frank Edwards | frank.edwards@rutgers.edu|
-| Office hours: Tuesday 9:30-12:30 | Room: CLJ 579B |
+| Office hours: Wednesday 10AM-12PM | Room: CLJ 579B |
 
 ## Quick links
 
 [Lecture slides](https://github.com/f-edwards/intro_stats/tree/master/slides)
 
-[Homework assignments](https://github.com/f-edwards/intro_stats/tree/master/hw)
-
-## Course description
-
-This is the course syllabus for Introduction to Statistics, Fall 2024. It is a graduate-level introduction to conducting quantitative social science research, and is the first part of a two-semester sequence. 
-
-For computing and data analysis workflow, we will cover the foundations of statistical computing with a heavy emphasis on data visualization using the R programming language and tidyverse suite of packages. You will also learn how to write professional reports on statistical findings using the RMarkdown format for fusing code and plain text writing together. 
-
-For statistics, we will review core mathematical concepts in algebra, linear algebra, and calculus, then proceed to build foundations in core probability theory. From there, we will learn foundational principles and techniques in statistical inference and conclude the class with a detailed unit on linear regression. 
-
-## Course goals
-
-1. Become comfortable fundamentals of probability and statistics. By the end of the course, they should be able to interpret and use common statistical measures of central tendency and variability, and be able to describe and interpret random events using probability statements. 
-
-2. Learn how to describe and estimate relationships for continuous outcomes using linear regression. 
-
-3. Use command-line interfaces for interacting with a computer and its file structure.
-
-4. Design and write basic data analysis programs using the R programming language. 
-
-5. Produce univariate and bivariate data visualizations using the ggplot2 library in R. 
-
-## Books
-
-- Open Intro to Statistics. 2019. https://www.openintro.org/book/os/
-
-- Healy, Data Visualization. 2018. https://socviz.co/
-
-- Alexander, Rohan. Telling Stories with Data. 2023. https://tellingstorieswithdata.com/ 
-
-## Communication
-
-We will use Canvas for course discussion and communication. Email is my preferred mode of one-on-one communication.
-
-## Expectations
-
-- Attendance is strongly recommended. We move fast, it'll be hard to keep up if you miss lecture.
-
-- Bring a computer - we'll be writing code in class.
-
-- Complete homework on time. Homework should take between 4-8 hours to complete. *Don't start them the day before they are due.* All students are granted one no-questions-asked extension on homework assignments. Please notify me if you are using it for the week. 
-
-- Be respectful and professional. Be mindful of the space you take up in the classroom.
-
-- Collaborate with your colleagues. Social science is a team sport. I encourage you all to work together to complete assignments. However, you DO need to submit your own work. We will penalize work that is copy/pasted from other students or online sources. 
-
-- Document your code. Explain what your code does in lots of detail. It helps you and helps us to evaluate your work. 
-
-- Don't use AI tools. If you want to learn to become a data analyst, you must learn to code. AI tools will make you sloppy and will often produce wrong code. Plus they are burning the planet. 
+[Homework assignments](https://github.com/f-edwards/intro_stats_26/tree/master/hw)
 
 ## Prerequisites
 
-No prior statistics or programming experience is assumed. Statistics requires a basic grasp of algebra, geometry, matrix algebra, and calculus. We'll be reviewing the foundational math throughout the semester. 
+No prior statistics or programming experience is assumed. Familiarity with algebra and basic calculus is helpful, but we'll be reviewing the foundational math throughout the semester. 
+
+I recommend this [refresher] (https://iqss.github.io/prefresher/) if you are feeling shaky on math fundamentals. The 3Blue1Brown series on [linear algebra](https://www.3blue1brown.com/?topic=linear-algebra), [calculus] (https://www.3blue1brown.com/?topic=calculus), and [probability](https://www.3blue1brown.com/?topic=probability) are also worth checking out.
+
+If you are new to programming or new to `R`, that is ok! We will take a slow pace throughout. If you'd like some focused support, here is a list how to do [many common tasks with `R`](https://posit.cloud/learn/recipes).
+
+## Course description
+
+This is the course syllabus for Introduction to Statistics, Fall 2026. It is a graduate-level introduction to conducting quantitative social science research, and is the first part of a two-semester sequence. 
+
+We will cover the foundations of statistical computing with a heavy emphasis on data visualization using the `R` programming language and `tidyverse` suite of packages. You will also learn how to write statistical reports using Quarto. 
+
+We will review the core math needed for statistics (some algebra, calculus, and linear algebra), then proceed to build foundations in probability. We will cover the basics of quantifying uncertainty in statistics, and learn how to use and interpret linear regression models.
+
+## Course goals
+
+1. Become comfortable fundamentals of probability and statistics. 
+
+2. Learn how to describe and estimate statistical relationships with linear regression. 
+
+3. Explain basic principles of causal inference and research design.
+
+4. Use command-line interfaces for interacting with a computer and its file structure.
+
+5. Design and write basic data analysis programs using the `R` programming language. 
+
+6. Produce data visualizations using `ggplot2`. 
+
+7. Produce professional-looking reports using Quarto.
+
+## Book
+
+- Gelman, Hill, and Vehtari. Regression and Other Stories (ROS). 2024.  https://avehtari.github.io/ROS-Examples/index.html
+
+- Recommended: Alexander. Telling Stories with Data. 2023. https://tellingstorieswithdata.com/
+
+## Communication
+
+Email is my preferred mode of communication. Announcements will be sent to the class listserv. We won't be using Canvas.
+
+## Expectations
+
+- Attendance is required. 
+
+- Bring a computer.
+
+- Complete homework on time. 
+
+- Be respectful and professional. 
+
+- Collaborate with your colleagues. 
+
+- Document your code. 
+
+- Try not to use AI tools.
+
+## AI Policy
+
+Large language models have become incredibly good at writing R code. They also have caused tremendous social and environmental harm and have been shown to impede learning. 
+
+I will allow AI usage under the following conditions:
+
+1. You do not ask an LLM to complete an entire assignment or homework question. You are here to learn. Please don't waste my time by having me grade LLM output.
+2. You first try to solve a problem yourself. You should expect to struggle with the material, it is hard. But the struggle is where learning happens!
+3. Only use LLMs for specific advice on technical problems: i.e. 'how do I compute a z-score for a variable in R?' or 'how do I change an axis label in ggplot?'. 
+4. Clearly indicate where you used AI in your assignment with the flag *AI support used*
+5. Include a full transcript of your LLM sessions. The following prompt will do it: "provide a transcript of this session". Attach this log to homework submissions as LLM_log.txt
+
+Companies like Anthropic and OpenAI want you to become paying users dependent on their platforms. You don't want them to own your workflow. You should build you workflow with open-source tools whenever possible. Open-source and on-device models have several advantages for researchers. They don't cost money, they can produce reproducible output, and they keep your data secure. If you are going to use an LLM, I recommend using Ollama with Gemma4 (or similar) on your laptop. Install is pretty easy: https://ollama.com/ 
 
 ## Software
 
-All instruction will be conducted in the R statistical programming language. R is free and open-source, and can be downloaded [here](https://cran.r-project.org/).
+All instruction will be conducted in the `R` statistical programming language. R is free and open-source, and can be downloaded [here](https://cran.r-project.org/).
 
-We will be using the [RStudio integrated development environment](https://www.rstudio.com/products/rstudio/download/). RStudio provides a powerful text editor and a range of very useful utilities. 
+We will be using the [RStudio integrated development environment](https://www.rstudio.com/products/rstudio/download/). RStudio provides a powerful text editor and a range of very useful utilities. Positron is similar and is an acceptable choice if you prefer it.
 
-In addition to writing code, it is a great tool for writing reports, papers, and slides using [RMarkdown](https://rmarkdown.rstudio.com/lesson-1.html). This syllabus, most of my course materials, and most of my academic papers are based on Markdown. 
+In addition to writing code, RStudio a great tool for writing reports, papers, and slides using [Quarto](https://quarto.org/), which is a plain text format based on markdown. This syllabus, most of my course materials, and most of my academic papers are written in markdown. 
 
-You are required to submit assignments using RMarkdown. 
+You are required to submit assignments as rendered Quarto output. 
 
 Lastly, I recommend learning some form of version control to ensure your work is a) backed up, b) easily accessible to collaborators and c) reproducible. Git and GitHub are great and flexible tools for software development that have powerful applications for researchers. Here's a useful [intro to GitHub](https://happygitwithr.com/) for R users.
 
+If you'd like to clone the course repository on your laptop, you can run
+
+```
+git clone https://github.com/f-edwards/intro_stats_26.git
+```
+
+To keep it up to date with current slides and homework, just navigate to the course directory (`cd intro_stats_26`), then run
+
+```
+git fetch
+```
+
 ## Assignments and grading
 
-Course grading is based entirely on homework assignments. I grade assignments with a simple 2 point scale, and am generally a forgiving grader. If your work indicates a serious effort to complete the assignment, you can expect to receive full 2 points of credit. If you submit incomplete or sloppy work, you can expect 1 point of credit. Incomplete work will receive a zero.
+Grades are based entirely on homework assignments. I grade assignments with a simple 2 point scale, and am generally a forgiving grader. If your work indicates a serious effort to complete the assignment, you can expect to receive full 2 points of credit. If you submit incomplete or sloppy work, you can expect 1 point of credit. Incomplete work will receive a zero.
+
+Statistics is hard, and I prioritize growth and learning over getting correct answers in grading and evaluation.
 
 All students who work hard and complete the assignments can expect to receive an A as their final grade. 
 
-### Homeworks
+### Homework
 
-I will assign homework each week. Assignments are Fridays by 7pm. Email your homework assignments (output and source code) to me and the course TA.
+I will assign homework each week. Assignments are due on Sunday by 10pm. Email your homework assignments (output and source code) to the instructor.
 
-Problem sets provide you an opportunity to directly apply what we've learned to real-world data analysis and statistical problems. Don't wait until the last minute to get started. These homeworks should take you on average between 2 and 6 hours of work to complete. Space that work out and give yourself time to ask for help from your peers and your instructor.
+Don't wait until the last minute to get started. These homeworks should take you on average about 6 hours of work to complete. Space that work out and give yourself time to ask for help from your peers and your instructor. 
 
-Group work is strongly encouraged for homework. I recommend scheduling a time to meet with your classmates to work on the problem sets. Each week, I will open a channel on the course Slack page for you to ask coding and technical questions. Quantitative research is a team sport, but I still do expect you to write your own code and interpretation. Don't just copy/paste from your peers, the internet, or a chatbot. 
+Group work is strongly encouraged. I recommend scheduling a time to meet with your classmates to work on the problem sets collectively. Quantitative research is a team sport, but I still do expect you to write your own code and interpretation. Don't just copy/paste from your peers, the internet, or a chatbot. Cheating will make me grumpy, please don't do it. 
 
-Homework should be submited via canbas with attached code and code output. Generally, this means I want to see two files: your script and your rendered output.
-
-Life happens. All students are granted two free extensions on homework, no questions asked. Just email prior to the due date and let me know you'll be taking an extension and when I should expect your submission.
+Life happens. All students are granted two free extensions on homework, no questions asked. Just email prior to the due date to let me know you'll be taking an extension and when I should expect your submission.
 
 ## Course schedule, topics, and readings
 
 **Week 1**
 
-Reading: Alexander Ch1; OI 1
+Reading: ROS Ch 1-2, Appendix A A.1 - A.4;
 
-- 9/3: Lab - Introduction to the course and intro to R
+- 9/1: Lab - Course intro and Introduction to R
 	- Review the syllabus and course format
 	- Installation and FOSS principles
-    - Familiarizing yourself with the RStudio workspace
-    - File formats: R Scripts, RMarkdown
-    - R: basic math operations, creating atomic objects
-    
-- HW 1: Due 9/10 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw1.Rmd)
+		- Local LLMs and responsible AI usage
+	- File paths and structures
+	- Working from the terminal, basic commands
+    - Install and setup: R and RStudio
+    - Introduction to R
+		- Vectors, matrices, and data.frames
+		- Indexing
+		- Vector operations
+		- Introducing `tidyverse`
+	 
+- HW 1 Due 9/6 
 
 **Week 2**
 
-Reading: OI 2; Healy 1 and 2
+ROS Ch 3
 
-- 9/8: Lecture - Math review 
-	- Algebra: order of operations, exponents and logarithms, polynomials, plotting functions on a cartesian plane
+- 9/7: Labor Day, no class 
+
+- 9/8: Math basics for statistics
+	- Algebra: order of operations, exponents and logarithms, polynomials, linear functions
     - Linear algebra: vectors and matrices, scalar operations
 	- Functions and limits
-	- The basics of derivitaves and integrals
+	- The basics of derivatives and integrals
+	- Basic set operations
+	- Marginal, joint, conditional probability
+	- Bayes theorem
 
-- 9/9: Lab - Working with vectors in R  
-	- Vectors, matrices, and data.frames
-	- Indexing
-	- Vector operations
-	- Commonly used functions for vectors
-
-- HW 2: Due 9/17 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw2.Rmd)
+- HW 2: Due 9/13 (Extension available for Rosh Hashanah)
 
 **Week 3**
 
-Reading: OI 3
+Reading: ROS Ch 4-5
 
-- 9/15: Lecture - Probability 
-	- Making probability statements, computing probabilities (marginal, conditional, joint)
-	- Basics of set theory
-
-- 9/16: Lab - group_by and ggplot basics
-	- Theory: grammar of graphics
-	- Importing tabular data
-	- Basic univariate visuals: densities, histograms, barplots
-	- Introduction to plain text editing with markdown
-    - Writing math with LaTeX
-
-- HW 3: Due 9/24 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw3.Rmd)
-
-**Week 4**
-
-Reading: OI 4; Alexander 2, 3 (recommended)
-
-
-- 9/22: Random variables and moments
-	- The Normal distribution and Normal random variables
-	- Simulating Normal variables
+- 9/14: Lecture - Generalizing from samples to populations 
+	- Measurement: theoretical constructs and operational measures
+	- Basic principles of inference: parameters, statistics, validity
+	- Random variables
 	- Measures of central tendency: mean, median, mode
 	- Measures of dispersion: variance, standard deviation, quantiles
 
-- 9/23: Lab - Visualizing more than one variable, basics of tidy data
-	- Tidy data principles
-	- Manipulating data frames with mutate(), select(), and filter()
-	- Scatterplots
+- 9/15: Lab - Writing in plain text
+	- WYSIWYG vs plain text
+	- Quarto 101
+	- Markdown 101
+	- Writing math with LaTeX
 
-- HW 4: Due 10/1 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw4.Rmd)
+- HW 3: Due 9/20 
 
-**Week 5**
+**Week 4**
 
-Reading: Healy 3
+Reading: ROS Ch 6
 
-- 9/29: Lecture - Types of variables and measures of association
+- 9/21: Lecture - Types of variables and measures of association (absences excused for Yom Kippur)
 	- Continuous, integer, binary, categorical, and ordinal measures
 	- Correlation
 	- Assessing bivariate distributions with crosstabs and scatterplots
 
-- 9/30: Lab - Summary operations
-	- Intermediate vector operations: group_by() and summarize()
-	- Comparing means for causal inference
-	- Visualization for comparing groups
+- 9/22: Lab - importing data, visualization basics, simulation 101
+	- Importing tabular data, `read_csv()`
+	- Introduction to `ggplot2`
+	- Simulating random variables
+	- Simulating a data generating process
 
-- HW 5: Due 10/8 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw5.Rmd)
+- HW 4: Due 9/27 
 
-**Week 6**
+**Week 5**
 
-Reading: Alexander 4
+Reading: ROS Ch 7
 
-- 10/6: Lecture - Causal inference in experimental designs
-	- The fundamental problem of causal inference
-	- Thinking counterfactually
-	- Experimental design and randomization
-	- Comparing means and the sample average treatment effect
-
-- 10/7: Lab - Summary operations
-	- Intermediate vector operations: group_by() and summarize()
-	- Comparing means for causal inference
-	- Computing the SATE
-	- Visualization for comparing groups
-
-- HW 6: Due 10/15 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw6.Rmd)
-
-**Week 7** 
-
-Reading: Healy 4, Alexander 7, 11 (6, 8 recommended)
-
-- 10/13: Lecture - Observational data and bivariate association
-	- Correlation
-	- Kinds of observational data: cross-sectional, panel, longitudinal
-	- Natural experiments and basic causal inference
-	- Descriptive vs causal analysis
-
-- 10/14: Lab - Data visualization with more than two variables
-	- Using additional ggplot aesthetics: color and fill
-	- Adding multiple geoms to visuals
-
-- HW 7: Due 10/22 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw7.Rmd)
-
-**Week 8** 
-
-Reading: OI 5, Alexander 9-10
-
-- 10/20: Lecture - Generalizing from samples to populations
-	- Measurement: theoretical constructs and operational measures
-	- Basic principles of inference: parameters and statistics
-	- Internal and external validity
-	- Ethics of measurement and inference in social science, epistemic humility
-
-10/21: Lab - working with more than one object
-	- Harmonizing tables
-	- Joins
-
-- HW 8: Due 10/29 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw8.Rmd)
-
-**Week 9** 
-
-Reading: OI 8.1, 
-
-- 10/27: Lecture - Introducing the linear regression model
+- 9/28: Lecture - Introducing the linear regression model
 	- Basic theory of linear regression
 	- The structural component of the model
 	- Theorizing and visualizing relationships as linear
 	- Deterministic predictions
 
-- 10/28: Lab - lm()
-	- Introduction to lm() syntax
-	- Estimating and interpreting the model
+- 9/29: `lm()`
+	- Introduction to formula syntax for models in R
+	- `group_by` and `summarize()`
+	- visuals for more than one variable
 
-- HW 9: Due 11/5 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw9.Rmd)
+- HW 5: Due 10/4
 
-**Week 10** 
+**Week 6**
 
-Reading: OI 8.2-8.4, Alexander 12
+Reading: ROS Ch 8
 
-- 11/3: Lecture - The stochastic (random) component of the linear regression model
+- 10/5:  Lecture - The stochastic (random) component of the linear regression model
 	- Anatomy of a linear regression model
 	- What is error? 
 	- Ordinary Least Squares as an estimation approach
 	- The meaning of stochastic error
-	- Prediction with error
+	- Stochastic predictions
 
-- 11/4: Lab - more lm()
-	- OLS diagnostics
-	- Using fit to compare models 
-	- predict()
+- 10/6: Lab - more linear models, Bayesian and frequentist estimation
+	- Introducing `brm()`
+	- Intrepreting `summary()` output for linear models
+	- density functions: `pnorm()` and `dnorm()`
 
-- HW 10: Due 11/21 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw10.Rmd)
+- HW 6: Due 10/11
 
-**Week 11** 
+**Week 7** 
 
-- 11/12 and 11/14 No class, ASC meetings
+Reading: ROS Ch 9
 
-**Week 12** 
-
-Reading: OI 6, 7
-
-- 11/17: Inference and regression
+- 10/12: Inference and prediction with linear regression
 	- The law of large numbers
 	- The central limit theorem
 	- Standard errors of parameters
-	- The logic of frequentist hypothesis testing
-	- t-tests for OLS parameters
+	- Hypothesis testing
+	- Confidence intervals
+	- Prediction intervals
 
-- 11/18: Inference for OLS in R
-	- summary.lm()
-	- Interpretation and writing up OLS results
+- 10/13: Lab - prediction
+	- Introducing `predict()`
+	- Introducing `tidybayes` 
+		- `linpred_draws()`
+		- `predicted_draws()`
 
-- HW 11: Due 11/26 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw11.Rmd)
+- HW 7: Due 10/18 
+
+**Week 8** 
+
+Reading: ROS Ch 10
+
+- 10/19: Multiple regression
+	- Logic of conditioning
+	- Categorical predictors
+	- Interpretation of coefficients
+	- Interactions
+
+- 10/20: Lab - multiple regression
+	- Fitting models with factors
+	- Formula syntax for interactions
+	- Interpretation of interactions
+	- Prediction for interactions
+
+- HW 8: Due 10/25 
+
+**Week 9** 
+
+Reading: ROS Ch 11
+
+- 10/26: Linear regression assumptions, diagnostics, fit
+	- Assumptions of OLS 
+	- Observed versus fitted
+	- Residual plots
+	- Replications from fitted
+	- Goodness of fit
+	- Cross validation
+
+- 10/27: 
+	- Visualization for diagnostics
+	- Simulation from model fit
+	- `BIC()`, `AIC()`
+	- `WAIC()`, `loo()`
+
+- HW 9: Due 11/1 
+
+**Week 10** 
+
+Reading: ROS Ch 12
+
+- 11/2: Nonlinear transformations
+	- Linear transformations
+		- Standardization with *z* scores
+	- Nonlinear transformations
+		- Logarithms
+		- Discretizing continuous measures
+
+- 11/3 Lab - implementing transformations
+	- `scale()`, `factor()` and inline transformations
+	- `log()`, `exp()`, `log1p()`, `expm1()`
+	- Axis transformations in ggplot
+	- Conditional transforms
+		- `ifelse()`
+		- `case_when()`
+
+- HW 10: Due 11/8 
+
+**Week 11** 
+
+Reading: ROS Ch 16 - 17
+
+- 11/9: Design, power, extrapolation, missing data
+	- Statistical power
+	- Replication crisis and publication bias
+	- Post-stratification
+	- Deterministic imputation
+	- Multiple imputation
+
+- 11/10: Lab - missing data
+	- Computing statistical power 
+	- Evaluating missing data
+	- Basic multiple imputation with `mice`
+
+**Week 12** 
+
+Reading: ROS Ch 18
+
+- 11/16: Lecture - Causal inference in experimental designs
+	- Potential outcomes
+	- Thinking counterfactually
+	- Experimental design and randomization
+	- Comparing means and the sample average treatment effect
+
+- 11/17: Lab - Simulation for regression and power
+	- Computing power directly
+	- Simulating from a regression model
+	- Computing power from simulations
+	- Prior prediction
+
+- HW 12: Due 11/24 (extended for ASC)
 
 **Week 13** 
 
-Reading: Alexander 12
+Reading: ROS Ch 19
 
-- 11/24: Confidence intervals, prediction with error
-	- The logic of confidence intervals
-	- Interpretation of confidence intervals (danger!)
-	- Using regression models for expected values with error
-	- Using regression models for prediction with error
+11/23: Causal inference with observational data, part 1
+	- Introducing causal graphs
+		- Confounding and causal graphs
+		- Backdoor criterion and d-separation
+		- Good and bad controls
+		- Mediation
 
-- 11/25: Lab - inference and uncertainty
-	- Using predict() for uncertainty
-	- Expected value intervals, prediction intervals
-	- The bootstrap
+11/24: Lab - drawing and analyzing causal graphs
+	- Introduction to `dagitty` and `ggdag`
+	- Drawing a causal model
+	- Identifying implications of causal models
 
-- HW 12: Due 12/3 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw12.Rmd)
+- HW 12: Due 11/24 (same hw as week 12)
 
 **Week 14**
 
-Reading: OI 9.1, Healy 6
+Reading: ROS Ch 20
 
-- 12/1: Multiple regression
-	- Confounding
-	- Visualizing causal relationships with Directed Acyclic Graphs 
-	- OLS with multiple additive predictors
+- 11/30: Causal inference with observational data, part 2
+	- Ignorability, balance, empirical support
+	- Constructing counterfactuals with matching and weighting
+		- Propensity score methods
+		- Inverse probability of treatment methods
 
-- 12/2: Lab
-	- lm() with multiple predictors
-	- prediction with multiple predictors
-	- Visualizing OLS predictions
+- 12/1: Lab - matching and weighting
+	- Implementing propensity scores for linear regression
+	- Implementing inverse probability of treatment for linear regression
+	- Using weights for regression
 
-- HW 13: Due 12/10 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw13.Rmd)
+- HW 14: Due 12/6 
 
 **Week 15**
 
-Reading: OI 9.2-9.4, Healy 6
+Reading: ROS Ch 21
 
-- 12/8: Multiple regression part 2
-	- Interactions
-	- Regression as a tool for modeling the data generating process
+- 12/7: Causal inference with observational data, part 3
+	- Defining the estimand clearly
+	- Instrumental variables
+	- Regression discontinuity
+	- Difference in differences
 
-- 12/9: Advanced lm()
-	- Estimating interactions
-	- Visualizing interactions
+- 12/8: Lab - Visualization for causal inference 
+	- Introducing `marginaleffects`
+	- Small multiple plots 
+	- Posterior visualization with `tidybayes`
 
-- HW 14: Due 12/16 (https://github.com/f-edwards/intro_stats/blob/master/hw/hw14.Rmd)
+- HW 15: Due 12/13
