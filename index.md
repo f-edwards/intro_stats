@@ -31,7 +31,7 @@ We will review the core math needed for statistics (some algebra, calculus, and 
 
 ## Course goals
 
-1. Become comfortable fundamentals of probability and statistics. 
+1. Become comfortable with the fundamentals of probability and statistics. 
 
 2. Learn how to describe and estimate statistical relationships with linear regression. 
 
