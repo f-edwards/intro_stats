@@ -17,7 +17,7 @@ layout: default
 
 No prior statistics or programming experience is assumed. Familiarity with algebra and basic calculus is helpful, but we'll be reviewing the foundational math throughout the semester. 
 
-I recommend this [refresher] (https://iqss.github.io/prefresher/) if you are feeling shaky on math fundamentals. The 3Blue1Brown series on [linear algebra](https://www.3blue1brown.com/?topic=linear-algebra), [calculus] (https://www.3blue1brown.com/?topic=calculus), and [probability](https://www.3blue1brown.com/?topic=probability) are also worth checking out.
+I recommend this [refresher](https://iqss.github.io/prefresher/) if you are feeling shaky on math fundamentals. The 3Blue1Brown series on [linear algebra](https://www.3blue1brown.com/?topic=linear-algebra), [calculus](https://www.3blue1brown.com/?topic=calculus), and [probability](https://www.3blue1brown.com/?topic=probability) are also worth checking out.
 
 If you are new to programming or new to `R`, that is ok! We will take a slow pace throughout. If you'd like some focused support, here is a list how to do [many common tasks with `R`](https://posit.cloud/learn/recipes).
 
@@ -47,7 +47,7 @@ We will review the core math needed for statistics (some algebra, calculus, and 
 
 ## Book
 
-- Gelman, Hill, and Vehtari. Regression and Other Stories (ROS). 2024.  https://avehtari.github.io/ROS-Examples/index.html
+- Required: Gelman, Hill, and Vehtari. Regression and Other Stories (ROS). 2024.  https://avehtari.github.io/ROS-Examples/index.html
 
 - Recommended: Alexander. Telling Stories with Data. 2023. https://tellingstorieswithdata.com/
 
@@ -63,6 +63,8 @@ Email is my preferred mode of communication. Announcements will be sent to the c
 
 - Complete homework on time. 
 
+- Keep up with the reading.
+
 - Be respectful and professional. 
 
 - Collaborate with your colleagues. 
@@ -73,17 +75,17 @@ Email is my preferred mode of communication. Announcements will be sent to the c
 
 ## AI Policy
 
-Large language models have become incredibly good at writing R code. They also have caused tremendous social and environmental harm and have been shown to impede learning. 
+Large language models have become incredibly good at writing `R` code. They also have caused tremendous social and environmental harm and have been shown to impede learning. 
 
 I will allow AI usage under the following conditions:
 
 1. You do not ask an LLM to complete an entire assignment or homework question. You are here to learn. Please don't waste my time by having me grade LLM output.
 2. You first try to solve a problem yourself. You should expect to struggle with the material, it is hard. But the struggle is where learning happens!
 3. Only use LLMs for specific advice on technical problems: i.e. 'how do I compute a z-score for a variable in R?' or 'how do I change an axis label in ggplot?'. 
-4. Clearly indicate where you used AI in your assignment with the flag *AI support used*
-5. Include a full transcript of your LLM sessions. The following prompt will do it: "provide a transcript of this session". Attach this log to homework submissions as LLM_log.txt
+4. Clearly indicate where you used AI in your assignment with the flag **AI support used**
+5. Include a full transcript of your LLM sessions. The following prompt will do it: "provide a transcript of this session". Attach this log to homework submissions as `LLM_log.txt`
 
-Companies like Anthropic and OpenAI want you to become paying users dependent on their platforms. You don't want them to own your workflow. You should build you workflow with open-source tools whenever possible. Open-source and on-device models have several advantages for researchers. They don't cost money, they can produce reproducible output, and they keep your data secure. If you are going to use an LLM, I recommend using Ollama with Gemma4 (or similar) on your laptop. Install is pretty easy: https://ollama.com/ 
+Companies like Anthropic and OpenAI want you to become paying users dependent on their platforms. You don't want them to own your workflow. You should build you workflow with open-source tools whenever possible. Open-source and on-device models have several advantages for researchers. They don't cost money, they can produce reproducible output, and they keep your data secure. If you are going to use an LLM, I recommend using [Ollama](https://ollama.com/) with Gemma4 (or similar) on your laptop.  
 
 ## Software
 
@@ -100,10 +102,10 @@ Lastly, I recommend learning some form of version control to ensure your work is
 If you'd like to clone the course repository on your laptop, you can run
 
 ```
-git clone https://github.com/f-edwards/intro_stats_26.git
+git clone https://github.com/f-edwards/intro_stats.git
 ```
 
-To keep it up to date with current slides and homework, just navigate to the course directory (`cd intro_stats_26`), then run
+To keep it up to date with current slides and homework, just navigate to the course directory (`cd intro_stats`), then run
 
 ```
 git fetch
@@ -150,7 +152,7 @@ Reading: ROS Ch 1-2, Appendix A A.1 - A.4;
 
 **Week 2**
 
-ROS Ch 3
+Reading: ROS Ch 3
 
 - 9/7: Labor Day, no class 
 
