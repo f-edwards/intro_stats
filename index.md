@@ -83,7 +83,7 @@ I will allow AI usage under the following conditions:
 2. You first try to solve a problem yourself. You should expect to struggle with the material, it is hard. But the struggle is where learning happens!
 3. Only use LLMs for specific advice on technical problems: i.e. 'how do I compute a z-score for a variable in R?' or 'how do I change an axis label in ggplot?'. 
 4. Clearly indicate where you used AI in your assignment with the flag **AI support used**
-5. Include a full transcript of your LLM sessions. The following prompt will do it: "provide a transcript of this session". Attach this log to homework submissions as `LLM_log.txt`
+5. Include a full transcript of your LLM sessions. Using Posit Assistant: gear -> export as .html
 
 Companies like Anthropic and OpenAI want you to become paying users dependent on their platforms. You don't want them to own your workflow. You should build you workflow with open-source tools whenever possible. Open-source and on-device models have several advantages for researchers. They don't cost money, they can produce reproducible output, and they keep your data secure. If you are going to use an LLM, I recommend using [Ollama](https://ollama.com/) with Gemma4 (or similar) on your laptop.  
 
