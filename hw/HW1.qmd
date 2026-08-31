@@ -1,0 +1,64 @@
+---
+title: "HW1"
+author: "YOUR NAME"
+date: "`r Sys.Date()`"
+format: html
+---
+
+# Practice with R
+
+Load the tidyverse package
+
+```{r}
+library(tidyverse)
+```
+
+Load the iris data into your environment 
+
+```{r}
+data(iris)
+```
+
+1. Use the `mean` function to compute the average petal width in the sample
+
+```{r}
+# YOUR CODE GOES HERE
+```
+
+Your explanation goes here!
+
+2. Use the `min` function to compute the smallest petal width in the data
+
+```{r}
+# YOUR CODE GOES HERE
+```
+
+Your explanation goes here!
+
+3. Use the `max` function to compute the largest petal width in the data
+
+```{r}
+# YOUR CODE GOES HERE
+```
+
+Your explanation goes here!
+
+4. Briefly describe the distribution of petal widths in the data using your answers from 1-3
+
+```{r}
+# YOUR CODE GOES HERE
+```
+
+Your explanation goes here!
+
+5. Use the `hist` function to create a histogram of petal widths. Describe the distribution of the data.
+
+```{r}
+# YOUR CODE GOES HERE
+```
+
+Your explanation goes here!
+
+# Book exercises
+
+Complete ROS exercises 1.4, 1.5 and 2.7

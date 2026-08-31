@@ -1,0 +1,482 @@
+---
+title: "1. Intro to Intro to Stats"
+author: "Frank Edwards"
+format:
+  revealjs: 
+    theme: dark
+    embed-resources: true
+execute: 
+  echo: true
+---
+
+## Syllabus / schedule
+
+<https://f-edwards.github.io/intro_stats>
+
+## Books for class
+
+Required: Gelman, Hill, and Vehtari. Regression and Other Stories (ROS). 2024. <https://avehtari.github.io/ROS-Examples/index.html>
+
+Recommended: Alexander. Telling Stories with Data. 2023. <https://tellingstorieswithdata.com/>
+
+## Navigating the schedule
+
+<https://f-edwards.github.io/intro_stats>
+
+## Software installation
+
+- Install R <https://cran.r-project.org/>
+- Install RStudio <https://posit.co/download/rstudio-desktop/>
+- On windows Git Bash: <https://git-scm.com/install/windows>
+
+## Open science basic principles
+
+-   Science should be reproducible
+-   Scientific decision-making should be transparent
+-   Free and open source software are the best foundations for reproducible and open research
+
+# RStudio walkthrough
+
+# The script and the console
+
+# Let's work with R
+
+## Using the console
+
+- Try some simple math operations with: + - / *  
+- Now try some operations that use: ^ ()
+- Try sqrt(); try log()
+
+## Objects in R
+
+For the following, please work in your RStudio Console
+
+-   In R, we use the assignment operator `<-` to assign values to objects
+-   Try to create an object named $x$ and assign the value 3 to the object
+-   Confirm that $x$ is equal to three using the `==` operator
+-   Compute $\frac{x+3}{2x^2}$
+
+## Objects in R
+
+- Create a new object named $y$ that is equal to $3x$
+- Confirm that $y$ is equal to $3x$ using the `==` operator
+- Print both y and 3x to the console
+
+## The Environment
+
+- List all objects in your environment with `ls()` 
+- Compare the results to your 'Environment` tab in RStudio
+- Next, let's restart our session of R and see what happens to our Environment 
+- (Session Menu -\> Restart R or Shift + Cmd + 0)
+
+## Reproducible research: the environment is a sandbox, treat it that way
+
+- The environment should always be treated as temporary
+- It disappears when you close R
+- For now, you never need to save the environment
+- You can use the environment for quick checks on objects or operations
+
+## Reproducible research: the importance of scripts
+
+- Scripts provide line-by-line instructions for everything you do in your analysis.
+- ALWAYS DO YOUR WORK IN SCRIPTS!
+- Scripts allow your entire analysis to be reproduced by simply running the program
+- To make a new script: Cmd+Shift+N, or File -\> New File -\> R Script
+
+## File paths and the command line
+
+We need to choose a good place to save this cool new script we are making
+
+-   Click the 'terminal' tab and let's check out how file paths work from the command line
+-   Basic unix command line tools: cd; ls; mkdir
+-   Navigate to your root directory with `cd ~`
+-   Use `ls` to identify a good place for you to store your stats course work
+-   create a new directory called `intro_stats` using mkdir
+
+## Your class folder and path
+
+- Now save this script as `lab1.R` in `./intro_stats/`
+- Make note of its exact file path (the details before the cursor on your terminal)
+- Create a new directory inside `intro_stats` called `hw`
+- Use these directories all semester!
+
+## RStudio projects
+
+- Projects keep your scripts pointed to the right directories
+- Create a new project for intro_stats now
+- Always work in a project
+
+## Back to our script
+
+Let's repeat the operations we did before in the console, but now in the script
+- On line 1: create an object named $x$ and assign the value 3 to the object
+- On line 2: Confirm that $x$ is equal to three using the `==` operator
+- On line 3: Create a new object named $y$ that is equal to $3x$
+- On line 4: print the object y by simply calling `y`
+
+## Sourcing and confirming output
+
+-   Now run your program! Click 'source' or use cmd+shift+return to run the script
+-   Check out your environment tab in RStudio, what do you see?
+-   Restart R again: cmd+shift+0
+-   Now source your script again. Reproducibility!
+
+# Congrats you wrote a program!
+
+## Let's document your program
+
+- We use # to write code comments
+- Before each line of code in your script, write a brief comment explaining what the line of code will do in plain english
+
+## Packages in R
+- Packages extend the functionality of R (dramatically!)
+- Thousands of FOSS packages available through CRAN
+- Try it:
+  - On the console: `install.packages("tidyverse")
+  - you only have to install once!
+
+## Loading packages in R
+
+- Use the `library("packagename")` format to import a package
+- Try it with tidyverse
+- Package loading will usually be the first few lines of your scripts
+
+## Quarto and plaintext writing
+
+Quarto is a powerful and flexible tool for writing reports, slides, and websites. It's very easy to use in RStudio
+
+<https://quarto.org>
+
+## Trying out quarto for a report
+
+In RStudio
+
+Click File-> New File -> Quarto Document
+
+## Tour of quarto
+
+- YAML header
+- Markdown plain text
+- Code chunks
+- Rendering output
+
+## LLMs and writing code
+
+- You are here to learn how to do statistical analysis
+- LLM use has been shown to impede learning and skill retention
+- LLMs are very good at writing computer code
+
+## LLM policy
+
+1. You do not ask an LLM to complete an entire assignment or homework question.
+2. You first try to solve a problem yourself. 
+3. Only use LLMs for specific advice on technical problems
+4. Clearly indicate where you used AI in your assignment with the flag AI support used
+5. Include a full transcript of your LLM sessions. 
+
+## Local LLMs
+
+- https://ollama.com/download
+- Intsall Gemma 4
+- Configure Posit assistant
+
+## LLM Usage
+
+- Example session
+- Export log file
+
+# Introducing vectors and data.frames
+
+## Vectors
+
+## R works with objects 
+
+```{r}
+a<-2
+a<-a+1
+```
+
+## R works with objects 
+
+```{r}
+a
+```
+
+## Objects can take many types
+
+```{r}
+a<-2
+class(a)
+```
+
+## Objects can take many types
+
+```{r}
+b<-"howdy"
+class(b)
+```
+
+## Objects can take many types
+
+```{r}
+c<-TRUE
+class(c)
+```
+
+## Vectors
+
+Vectors are one-dimensional arrays of values of any class
+
+```{r}
+vector1<-c(2,3,4,5,6)
+vector1
+```
+
+## Vectors
+
+Vectors are one-dimensional arrays of values of any class
+
+```{r}
+vector2<-c("a", "fancy", "vector")
+vector2
+```
+
+## Vectors
+
+```{r}
+vector3<-c(TRUE, FALSE, TRUE, FALSE, FALSE)
+vector3
+```
+
+## Vectorized operations
+
+```{r}
+vector1
+2 * vector1
+```
+
+## Vectorized operations
+
+```{r}
+vector3
+vector3==FALSE
+```
+
+## Vector indexing
+
+```{r}
+vector2
+```
+
+## Vector indexing
+
+```{r}
+vector2
+vector2[1]
+```
+
+## Vector indexing
+
+```{r}
+vector2
+vector2[2]
+```
+
+## Vector indexing
+
+```{r}
+vector2
+vector2[3]
+```
+
+## Operations and vector indexing
+
+```{r}
+vector1
+vector1[2] + 3
+```
+
+## Functions!
+
+R has loads and loads of functions. 
+
+- Functions run a fixed set of operations on some argument(s)
+- Functions return a value that can be assigned to an object
+- Functions take the general form *function(arguments)*
+
+## Some common function in R for vectors
+
+```{r}
+vector1
+max(vector1)
+min(vector1)
+```
+
+## Some common function in R for vectors
+
+```{r}
+vector1
+length(vector1)
+```
+
+## Some common function in R for vectors
+
+```{r}
+vector1
+mean(vector1)
+```
+
+## Some common function in R for vectors
+
+```{r}
+vector1
+sum(vector1)
+```
+
+## Functions can work together
+
+```{r}
+sum(vector1)
+length(vector1)
+# this is the same as mean()
+sum(vector1)/length(vector1)
+```
+
+## We can even write our own!
+
+```{r}
+redundantMean<-function(x){
+  n<-length(x)
+  sum_x<-sum(x)
+  xbar<-sum_x/n
+  return(xbar)
+}
+redundantMean(vector1)
+```
+
+## Exercises
+
+Create a new vector (any name is fine) that contains the elements 4, 6, 22, 3, 5
+
+- Access the 3rd element of your vector
+- Use the `length` function to see how long your vector is
+- Use the `mean` function to compute the mean of your vector
+- Use `sum` to compute sum; confirm that this is equal to mean * length
+
+## Data frames 
+
+```{r}
+head(iris)
+```
+
+## As super-matrices?
+
+Recall that we can obtain any element $x_{ij}$ from a matrix $X$ with row index $i$ and column index $j$
+
+```{r}
+head(iris)
+```
+
+## As super-matrices?
+
+Recall that we can obtain any element $x_{ij}$ from a matrix $X$ with row index $i$ and column index $j$
+
+```{r}
+iris[1,1]
+```
+
+## As super-matrices?
+
+Recall that we can obtain any element $x_{ij}$ from a matrix $X$ with row index $i$ and column index $j$
+
+```{r}
+iris[2,2]
+```
+
+## Other means of indexing
+
+```{r}
+iris[,1]
+```
+
+## Other means of indexing
+
+```{r}
+iris[1,]
+```
+
+## Other means of indexing
+
+```{r}
+iris$Petal.Length
+```
+
+## Other means of indexing
+
+```{r}
+iris$Petal.Length[3]
+```
+
+## Other means of indexing
+
+```{r}
+iris[1, "Petal.Length"]
+```
+
+## Some convenient data.frame functions
+
+```{r}
+summary(iris)
+```
+
+## Some convenient data.frame functions
+
+```{r}
+nrow(iris)
+ncol(iris)
+dim(iris)
+```
+
+## Some convenient data.frame functions
+
+```{r}
+head(iris)
+```
+
+## Some convenient data.frame functions
+
+```{r}
+tail(iris)
+```
+
+## Some convenient data.frame functions
+
+```{r}
+names(iris)
+```
+
+## How to do operations over a data.frame column
+
+```{r}
+mean(iris$Petal.Length)
+sum(iris$Petal.Length)/nrow(iris)
+```
+
+## How to do operations over a data.frame column
+
+```{r}
+iris$Petal.Length/2
+```
+
+## Scatterplots
+
+We make a *scatterplot* using `plot(var1, var2)`. 
+
+```{r}
+plot(iris$Petal.Length, iris$Petal.Width)
+```
+
+
+## Homework 1
+
+<https://github.com/f-edwards/intro_stats/blob/master/hw/HW1.Rmd>
