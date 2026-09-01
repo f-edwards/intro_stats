@@ -479,4 +479,4 @@ plot(iris$Petal.Length, iris$Petal.Width)
 
 ## Homework 1
 
-<https://github.com/f-edwards/intro_stats/blob/master/hw/HW1.Rmd>
+<https://github.com/f-edwards/intro_stats/blob/master/hw/HW1.qmd>
