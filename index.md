@@ -148,16 +148,26 @@ Reading: ROS Ch 1-2, Appendix A A.1 - A.4;
 		- Vector operations
 		- Introducing `tidyverse`
 	 
-- HW 1 Due 9/6 
-
 **Week 2**
 
 Reading: ROS Ch 3
 
 - 9/7: Labor Day, no class 
 
-- 9/8: Math basics for statistics
-	- Algebra: order of operations, exponents and logarithms, polynomials, linear functions
+- 9/8: - Introduction to R part 2
+		- Vectors, matrices, and data.frames
+		- Indexing
+		- Vector operations
+		- Introducing `tidyverse`
+
+- HW 1: Due 9/13 (Extension available for Rosh Hashanah)
+
+**Week 3**
+
+Reading: ROS Ch 4-5
+
+- 9/14: Math basics for statistics:
+ - Algebra: order of operations, exponents and logarithms, polynomials, linear functions
     - Linear algebra: vectors and matrices, scalar operations
 	- Functions and limits
 	- The basics of derivatives and integrals
@@ -165,35 +175,27 @@ Reading: ROS Ch 3
 	- Marginal, joint, conditional probability
 	- Bayes theorem
 
-- HW 2: Due 9/13 (Extension available for Rosh Hashanah)
-
-**Week 3**
-
-Reading: ROS Ch 4-5
-
-- 9/14: Lecture - Generalizing from samples to populations 
-	- Measurement: theoretical constructs and operational measures
-	- Basic principles of inference: parameters, statistics, validity
-	- Random variables
-	- Measures of central tendency: mean, median, mode
-	- Measures of dispersion: variance, standard deviation, quantiles
-
 - 9/15: Lab - Writing in plain text
 	- WYSIWYG vs plain text
 	- Quarto 101
 	- Markdown 101
 	- Writing math with LaTeX
 
-- HW 3: Due 9/20 
+- HW 2: Due 9/20 
 
 **Week 4**
 
 Reading: ROS Ch 6
 
-- 9/21: Lecture - Types of variables and measures of association (absences excused for Yom Kippur)
-	- Continuous, integer, binary, categorical, and ordinal measures
-	- Correlation
-	- Assessing bivariate distributions with crosstabs and scatterplots
+- 9/21: Lecture - Lecture - Generalizing from samples to populations, associations (absences excused for Yom Kippur)
+	- Measurement: theoretical constructs and operational measures
+	- Basic principles of inference: parameters, statistics, validity
+	- Random variables
+	- Measures of central tendency and dispersion
+	- Types of variables and measures of association 
+		- Continuous, integer, binary, categorical, and ordinal measures
+		- Correlation
+		- Assessing bivariate distributions with crosstabs and scatterplots
 
 - 9/22: Lab - importing data, visualization basics, simulation 101
 	- Importing tabular data, `read_csv()`
@@ -201,7 +203,7 @@ Reading: ROS Ch 6
 	- Simulating random variables
 	- Simulating a data generating process
 
-- HW 4: Due 9/27 
+- HW 3: Due 9/27 
 
 **Week 5**
 
@@ -218,7 +220,7 @@ Reading: ROS Ch 7
 	- `group_by` and `summarize()`
 	- visuals for more than one variable
 
-- HW 5: Due 10/4
+- HW 4: Due 10/4
 
 **Week 6**
 
@@ -236,7 +238,7 @@ Reading: ROS Ch 8
 	- Intrepreting `summary()` output for linear models
 	- density functions: `pnorm()` and `dnorm()`
 
-- HW 6: Due 10/11
+- HW 5: Due 10/11
 
 **Week 7** 
 
@@ -256,7 +258,7 @@ Reading: ROS Ch 9
 		- `linpred_draws()`
 		- `predicted_draws()`
 
-- HW 7: Due 10/18 
+- HW 6: Due 10/18 
 
 **Week 8** 
 
@@ -274,7 +276,7 @@ Reading: ROS Ch 10
 	- Interpretation of interactions
 	- Prediction for interactions
 
-- HW 8: Due 10/25 
+- HW 7: Due 10/25 
 
 **Week 9** 
 
@@ -294,7 +296,7 @@ Reading: ROS Ch 11
 	- `BIC()`, `AIC()`
 	- `WAIC()`, `loo()`
 
-- HW 9: Due 11/1 
+- HW 8: Due 11/1 
 
 **Week 10** 
 
@@ -315,7 +317,7 @@ Reading: ROS Ch 12
 		- `ifelse()`
 		- `case_when()`
 
-- HW 10: Due 11/8 
+- HW 9: Due 11/8 
 
 **Week 11** 
 
@@ -333,6 +335,9 @@ Reading: ROS Ch 16 - 17
 	- Evaluating missing data
 	- Basic multiple imputation with `mice`
 
+- HW 10: Due 11/24 (extended for ASC)
+
+
 **Week 12** 
 
 Reading: ROS Ch 18
@@ -349,7 +354,7 @@ Reading: ROS Ch 18
 	- Computing power from simulations
 	- Prior prediction
 
-- HW 12: Due 11/24 (extended for ASC)
+- HW 11: Due 11/24 (extended for ASC)
 
 **Week 13** 
 
@@ -384,7 +389,7 @@ Reading: ROS Ch 20
 	- Implementing inverse probability of treatment for linear regression
 	- Using weights for regression
 
-- HW 14: Due 12/6 
+- HW 13: Due 12/6 
 
 **Week 15**
 
@@ -401,4 +406,4 @@ Reading: ROS Ch 21
 	- Small multiple plots 
 	- Posterior visualization with `tidybayes`
 
-- HW 15: Due 12/13
+- HW 14: Due 12/13
