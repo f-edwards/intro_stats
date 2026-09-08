@@ -11,7 +11,7 @@ layout: default
 
 [Lecture slides](https://github.com/f-edwards/intro_stats/tree/master/slides)
 
-[Homework assignments](https://github.com/f-edwards/intro_stats_26/tree/master/hw)
+[Homework assignments](https://github.com/f-edwards/intro_stats/tree/master/hw)
 
 ## Prerequisites
 
