@@ -1,0 +1,20 @@
+---
+title: "HW2"
+author: "YOUR NAME"
+date: "`r Sys.Date()`"
+format: html
+---
+
+# Math practice
+
+We can write math equations in quarto using LaTeX syntax. It's funky but you'll get used to it.
+
+We start and end an equation with two $ symbols like this
+
+$$f(x) = x^2 + 3x$$ 
+
+Provide equations in quarto LaTeX when appropriate.
+
+Read ROS Chapter 3
+
+ROS Exercises 3.1, 3.2, 3.6, 3.7
