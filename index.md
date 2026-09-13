@@ -167,8 +167,8 @@ Reading: ROS Ch 3
 Reading: ROS Ch 4-5
 
 - 9/14: Math basics for statistics:
- - Algebra: order of operations, exponents and logarithms, polynomials, linear functions
-    - Linear algebra: vectors and matrices, scalar operations
+	- Algebra: order of operations, exponents and logarithms, polynomials, linear functions
+	- Linear algebra: vectors and matrices, scalar operations
 	- Functions and limits
 	- The basics of derivatives and integrals
 	- Basic set operations
