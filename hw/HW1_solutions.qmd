@@ -1,0 +1,84 @@
+---
+title: "HW1"
+author: "YOUR NAME"
+date: "`r Sys.Date()`"
+format: html
+---
+
+# Practice with R
+
+Load the tidyverse package
+
+```{r}
+library(tidyverse)
+```
+
+Load the iris data into your environment 
+
+```{r}
+data(iris)
+```
+
+1. Use the `mean` function to compute the average petal width in the sample
+
+```{r}
+mean(iris$Petal.Width)
+```
+
+The mean petal width for flowers in the iris data is `r mean(iris$Petal.Width)`. I'm assuming that's in inches, but not entirely sure.
+
+2. Use the `min` function to compute the smallest petal width in the data
+
+```{r}
+min(iris$Petal.Width)
+```
+
+The smallest petal width in the iris data is `r min(iris$Petal.Width)``
+
+3. Use the `max` function to compute the largest petal width in the data
+
+```{r}
+max(iris$Petal.Width)
+```
+
+The largest petal width in the iris data is `r max(iris$Petal.Width)``
+
+4. Briefly describe the distribution of petal widths in the data using your answers from 1-3
+
+There is substantial range in petal widths in the iris data. The minimum is quite small at 0.1, and the maximum is 25 times larger, at 2.5.
+
+5. Use the `hist` function to create a histogram of petal widths. Describe the distribution of the data.
+
+```{r}
+hist(iris$Petal.Width)
+```
+
+This looks like a distribution with multiple modes (most common values) or local maxima (largest values in portions of the distribution). There are two primary clusters, one with very small petal widths (less than or equal to 0.5), and another larger cluster with ranges between about 1.0 and 2.5
+
+# Book exercises
+
+Complete ROS exercises 1.4, 1.5 and 2.7
+
+## 1.4 Examples from applied statistics
+
+a) I use sample data from the American Community Survey all the time to learn about what demographic characteristics of places look like. Census data is better when available, but ACS is available more than every 10 years, so it's a trade off.
+
+b) I'm currently writing up the results of a randomized controlled trial where we are seeking to learn the effects of a $500 monthly income on family stability. We have to infer what would've happened to the families in control if exposed to treatment by using a model and making counterfactual assumptions (more on this later)!
+
+c) A common problem I deal with is inferring characteristics about a set of risks (eg risk of being killed by police) in contexts when we've only got error-prone and incomplete data. We don't observe 'risk', we just observe fatalities, but 'risk' is what we want to learn about!
+
+## 1.5 Goals of regression
+
+a) In my work on police violence, we are very much forecasting risk using a regression model. We estimate what past patterns have looked like to try and learn what future risks of death are likely to look like.
+
+b) I also do a lot of work exploring associations. For example, I'm working on a paper that looks at how the locations of historical institutions (Federal Indian Boarding Schools) are associated with contemporary state violence (police violence, foster care removals)
+
+c) Extrapolation is a bit trickier. But there are many cases where we've got data on one group and want to learn about others we don't have data on. Regression is really helpful here if we can make good assumptions about the group that we don't have direct data for.
+
+d) Causal inference is more direct, many of the projects I'm working on directly use regression models to estimate the effect of an intervention (real or hypothetial) on an outcome. Like the experiment I describe above.
+
+## 2.7 Reliability and validity
+
+a) An example of a valid but unreliable measurement might include something like an accurate heart rate monitor used during physical exercise to obtain information on average heart rates. The measure will be accurate for each particular instant, but we are likely to get very different measurements each time we collect data, as there's a lot of noise in the process.
+
+b) An example of a reliable but invalid measure might include a clock that is 15 minutes late. Checking the time many times will give you identical measurements, but they'll all be biased in the same direction.
