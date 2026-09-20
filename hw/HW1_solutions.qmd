@@ -1,31 +1,32 @@
 ---
-title: "HW1"
-author: "YOUR NAME"
+title: "HW1: a space odyssey"
+author: "Frank Edwards"
 date: "`r Sys.Date()`"
-format: html
+format: typst
 ---
 
 # Practice with R
 
 Load the tidyverse package
 
-```{r}
+```{r setup, include = FALSE}
 library(tidyverse)
 ```
 
 Load the iris data into your environment 
 
-```{r}
+```{r, echo = F}
 data(iris)
 ```
 
-1. Use the `mean` function to compute the average petal width in the sample
+1. Use the `mean()` function to compute the average petal width in the sample
+ 
 
 ```{r}
-mean(iris$Petal.Width)
+round(mean(iris$Petal.Width), 2)
 ```
 
-The mean petal width for flowers in the iris data is `r mean(iris$Petal.Width)`. I'm assuming that's in inches, but not entirely sure.
+The mean petal width for flowers in the iris data is `r round(mean(iris$Petal.Width), 2)`. I'm assuming that's in inches, but not entirely sure.
 
 2. Use the `min` function to compute the smallest petal width in the data
 

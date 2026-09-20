@@ -133,7 +133,7 @@ Life happens. All students are granted two free extensions on homework, no quest
 
 **Week 1**
 
-Reading: ROS Ch 1-2, Appendix A A.1 - A.4;
+Reading: ROS Ch 1, Appendix A A.1 - A.4;
 
 - 9/1: Lab - Course intro and Introduction to R
 	- Review the syllabus and course format
@@ -150,7 +150,7 @@ Reading: ROS Ch 1-2, Appendix A A.1 - A.4;
 	 
 **Week 2**
 
-Reading: ROS Ch 3
+Reading: ROS Ch 2
 
 - 9/7: Labor Day, no class 
 
@@ -164,16 +164,14 @@ Reading: ROS Ch 3
 
 **Week 3**
 
-Reading: ROS Ch 4-5
+Reading: ROS Ch 3
 
 - 9/14: Math basics for statistics:
 	- Algebra: order of operations, exponents and logarithms, polynomials, linear functions
 	- Linear algebra: vectors and matrices, scalar operations
 	- Functions and limits
 	- The basics of derivatives and integrals
-	- Basic set operations
-	- Marginal, joint, conditional probability
-	- Bayes theorem
+	
 
 - 9/15: Lab - Writing in plain text
 	- WYSIWYG vs plain text
@@ -185,17 +183,15 @@ Reading: ROS Ch 4-5
 
 **Week 4**
 
-Reading: ROS Ch 6
+Reading: ROS Ch 4-5
 
-- 9/21: Lecture - Lecture - Generalizing from samples to populations, associations (absences excused for Yom Kippur)
-	- Measurement: theoretical constructs and operational measures
-	- Basic principles of inference: parameters, statistics, validity
+- 9/21: Probability
+	- Basic set operations
+	- Marginal, joint, conditional probability
+	- Bayes theorem
+	- Probability distributions
 	- Random variables
-	- Measures of central tendency and dispersion
-	- Types of variables and measures of association 
-		- Continuous, integer, binary, categorical, and ordinal measures
-		- Correlation
-		- Assessing bivariate distributions with crosstabs and scatterplots
+	- Moments, parameters
 
 - 9/22: Lab - importing data, visualization basics, simulation 101
 	- Importing tabular data, `read_csv()`
@@ -207,7 +203,7 @@ Reading: ROS Ch 6
 
 **Week 5**
 
-Reading: ROS Ch 7
+Reading: ROS Ch 6-7
 
 - 9/28: Lecture - Introducing the linear regression model
 	- Basic theory of linear regression

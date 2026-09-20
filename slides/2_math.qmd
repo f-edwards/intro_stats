@@ -106,7 +106,7 @@ We can calculate the slope with two coordinates on the line $(x_1, y_1), (x_2, y
 
 The slope is the ratio of the difference in y values to the difference in x values.
 
-$$ m = \frac{y_2-y_1}{x_2-x_1}$$
+$$m = \frac{y_2-y_1}{x_2-x_1}$$
 
 ## The y-intercept
 
@@ -272,7 +272,7 @@ ggplot(data.frame(x = c(-10,10)), aes(x=x)) +
 
 ## Exponential growth
 
-$f(x) = e^{2x} $
+$f(x) = e^{2x}$
 
 ```{r echo = FALSE}
 exp_fun<-function(x){exp(2*x)}
