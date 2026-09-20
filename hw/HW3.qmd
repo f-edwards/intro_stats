@@ -1,0 +1,12 @@
+---
+title: "HW3"
+author: "YOUR NAME"
+date: "Today!"
+format: pdf
+---
+
+```{r, include = F}
+library(tidyverse)
+```
+
+For homework 3, complete the following exercises in ROS: Chapter 3: 3.3, 3.4, 3.5, 3.8; Chapter 4: 4.1, 4.4, 4.6 (a) and (b)
