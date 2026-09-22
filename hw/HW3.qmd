@@ -9,4 +9,19 @@ format: pdf
 library(tidyverse)
 ```
 
-For homework 3, complete the following exercises in ROS: Chapter 3: 3.3, 3.4, 3.5, 3.8; Chapter 4: 4.1, 4.4, 4.6 (a) and (b)
+For homework 3, complete the following exercises in ROS: Chapter 4: 4.1, 4.4
+
+Then using the `mtcars` data built into R, complete the following using `ggplot`.
+
+1. Create a histogram of fuel efficiency (mpg). Describe the distribution.
+
+2. Create a histogram of vehicle weight (wt). Descreibe the distribution.
+
+3. Create a scatterplot of fuel efficiency by weight. Describe the joint distribution.
+
+4. Include information on transmission type (automatic / manual; in the am variable) in the scatterplot. Describe the distribution.
+
+5. What can you conclude from these data visuals? Write 2-3 sentences to provide context. 
+5. What can you conclude from these data visuals?
+
+
