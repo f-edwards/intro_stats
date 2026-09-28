@@ -1,8 +1,8 @@
 ---
-title: "HW2"
+title: "HW3"
 author: "YOUR NAME"
-date: "9/15/26"
-format: html
+date: "Today!"
+format: pdf
 ---
 
 ```{r, include = F}

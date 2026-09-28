@@ -11,6 +11,8 @@ library(tidyverse)
 
 For homework 3, complete the following exercises in ROS: Chapter 4: 4.1, 4.4
 
+## ggplot stuff
+
 Then using the `mtcars` data built into R, complete the following using `ggplot`.
 
 1. Create a histogram of fuel efficiency (mpg). Describe the distribution.

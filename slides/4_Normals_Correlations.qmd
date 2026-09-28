@@ -1,0 +1,905 @@
+---
+title: "4: Normal distributions, correlations"
+author: "Frank Edwards"
+format:
+  revealjs: 
+    theme: dark
+    embed-resources: true
+    incremental: true
+execute: 
+  echo: true
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(pander)
+```
+
+# Random Variables
+
+## Random Variables
+
+- Random variables assign values to events 
+- Each value is mutually exclusive 
+- The set of all values is exhaustive (the sample space $\Omega$) 
+- Discrete random variables take a finite number of values (e.g. TRUE, FALSE) 
+- Continuous random variables are real numbers, and take on an infinite number of values 
+
+## The expectation of a random variable
+
+- The expectation of a random variable $E(X)$ is the mean. 
+
+## Variance and standard deviation 
+
+- The standard deviation $sd$ measures the average difference of observations from the mean
+
+. . . 
+
+$$sd = \sqrt{\frac{1}{n}\sum_{i=1}^n{(x_i-\bar{x}})^2}$$
+
+- Sometimes we use the variance, which is $sd^2$ 
+
+## The Normal Distribution
+
+The Normal (Gaussian) distribution is continuous, and takes on values from $[-\infty, \infty]$. It has two parameters, the mean $\mu$ and standard deviation $\sigma$ (or variance $\sigma^2$).
+
+- $\mu$ determines the location of the distribution
+- $\sigma$ determines the spread of the distribution
+
+# The location parameter
+
+## The Normal PDF
+
+```{r echo = F}
+sequence<-seq(-8,8,0.001)
+n1<-data.frame(x=sequence, y=dnorm(sequence, 0, 1))
+
+plot_dat<-bind_rows(n1)
+
+ggplot(plot_dat,
+       aes(x = x, y = y)) + 
+  geom_line() + 
+  ylab("Density of P(X=x)") + 
+  coord_cartesian(xlim = c(-7, 7), ylim = c(0, 0.4))+ 
+  labs(subtitle="mu=0, sigma = 1")
+```
+
+## The Normal PDF
+
+```{r echo = F}
+sequence<-seq(-8,8,0.001)
+n1<-data.frame(x=sequence, y=dnorm(sequence, 0.5, 1))
+
+plot_dat<-bind_rows(n1)
+
+ggplot(plot_dat,
+       aes(x = x, y = y)) + 
+  geom_line() + 
+  ylab("Density of P(X=x)") + 
+  coord_cartesian(xlim = c(-7, 7), ylim = c(0, 0.4))+ 
+  labs(subtitle="mu=0.5, sigma = 1")
+```
+
+## The Normal PDF
+
+```{r echo = F}
+sequence<-seq(-8,8,0.001)
+n1<-data.frame(x=sequence, y=dnorm(sequence, 1, 1))
+
+plot_dat<-bind_rows(n1)
+
+ggplot(plot_dat,
+       aes(x = x, y = y)) + 
+  geom_line() + 
+  ylab("Density of P(X=x)") + 
+  coord_cartesian(xlim = c(-7, 7), ylim = c(0, 0.4))+ 
+  labs(subtitle="mu=1, sigma = 1")
+```
+
+## The Normal PDF
+
+```{r echo = F}
+sequence<-seq(-8,8,0.001)
+n1<-data.frame(x=sequence, y=dnorm(sequence, 1.5, 1))
+
+plot_dat<-bind_rows(n1)
+
+ggplot(plot_dat,
+       aes(x = x, y = y)) + 
+  geom_line() + 
+  ylab("Density of P(X=x)") + 
+  coord_cartesian(xlim = c(-7, 7), ylim = c(0, 0.4))+ 
+  labs(subtitle="mu=1.5, sigma = 1")
+```
+
+## The Normal PDF
+
+```{r echo = F}
+sequence<-seq(-8,8,0.001)
+n1<-data.frame(x=sequence, y=dnorm(sequence, 2, 1))
+
+plot_dat<-bind_rows(n1)
+
+ggplot(plot_dat,
+       aes(x = x, y = y)) + 
+  geom_line() + 
+  ylab("Density of P(X=x)") + 
+  coord_cartesian(xlim = c(-7, 7), ylim = c(0, 0.4))+ 
+  labs(subtitle="mu=2, sigma = 1")
+```
+
+## The Normal PDF
+
+```{r echo = F}
+sequence<-seq(-8,8,0.001)
+n1<-data.frame(x=sequence, y=dnorm(sequence, 2.5, 1))
+
+plot_dat<-bind_rows(n1)
+
+ggplot(plot_dat,
+       aes(x = x, y = y)) + 
+  geom_line() + 
+  ylab("Density of P(X=x)") + 
+  coord_cartesian(xlim = c(-7, 7), ylim = c(0, 0.4))+ 
+  labs(subtitle="mu=2.5, sigma = 1")
+```
+
+## The Normal PDF
+
+```{r echo = F}
+sequence<-seq(-8,8,0.001)
+n1<-data.frame(x=sequence, y=dnorm(sequence, 3, 1))
+
+plot_dat<-bind_rows(n1)
+
+ggplot(plot_dat,
+       aes(x = x, y = y)) + 
+  geom_line() + 
+  ylab("Density of P(X=x)") + 
+  coord_cartesian(xlim = c(-7, 7), ylim = c(0, 0.4))+ 
+  labs(subtitle="mu=3, sigma = 1")
+```
+
+## The Normal PDF
+
+```{r echo = F}
+sequence<-seq(-8,8,0.001)
+n1<-data.frame(x=sequence, y=dnorm(sequence, 3.5, 1))
+
+plot_dat<-bind_rows(n1)
+
+ggplot(plot_dat,
+       aes(x = x, y = y)) + 
+  geom_line() + 
+  ylab("Density of P(X=x)") + 
+  coord_cartesian(xlim = c(-7, 7), ylim = c(0, 0.4))+ 
+  labs(subtitle="mu=3.5, sigma = 1")
+```
+
+## The Normal PDF
+
+```{r echo = F}
+sequence<-seq(-8,8,0.001)
+n1<-data.frame(x=sequence, y=dnorm(sequence, 4, 1))
+
+plot_dat<-bind_rows(n1)
+
+ggplot(plot_dat,
+       aes(x = x, y = y)) + 
+  geom_line() + 
+  ylab("Density of P(X=x)") + 
+  coord_cartesian(xlim = c(-7, 7), ylim = c(0, 0.4))+ 
+  labs(subtitle="mu=4, sigma = 1")
+```
+
+# The variance parameter
+
+## The Normal PDF
+
+```{r echo = F}
+sequence<-seq(-8,8,0.001)
+n1<-data.frame(x=sequence, y=dnorm(sequence, 0, 1))
+
+plot_dat<-bind_rows(n1)
+
+ggplot(plot_dat,
+       aes(x = x, y = y)) + 
+  geom_line() + 
+  ylab("Density of P(X=x)") + 
+  coord_cartesian(xlim = c(-7, 7), ylim = c(0, 0.4))+ 
+  labs(subtitle="mu=0, sigma = 1")
+```
+
+## The Normal PDF
+
+```{r echo = F}
+sequence<-seq(-8,8,0.001)
+n1<-data.frame(x=sequence, y=dnorm(sequence, 0, 1.1))
+
+plot_dat<-bind_rows(n1)
+
+ggplot(plot_dat,
+       aes(x = x, y = y)) + 
+  geom_line() + 
+  ylab("Density of P(X=x)")+ 
+  coord_cartesian(xlim = c(-7, 7), ylim = c(0, 0.4)) + 
+  labs(subtitle="mu=0, sigma = 1.1")
+```
+
+## The Normal PDF
+
+```{r echo = F}
+sequence<-seq(-8,8,0.001)
+n1<-data.frame(x=sequence, y=dnorm(sequence, 0, 1.2))
+
+plot_dat<-bind_rows(n1)
+
+ggplot(plot_dat,
+       aes(x = x, y = y)) + 
+  geom_line() + 
+  ylab("Density of P(X=x)")+ 
+  coord_cartesian(xlim = c(-7, 7), ylim = c(0, 0.4)) + 
+  labs(subtitle="mu=0, sigma = 1.2")
+```
+
+## The Normal PDF
+
+```{r echo = F}
+sequence<-seq(-8,8,0.001)
+n1<-data.frame(x=sequence, y=dnorm(sequence, 0, 1.3))
+
+plot_dat<-bind_rows(n1)
+
+ggplot(plot_dat,
+       aes(x = x, y = y)) + 
+  geom_line() + 
+  ylab("Density of P(X=x)")+ 
+  coord_cartesian(xlim = c(-7, 7), ylim = c(0, 0.4)) + 
+  labs(subtitle="mu=0, sigma = 1.3")
+```
+
+## The Normal PDF
+
+```{r echo = F}
+sequence<-seq(-8,8,0.001)
+n1<-data.frame(x=sequence, y=dnorm(sequence, 0, 1.4))
+
+plot_dat<-bind_rows(n1)
+
+ggplot(plot_dat,
+       aes(x = x, y = y)) + 
+  geom_line() + 
+  ylab("Density of P(X=x)")+ 
+  coord_cartesian(xlim = c(-7, 7), ylim = c(0, 0.4)) + 
+  labs(subtitle="mu=0, sigma = 1.4")
+```
+
+## The Normal PDF
+
+```{r echo = F}
+sequence<-seq(-8,8,0.001)
+n1<-data.frame(x=sequence, y=dnorm(sequence, 0, 1.5))
+
+plot_dat<-bind_rows(n1)
+
+ggplot(plot_dat,
+       aes(x = x, y = y)) + 
+  geom_line() + 
+  ylab("Density of P(X=x)")+ 
+  coord_cartesian(xlim = c(-7, 7), ylim = c(0, 0.4)) + 
+  labs(subtitle="mu=0, sigma = 1.5")
+```
+
+## The Normal PDF
+
+```{r echo = F}
+sequence<-seq(-8,8,0.001)
+n1<-data.frame(x=sequence, y=dnorm(sequence, 0, 1.6))
+
+plot_dat<-bind_rows(n1)
+
+ggplot(plot_dat,
+       aes(x = x, y = y)) + 
+  geom_line() + 
+  ylab("Density of P(X=x)")+ 
+  coord_cartesian(xlim = c(-7, 7), ylim = c(0, 0.4)) + 
+  labs(subtitle="mu=0, sigma = 1.6")
+```
+
+## The Normal PDF
+
+```{r echo = F}
+sequence<-seq(-8,8,0.001)
+n1<-data.frame(x=sequence, y=dnorm(sequence, 0, 1.7))
+
+plot_dat<-bind_rows(n1)
+
+ggplot(plot_dat,
+       aes(x = x, y = y)) + 
+  geom_line() + 
+  ylab("Density of P(X=x)")+ 
+  coord_cartesian(xlim = c(-7, 7), ylim = c(0, 0.4)) + 
+  labs(subtitle="mu=0, sigma = 1.7")
+```
+
+## The Normal PDF
+
+```{r echo = F}
+sequence<-seq(-8,8,0.001)
+n1<-data.frame(x=sequence, y=dnorm(sequence, 0, 1.8))
+
+plot_dat<-bind_rows(n1)
+
+ggplot(plot_dat,
+       aes(x = x, y = y)) + 
+  geom_line() + 
+  ylab("Density of P(X=x)")+ 
+  coord_cartesian(xlim = c(-7, 7), ylim = c(0, 0.4)) + 
+  labs(subtitle="mu=0, sigma = 1.8")
+```
+
+## The Normal PDF
+
+```{r echo = F}
+sequence<-seq(-8,8,0.001)
+n1<-data.frame(x=sequence, y=dnorm(sequence, 0, 1.9))
+
+plot_dat<-bind_rows(n1)
+
+ggplot(plot_dat,
+       aes(x = x, y = y)) + 
+  geom_line() + 
+  ylab("Density of P(X=x)")+ 
+  coord_cartesian(xlim = c(-7, 7), ylim = c(0, 0.4)) + 
+  labs(subtitle="mu=0, sigma = 1.9")
+```
+
+## The Normal PDF
+
+```{r echo = F}
+sequence<-seq(-8,8,0.001)
+n1<-data.frame(x=sequence, y=dnorm(sequence, 0, 2))
+
+plot_dat<-bind_rows(n1)
+
+ggplot(plot_dat,
+       aes(x = x, y = y)) + 
+  geom_line() + 
+  ylab("Density of P(X=x)")+ 
+  coord_cartesian(xlim = c(-7, 7), ylim = c(0, 0.4)) + 
+  labs(subtitle="mu=0, sigma = 2")
+```
+
+
+## The Normal Cumulative Distribution Function 
+
+```{r echo = F}
+ggplot(data.frame(x=c(-4,4)), aes(x)) +
+  stat_function(fun=pnorm) 
+```
+
+## Interpreting the PDF and CDF
+
+```{r echo = F}
+s <- -3
+p1 <- ggplot(data.frame(x=c(-4,4)), aes(x)) +
+  stat_function(fun=dnorm) +
+  stat_function(fun=dnorm,
+                xlim=c(-4,s),
+                geom="area",
+                fill="blue",
+                alpha = 0.5)+
+  ggtitle(c(paste(s, "sigma,", "p=",round(pnorm(s,0,1),3)))) + 
+  labs(subtitle = "Probability Density Function")
+
+p2 <- ggplot(data.frame(x=c(-4,4), s = s, y = pnorm(s, 0, 1)), aes(x)) +
+  stat_function(fun=pnorm) +
+  geom_point(aes(x=s, y=y), color = "blue", size=2) + 
+  labs(subtitle = "Cumulative Distribution Function")
+
+gridExtra::grid.arrange(p1, p2)
+```
+
+## Interpreting the PDF and CDF
+
+```{r echo = F}
+s <- -2.5
+p1 <- ggplot(data.frame(x=c(-4,4)), aes(x)) +
+  stat_function(fun=dnorm) +
+  stat_function(fun=dnorm,
+                xlim=c(-4,s),
+                geom="area",
+                fill="blue",
+                alpha = 0.5)+
+  ggtitle(c(paste(s, "sigma,", "p=",round(pnorm(s,0,1),3)))) + 
+  labs(subtitle = "Probability Density Function")
+
+p2 <- ggplot(data.frame(x=c(-4,4), s = s, y = pnorm(s, 0, 1)), aes(x)) +
+  stat_function(fun=pnorm) +
+  geom_point(aes(x=s, y=y), color = "blue", size=2) + 
+  labs(subtitle = "Cumulative Distribution Function")
+
+gridExtra::grid.arrange(p1, p2)
+```
+
+## Interpreting the PDF and CDF
+
+```{r echo = F}
+s <- -2
+p1 <- ggplot(data.frame(x=c(-4,4)), aes(x)) +
+  stat_function(fun=dnorm) +
+  stat_function(fun=dnorm,
+                xlim=c(-4,s),
+                geom="area",
+                fill="blue",
+                alpha = 0.5)+
+  ggtitle(c(paste(s, "sigma,", "p=",round(pnorm(s,0,1),3)))) + 
+  labs(subtitle = "Probability Density Function")
+
+p2 <- ggplot(data.frame(x=c(-4,4), s = s, y = pnorm(s, 0, 1)), aes(x)) +
+  stat_function(fun=pnorm) +
+  geom_point(aes(x=s, y=y), color = "blue", size=2) + 
+  labs(subtitle = "Cumulative Distribution Function")
+
+gridExtra::grid.arrange(p1, p2)
+```
+
+## Interpreting the PDF and CDF
+
+```{r echo = F}
+s <- -1.5
+p1 <- ggplot(data.frame(x=c(-4,4)), aes(x)) +
+  stat_function(fun=dnorm) +
+  stat_function(fun=dnorm,
+                xlim=c(-4,s),
+                geom="area",
+                fill="blue",
+                alpha = 0.5)+
+  ggtitle(c(paste(s, "sigma,", "p=",round(pnorm(s,0,1),3)))) + 
+  labs(subtitle = "Probability Density Function")
+
+p2 <- ggplot(data.frame(x=c(-4,4), s = s, y = pnorm(s, 0, 1)), aes(x)) +
+  stat_function(fun=pnorm) +
+  geom_point(aes(x=s, y=y), color = "blue", size=2) + 
+  labs(subtitle = "Cumulative Distribution Function")
+
+gridExtra::grid.arrange(p1, p2)
+```
+
+## Interpreting the PDF and CDF
+
+```{r echo = F}
+s <- -1
+p1 <- ggplot(data.frame(x=c(-4,4)), aes(x)) +
+  stat_function(fun=dnorm) +
+  stat_function(fun=dnorm,
+                xlim=c(-4,s),
+                geom="area",
+                fill="blue",
+                alpha = 0.5)+
+  ggtitle(c(paste(s, "sigma,", "p=",round(pnorm(s,0,1),3)))) + 
+  labs(subtitle = "Probability Density Function")
+
+p2 <- ggplot(data.frame(x=c(-4,4), s = s, y = pnorm(s, 0, 1)), aes(x)) +
+  stat_function(fun=pnorm) +
+  geom_point(aes(x=s, y=y), color = "blue", size=2) + 
+  labs(subtitle = "Cumulative Distribution Function")
+
+gridExtra::grid.arrange(p1, p2)
+```
+
+## Interpreting the PDF and CDF
+
+```{r echo = F}
+s <- -0.5
+p1 <- ggplot(data.frame(x=c(-4,4)), aes(x)) +
+  stat_function(fun=dnorm) +
+  stat_function(fun=dnorm,
+                xlim=c(-4,s),
+                geom="area",
+                fill="blue",
+                alpha = 0.5)+
+  ggtitle(c(paste(s, "sigma,", "p=",round(pnorm(s,0,1),3)))) + 
+  labs(subtitle = "Probability Density Function")
+
+p2 <- ggplot(data.frame(x=c(-4,4), s = s, y = pnorm(s, 0, 1)), aes(x)) +
+  stat_function(fun=pnorm) +
+  geom_point(aes(x=s, y=y), color = "blue", size=2) + 
+  labs(subtitle = "Cumulative Distribution Function")
+
+gridExtra::grid.arrange(p1, p2)
+```
+
+## Interpreting the PDF and CDF
+
+```{r echo = F}
+s <- -0
+p1 <- ggplot(data.frame(x=c(-4,4)), aes(x)) +
+  stat_function(fun=dnorm) +
+  stat_function(fun=dnorm,
+                xlim=c(-4,s),
+                geom="area",
+                fill="blue",
+                alpha = 0.5)+
+  ggtitle(c(paste(s, "sigma,", "p=",round(pnorm(s,0,1),3)))) + 
+  labs(subtitle = "Probability Density Function")
+
+p2 <- ggplot(data.frame(x=c(-4,4), s = s, y = pnorm(s, 0, 1)), aes(x)) +
+  stat_function(fun=pnorm) +
+  geom_point(aes(x=s, y=y), color = "blue", size=2) + 
+  labs(subtitle = "Cumulative Distribution Function")
+
+gridExtra::grid.arrange(p1, p2)
+```
+
+## Interpreting the PDF and CDF
+
+```{r echo = F}
+s <- 0.5
+p1 <- ggplot(data.frame(x=c(-4,4)), aes(x)) +
+  stat_function(fun=dnorm) +
+  stat_function(fun=dnorm,
+                xlim=c(-4,s),
+                geom="area",
+                fill="blue",
+                alpha = 0.5)+
+  ggtitle(c(paste(s, "sigma,", "p=",round(pnorm(s,0,1),3)))) + 
+  labs(subtitle = "Probability Density Function")
+
+p2 <- ggplot(data.frame(x=c(-4,4), s = s, y = pnorm(s, 0, 1)), aes(x)) +
+  stat_function(fun=pnorm) +
+  geom_point(aes(x=s, y=y), color = "blue", size=2) + 
+  labs(subtitle = "Cumulative Distribution Function")
+
+gridExtra::grid.arrange(p1, p2)
+```
+
+## Interpreting the PDF and CDF
+
+```{r echo = F}
+s <- 1
+p1 <- ggplot(data.frame(x=c(-4,4)), aes(x)) +
+  stat_function(fun=dnorm) +
+  stat_function(fun=dnorm,
+                xlim=c(-4,s),
+                geom="area",
+                fill="blue",
+                alpha = 0.5)+
+  ggtitle(c(paste(s, "sigma,", "p=",round(pnorm(s,0,1),3)))) + 
+  labs(subtitle = "Probability Density Function")
+
+p2 <- ggplot(data.frame(x=c(-4,4), s = s, y = pnorm(s, 0, 1)), aes(x)) +
+  stat_function(fun=pnorm) +
+  geom_point(aes(x=s, y=y), color = "blue", size=2) + 
+  labs(subtitle = "Cumulative Distribution Function")
+
+gridExtra::grid.arrange(p1, p2)
+```
+
+## Interpreting the PDF and CDF
+
+```{r echo = F}
+s <- 1.5
+p1 <- ggplot(data.frame(x=c(-4,4)), aes(x)) +
+  stat_function(fun=dnorm) +
+  stat_function(fun=dnorm,
+                xlim=c(-4,s),
+                geom="area",
+                fill="blue",
+                alpha = 0.5)+
+  ggtitle(c(paste(s, "sigma,", "p=",round(pnorm(s,0,1),3)))) + 
+  labs(subtitle = "Probability Density Function")
+
+p2 <- ggplot(data.frame(x=c(-4,4), s = s, y = pnorm(s, 0, 1)), aes(x)) +
+  stat_function(fun=pnorm) +
+  geom_point(aes(x=s, y=y), color = "blue", size=2) + 
+  labs(subtitle = "Cumulative Distribution Function")
+
+gridExtra::grid.arrange(p1, p2)
+```
+
+## Interpreting the PDF and CDF
+
+```{r echo = F}
+s <- 2
+p1 <- ggplot(data.frame(x=c(-4,4)), aes(x)) +
+  stat_function(fun=dnorm) +
+  stat_function(fun=dnorm,
+                xlim=c(-4,s),
+                geom="area",
+                fill="blue",
+                alpha = 0.5)+
+  ggtitle(c(paste(s, "sigma,", "p=",round(pnorm(s,0,1),3)))) + 
+  labs(subtitle = "Probability Density Function")
+
+p2 <- ggplot(data.frame(x=c(-4,4), s = s, y = pnorm(s, 0, 1)), aes(x)) +
+  stat_function(fun=pnorm) +
+  geom_point(aes(x=s, y=y), color = "blue", size=2) + 
+  labs(subtitle = "Cumulative Distribution Function")
+
+gridExtra::grid.arrange(p1, p2)
+```
+
+## Interpreting the PDF and CDF
+
+```{r echo = F}
+s <- 2.5
+p1 <- ggplot(data.frame(x=c(-4,4)), aes(x)) +
+  stat_function(fun=dnorm) +
+  stat_function(fun=dnorm,
+                xlim=c(-4,s),
+                geom="area",
+                fill="blue",
+                alpha = 0.5)+
+  ggtitle(c(paste(s, "sigma,", "p=",round(pnorm(s,0,1),3)))) + 
+  labs(subtitle = "Probability Density Function")
+
+p2 <- ggplot(data.frame(x=c(-4,4), s = s, y = pnorm(s, 0, 1)), aes(x)) +
+  stat_function(fun=pnorm) +
+  geom_point(aes(x=s, y=y), color = "blue", size=2) + 
+  labs(subtitle = "Cumulative Distribution Function")
+
+gridExtra::grid.arrange(p1, p2)
+```
+
+## Interpreting the PDF and CDF
+
+```{r echo = F}
+s <- 3
+p1 <- ggplot(data.frame(x=c(-4,4)), aes(x)) +
+  stat_function(fun=dnorm) +
+  stat_function(fun=dnorm,
+                xlim=c(-4,s),
+                geom="area",
+                fill="blue",
+                alpha = 0.5)+
+  ggtitle(c(paste(s, "sigma,", "p=",round(pnorm(s,0,1),3)))) + 
+  labs(subtitle = "Probability Density Function")
+
+p2 <- ggplot(data.frame(x=c(-4,4), s = s, y = pnorm(s, 0, 1)), aes(x)) +
+  stat_function(fun=pnorm) +
+  geom_point(aes(x=s, y=y), color = "blue", size=2) + 
+  labs(subtitle = "Cumulative Distribution Function")
+
+gridExtra::grid.arrange(p1, p2)
+```
+
+## Z-scores and area under the curve
+
+- To obtain a z-score, we subtract the mean and divide by the standard deviation:
+
+. . . 
+
+$$\textsf{z-score} = \frac{X-\mu}{\sigma}$$
+
+- For a Normal variable, z-scores are distributed $z \sim N(0,1)$ 
+
+- What does a z-score of 0 indicate?  -1?  2?
+
+## 
+
+```{r echo=F}
+ggplot(data.frame(x=c(-4,4)), aes(x)) +
+  stat_function(fun=dnorm) +
+  stat_function(fun=dnorm,
+                xlim=c(-1,1),
+                geom="area",
+                fill="blue",
+                alpha = 0.5) +
+  ggtitle(paste("Mean +/- 1 SD = ",round(pnorm(1,0,1) - pnorm(-1,0,1),3)))
+```
+
+##
+
+```{r echo=F}
+ggplot(data.frame(x=c(-4,4)), aes(x)) +
+  stat_function(fun=dnorm) +
+  stat_function(fun=dnorm,
+                xlim=c(-2,2),
+                geom="area",
+                fill="blue",
+                alpha = 0.5) +
+  ggtitle(paste("Mean +/- 2 SD = ",round(pnorm(2,0,1) - pnorm(-2,0,1),3)))
+```
+
+## 
+
+```{r echo=F}
+ggplot(data.frame(x=c(-4,4)), aes(x)) +
+  stat_function(fun=dnorm) +
+  stat_function(fun=dnorm,
+                xlim=c(-3,3),
+                geom="area",
+                fill="blue",
+                alpha = 0.5) +
+  ggtitle(paste("Mean +/- 3 SD = ",round(pnorm(3,0,1) - pnorm(-3,0,1),3)))
+```
+
+## Special features of Normal distributions: 
+
+- The sum of many random variables from other distributions are often Normal
+- If X is a Normal random variable, then $Y=X+c$ is also Normal
+  - $Y \sim (\mu +c, \sigma^2)$
+- It works for multiplication too, as a scaling factor
+  - $Y=cX$ is distributed $Y\sim N(c\mu, (c\sigma)^2)$
+- Z-scores of a Normal random variable are $N(0,1)$
+
+# Correlation
+
+## Correlation defined
+
+- Correlation measures the linear relationship between two variables $x$ and $y$
+
+. . . 
+
+$$cor_{xy} = \frac{\textrm{E}[(x-\bar{x})(y-\bar{y})]}{\sigma_x \cdot \sigma_y}$$
+
+## Correlation and Z-scores
+
+- It's helpful to have measures on the same scale
+
+- A $z$-score measures the number of standard deviations an observation is away from the mean of a variable.
+
+- $z\textrm{ score of }x_i = \frac{x_i-\bar{x}}{S_x}$
+
+- In R, we can transform a numeric into a $z$-score using `scale()`
+
+## Z-scores in R
+
+```{r}
+iris  |>  
+  mutate(Sepal.Length.sc = scale(Sepal.Length)) |> 
+  select(Sepal.Length, Sepal.Length.sc)
+```
+
+## Z-score transformed distributions have the same shape as the original data
+
+```{r echo = F, message = F}
+library(patchwork)
+p1<-ggplot(iris,
+           aes(x = Sepal.Length)) + 
+  geom_histogram() + 
+  labs(subtitle = "Untransformed")
+p2<-ggplot(iris,
+           aes(x = scale(Sepal.Length))) + 
+  geom_histogram() + 
+  labs(subtitle = "Z-transformed")
+
+p1+p2
+```
+
+## Correlation
+
+- Correlation measures the linear association between two variables. We often use the letter $r$ to denote a correlation.
+
+. . . 
+
+$$r(x,y) = \frac{1}{n}\sum_{i=1}^{n} \frac{x_i-\bar{x}}{S_x} \times \frac{y_i-\bar{y}}{S_y}$$
+
+. . . 
+
+$$ = E[z(x) \times z(y)] $$
+
+. . . 
+
+In R, you can use `cor()`
+
+## Evaluate correlations using cor()
+
+- Compute the correlation between Sepal.Length and Sepal.Width. What does it mean?
+- Compute the correlation between Petal.Length and Petal.Width. What does it mean?
+- Compute the correlation between Petal.Length and Sepal.Width. What does it mean?
+
+# Interpreting relationships with scatterplots
+
+## Correlation and scatterplots
+
+```{r echo = FALSE}
+library(MASS)
+select<-dplyr::select
+cors<-seq(from=0, to =1, by = 0.1)
+cor_plot<-list()
+for(i in 1:length(cors)){
+  cor_plot[[i]] <- mvrnorm(50, 
+                      mu = c(0,0), 
+                      Sigma = matrix(c(1,cors[i],cors[i],1), ncol = 2),
+                      empirical = TRUE)
+  cor_plot[[i]]<-as.data.frame(cor_plot[[i]])
+  cor_plot[[i]]$cor<-cors[i]
+}
+cor_plot<-bind_rows(cor_plot)
+
+ggplot(cor_plot, aes(x=V1, y = V2)) + 
+  geom_point() +
+  facet_wrap(~cor)
+```
+
+## Correlation and scatterplots
+
+```{r echo = FALSE}
+library(MASS)
+select<-dplyr::select
+cors<-seq(from=0, to =1, by = 0.1)
+cor_plot<-list()
+for(i in 1:length(cors)){
+  cor_plot[[i]] <- mvrnorm(50, 
+                      mu = c(0,0), 
+                      Sigma = matrix(c(1,cors[i],cors[i],1), ncol = 2),
+                      empirical = TRUE)
+  cor_plot[[i]]<-as.data.frame(cor_plot[[i]])
+  cor_plot[[i]]$cor<-cors[i]
+}
+cor_plot<-bind_rows(cor_plot)
+
+ggplot(cor_plot, aes(x=V1, y = V2)) + 
+  geom_point() +
+  geom_smooth(method = "lm", se = F) + 
+  facet_wrap(~cor)
+```
+
+## Correlation and scatterplots
+
+```{r echo = FALSE}
+library(MASS)
+select<-dplyr::select
+cors<-seq(from=-1, to =0, by = 0.1)
+cor_plot<-list()
+for(i in 1:length(cors)){
+  cor_plot[[i]] <- mvrnorm(50, 
+                      mu = c(0,0), 
+                      Sigma = matrix(c(1,cors[i],cors[i],1), ncol = 2),
+                      empirical = TRUE)
+  cor_plot[[i]]<-as.data.frame(cor_plot[[i]])
+  cor_plot[[i]]$cor<-cors[i]
+}
+cor_plot<-bind_rows(cor_plot)
+
+ggplot(cor_plot, aes(x=V1, y = V2)) + 
+  geom_point() +
+  facet_wrap(~cor)
+```
+
+## Correlation and scatterplots
+
+```{r echo = FALSE}
+library(MASS)
+select<-dplyr::select
+cors<-seq(from=-1, to =0, by = 0.1)
+cor_plot<-list()
+for(i in 1:length(cors)){
+  cor_plot[[i]] <- mvrnorm(50, 
+                      mu = c(0,0), 
+                      Sigma = matrix(c(1,cors[i],cors[i],1), ncol = 2),
+                      empirical = TRUE)
+  cor_plot[[i]]<-as.data.frame(cor_plot[[i]])
+  cor_plot[[i]]$cor<-cors[i]
+}
+cor_plot<-bind_rows(cor_plot)
+
+ggplot(cor_plot, aes(x=V1, y = V2)) + 
+  geom_point() +
+  geom_smooth(method = "lm", se = F) + 
+  facet_wrap(~cor)
+```
+
+## Return to iris
+
+- Scatterplot Sepal.Width and Petal.Width
+- How would you describe the relationship between the variables?
+- Estimate the correlation
+- Describe what you find using both the estimated correlation and your interpretation of the scatterplot
+
+# Why we visualize
+
+## Exercise
+
+- load `data("anscombe")
+- Compute correlations for each pair x1, y1; x2, y2; ...
+- What do you find?
+- Now scatterplot each pair using ggplot
+
+## Homework prep
+
+- Download the Uniform Crime Reports Arrests by Age, Sex, and Race 2022 data from NACJD in delimited format: https://www.icpsr.umich.edu/web/NACJD/studies/39063
+- Move the data into a subdirectory of your intro_stats folder called ./data/
+
