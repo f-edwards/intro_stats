@@ -1,24 +1,49 @@
 ---
 title: "HW4"
-author: "YOUR NAME"
-date: "Today!"
+author: "Frank Edwards"
 format: pdf
 ---
 
-Use the UCR 2022 Arrests by Age, Sex, and Race data for this assignment. You will need to refer to the included codebook for this assignment. 
+In this homework, we'll practice fitting a variety of linear regression models.
 
-The data are available for download here: https://www.icpsr.umich.edu/web/NACJD/studies/39063
+## Question 1
 
-1. Load the 12-month data into R using the `read_tsv` command
+For this question, use the `mtcars` data built into R. This data displays a series of measures on cars from 1974. Run `?mtcars` to see the codebook.
 
-2. Using the variables `AW`, `AB`, `AI`, `AA`, and `POP`, create a new data frame that includes a variable called `arrests_Per100k` that computes the arrest rate per 100,000 population for each agency in the data. Consider how you will handle missing values, and agencies that report no population.
+1. Create a scatterplot of miles per gallon (`mpg`) and vehicle weight (`wt`). Interpret the scatterplot. Do you think this might be a good candidate for a linear model?
 
-3. Subset this data frame to include only agencies covering more than 10,000 population and only arrests for fraud and for forgery and counterfeiting. How many fewer rows does this new data frame contain when compared to the original data?
+2. Estimate a linear regression model with `mpg` as the outcome and `wt` as a predictor. Interpret the intercept and slope coefficients.
 
-4. Use filter to subset the datato include only fraud arrests and another for the forgery and counterfeiting arrests. Compute an arrest rate. Then scatterplot these two arrest rates and describe their joint distribution.
+3. What does your model tell you substantively (real world implications) about this relationship?
 
-5. For each state, compute the average agency-level arrest rates for both fraud and counterfeiting. Create a barplot to show your findings and interpret. 
+## Question 2
 
-6. Now, for each state compute the state-level arrest rate for both fraud and counterfeiting. Create a barplot to show your findings. 
+For this question, we will use the `USArrests` data built into R
 
-7. Consider carefully the difference between agency-level and state-level arrest rates, and explain the differences you observe between the two plots. (Hint: carefully consider how you group your data when computing averages)
+1. Create a scatterplot of the relationship between homicide arrest rates and the proportion of the state that lives in cities (`UrbanPop`). Compute a correlation coefficient. Interpret your plot and correlation estimate.
+
+2. Estimate a linear regression with `Murder` as the outcome and `UrbanPop` as a predictor. Interpret the coefficients.
+
+3. What does your model tell you substantively about the relationship between state urban population composition and homicide arrest rates? 
+
+## Question 3
+
+For this question we will use the `gapminder` data. You will need to install and load the `gapminder` package. Check the documentation with `?gapminder`
+
+1. Scatterplot the relationship between `gdpPercap` and `lifeExp`. Interpret.
+
+2. Estimate a linear regression with `lifeExp` as an outcome and `gdpPercap` as a predictor. Interpret.
+
+3. Now, scatterplot the relationship between the logarithm of GDP per capita and life expectancy. Interpret.
+
+4. Estimate a linear regression with life expectancy as an outcome and log(GPD per capita) as a predictor. Interpret. 
+
+5. Briefly explain the differences in how you should interpret the slope coefficient in model 2 compared to model 4. 
+
+Hint: if you are having trouble thinking about logarithms, try this code and think about how log(x) is related to x
+
+```{r}
+x<-1:1000
+plot(x, log(x))
+```
+
