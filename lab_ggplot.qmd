@@ -1,0 +1,21 @@
+---
+title: "Untitled"
+format: pdf
+---
+
+```{r, include = F}
+library(palmerpenguins)
+library(tidyverse)
+```
+
+
+This is my cool penguin scatterplot
+
+```{r, fig.cap = "My cool penguin scatterplot"}
+ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = species)) +
+  geom_point() +
+  geom_smooth(method = "lm") + 
+  labs(x = "Bill length (mm)", y = "Bill depth (mm)",
+       color = "")
+```
+

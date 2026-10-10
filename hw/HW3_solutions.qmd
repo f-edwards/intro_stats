@@ -1,0 +1,93 @@
+---
+title: "HW3"
+author: "YOUR NAME"
+date: "Today!"
+format: pdf
+---
+
+```{r, include = F}
+library(tidyverse)
+```
+
+For homework 3, complete the following exercises in ROS: Chapter 4: 4.1, 4.4
+
+## 4.1 
+
+```{r}
+n <- 1000
+n_t <- 500
+n_c <- 500
+r_t <- 0.5
+r_c <- 0.4
+# the average treatment effect (ATE) is the 
+# difference in the outcome, response here
+e <- r_t - r_c
+# the standard error is s/sqrt(n)
+# s for a binary is p*(1-p)
+# so se for 1 is p*(1-p)/sqrt(n)
+se_t <- (r_t * (1-r_t))/sqrt(n_t)
+se_c <- (r_c * (1-r_c))/sqrt(n_c)
+# the SE of a sum or difference of two variables is
+# sqrt(se_1^2 + se_2^2)
+se_e <- sqrt(se_t^2 + se_c^2)
+```
+
+The average treatment effect is a simple difference in mean response rates, so $0.5-0.4 = 0.1$. The standard error is the square root of the sum of squared standard errors (confusing!), which turns out to be `r se_e`
+
+## 4.4
+
+This one is a little tricky, we basically want to know what sample size we'll need to distinguish about a 0.1 difference. We could compute the n based on statistical power formulas, but that's messy. Instead, we'll just assume we need our SE for a single proportion to be about 0.05, so that 2 $\sigma$ is equal to about 0.1. 
+
+To do this, we just need to start from the definition of s standard error for a proportion (see page 51-52):
+
+$$se = \sqrt{\frac{p*(1-p)}{n}}$$
+
+So to be sure a 30% shooter isn't really a 40% shooter, we'd need 
+
+$$0.05 = \sqrt{\frac{0.3*(1-0.3)}{n}}$$
+Solving for n, we square both sides and do some algebra
+
+$$0.05^2 \times n = 0.21$$
+$$n = 0.21/0.05^2$$
+
+```{r}
+0.21/0.05^2
+```
+
+We'll need about 84 shots to be sure.
+
+## ggplot stuff
+
+Then using the `mtcars` data built into R, complete the following using `ggplot`.
+
+1. Create a histogram of fuel efficiency (mpg). Describe the distribution.
+
+```{r}
+ggplot(mtcars, aes(x = mpg)) + geom_histogram()
+```
+
+2. Create a histogram of vehicle weight (wt). Describe the distribution.
+
+```{r}
+ggplot(mtcars, aes(x = wt)) + geom_histogram()
+```
+
+3. Create a scatterplot of fuel efficiency by weight. Describe the joint distribution.
+
+```{r}
+ggplot(mtcars,
+       aes(x = wt, y = mpg)) + 
+  geom_point()
+```
+
+4. Include information on transmission type (automatic / manual; in the am variable) in the scatterplot. Describe the distribution.
+
+```{r}
+ggplot(mtcars,
+       aes(x = wt, y = mpg, color = factor(am))) + 
+  geom_point()
+```
+
+5. What can you conclude from these data visuals? Write 2-3 sentences to provide context. 
+
+
