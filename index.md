@@ -250,9 +250,8 @@ Reading: ROS Ch 9
 
 - 10/13: Lab - prediction
 	- Introducing `predict()`
-	- Introducing `tidybayes` 
-		- `linpred_draws()`
-		- `predicted_draws()`
+	- Visuals for regression 
+	- `expand.grid()` and prediction
 
 - HW 6: Due 10/18 
 

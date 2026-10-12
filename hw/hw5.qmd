@@ -15,9 +15,19 @@ hibbs <- read.table("https://github.com/f-edwards/intro_stats/raw/refs/heads/mas
 earnings <- read.csv("https://raw.githubusercontent.com/f-edwards/intro_stats/refs/heads/master/data/earnings.csv")
 ```
 
+## Question 1
+
+For this question, use the `hibbs` data from the ROS textbook. We'll be focusing on the variable `growth` which measures economic growth, and `vote`, which measures the vote share for the incumbent party in presidential election years
+
+1. Create a scatterplot of vote by growth. Interpret the plot.
+
+2. Estimate a linear regression with vote as an outcome and growth as a predictor. Interpret your estimates for the slope and intercept.
+
+3. Interpret the standard errors and p values. What do these numbers mean?
+
 ## Question 2
 
-For this question, use the `earnings` data from the ROS textbook.
+For this question, use the `earnings` data from the ROS textbook. The variable `earn` captures earnings, and `education` captures years of education. 
 
 1. Create a scatterplot of earn by education. Interpret the plot. Explain why it looks a bit strange.
 
@@ -27,9 +37,4 @@ For this question, use the `earnings` data from the ROS textbook.
 
 4. Interpret the standard errors and p values. What do these estimates imply?
 
-3. Describe the 'null hypothesis' that the significance test assumes for the intercept and the slope.
-
-4. Explain the results of the significance test and the meaning of the finding.
-
-## Question 2
 

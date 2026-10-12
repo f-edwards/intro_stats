@@ -15,6 +15,7 @@ knitr:
 
 ```{r setup, include=FALSE}
 rm(list=ls())
+set.seed(1)
 library(tidyverse)
 def.chunk.hook  <- knitr::knit_hooks$get("chunk")
 knitr::knit_hooks$set(chunk = function(x, options) {
@@ -207,7 +208,7 @@ ggplot(data = data.frame(x = c(0, 10)), aes(x)) +
 Use the Normal PDF to estimate
 
 ```{r}
-pnorm(q = mean(pizza), mean = 5, sd = sd(pizza)/sqrt(10))
+dnorm(q = mean(pizza), mean = 5, sd = sd(pizza)/sqrt(10))
 ```
 
 That's the proportion of observations that fall below our observation *if* $H_1$ is true. To convert this to how likely we are to observe our data *if* $H_1$ is true, subtract from 1
