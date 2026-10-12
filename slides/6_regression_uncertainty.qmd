@@ -242,13 +242,7 @@ In other words, we try to learn about the `true' *regression coefficients* $\bet
 
 The standard error of $\beta$ is the standard deviation of its sampling distribution. \pause
 
-In other words: $\hat{\beta} \sim N(\beta, SE_\beta^2)$ \pause
-
-The standard error of $\beta$ is calculated as:
-
-$$SE_\beta = \sqrt{\frac{\sum\varepsilon_i^2}{(n-2)\sum(x_i - \bar{x})^2}}$$
-
-Note that the numerator captures variance in $y$ and the denominator captures variance in $x$
+In other words: $\hat{\beta} \sim N(\beta, SE_\beta)$ 
 
 # Uncertainty and OLS
 
