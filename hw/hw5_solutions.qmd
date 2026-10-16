@@ -1,0 +1,93 @@
+---
+title: "HW5"
+author: "Frank Edwards"
+format: pdf
+---
+
+In this homework, we'll continue practicing fitting and interpreting linear regression models.
+
+The data are available from my GitHub. You can either download them, or load them directly with this code
+
+```{r}
+# read the hibbs data
+hibbs <- read.table("https://github.com/f-edwards/intro_stats/raw/refs/heads/master/data/hibbs.dat", header=TRUE)
+# read the earnings data
+earnings <- read.csv("https://raw.githubusercontent.com/f-edwards/intro_stats/refs/heads/master/data/earnings.csv")
+```
+
+## Question 1
+
+For this question, use the `hibbs` data from the ROS textbook. We'll be focusing on the variable `growth` which measures economic growth, and `vote`, which measures the vote share for the incumbent party in presidential election years
+
+1. Create a scatterplot of vote by growth. Interpret the plot.
+
+```{r}
+ggplot(hibbs, 
+       aes(x = growth, y = vote)) + 
+  geom_point()
+```
+
+Looks like incumbent vote share tends to be higher when growth is high. So better economies favor incumbents.
+
+2. Estimate a linear regression with vote as an outcome and growth as a predictor. Interpret your estimates for the slope and intercept.
+
+```{r}
+m1 <- lm(vote ~ growth, data = hibbs)
+m1
+```
+
+Our model suggests an average incumbent vote share of 46 when growth is at zero. For each point of growth increase, our model expects incumbent vote share to increase by about 3 points.
+
+3. Interpret the standard errors and p values. What do these numbers mean?
+
+```{r}
+summary(m1)
+```
+
+We find a standard error of about 1.6 for the intercept. This suggests that our model is consistent with an intercept of between 42.8 and 49.2 (95% CI). The p value is very low. We are incredibly unlikely to observe a 46 if the sampling distribution for the intercept were centered at zero.
+
+We find a standard error of about 0.7 for the slope. This suggests a 95% CI of the slope between 1.6 and 4.4. It's very unlikely that we'd observe something as extreme as 3 under a null distribution with standard deviation 0.7, we can reject the null hypothesis.
+
+## Question 2
+
+For this question, use the `earnings` data from the ROS textbook. The variable `earn` captures earnings, and `education` captures years of education. 
+
+1. Create a scatterplot of earn by education. Interpret the plot. Explain why it looks a bit strange.
+
+```{r}
+ggplot(earnings,
+       aes(x = education, y = earn)) + 
+  geom_point()
+```
+
+Looks like we generally see higher earnings with more education. It looks a bit odd because education isn't really continuous, it is measured in years. You can't have a 12.2 in these data. It is also notable that we've got a definite pattern here where the highest earners tend to have more education, but we still see low earners with high educations.
+
+2. Estimate a linear regression with earn as the outcome and education as a predictor. Interpret your estimates for the slope and intercept.
+
+```{r}
+m2 <- lm(earn~education, data = earnings)
+m2
+```
+
+Our model says that people with zero education have -14000 in expected earnings, which doesn't have any real meaning here. The model suggests that each additional year of education is associated with a 2700 increase in earnings.
+
+3. Create a new variable that is a $z$ score of the variable earn (hint: the scale() function is helpful here). Re-estimate the regression from question 2 and interpret the coefficients. Why do these results look different?
+
+```{r}
+earnings <- earnings |> 
+  mutate(earn.z = scale(earn))
+m3 <- lm(earn.z ~ education, data = earnings)
+m3
+```
+
+We've not centered the earnings measure at the mean and transformed it onto a standard deviation scale. We now show that someone with no education is expected to have earnings that are 1.6 standard deviations below the mean. For each additional year of education, we expect earnings to increase by 0.12 sd (one sd = sd(earnings$earn) = 22531).
+
+4. Interpret the standard errors and p values. What do these estimates imply?
+
+```{r}
+summary(m3)
+```
+
+We estimate a standard error of 0.1 for the intercept, suggesting that values between -1.8 and -1.4 would be consistent with out data and model. This result is significant, meaning that it is very unlikely that the true sampling distribution for the intercept is centered at zero. 
+
+PWe estimate a very small 0.008 standard error on the slope. This suggests that we don't have much uncertainty in the value, a 95% interval is a very small range around 0.1 - 0.14. This is a significant result, suggesting that we can reject the null hypothesis of no differences in earnings across levels of education. 
