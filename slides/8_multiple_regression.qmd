@@ -1,5 +1,5 @@
 ---
-title: "Multiple regression part 2"
+title: "Multiple regression"
 author: "Frank Edwards"
 format: 
   beamer:
@@ -106,7 +106,7 @@ ggplot(dat,
 
 ```{r fig.height = 4}
 ggplot(dat,
-       aes(x = income, y = hrs_work)) + 
+       aes(y = income, x = hrs_work)) + 
   geom_point()
 ```
 
@@ -153,7 +153,7 @@ ggdag(d2, layout = "linear") + theme_dag()
 
 Which model is more plausible? 
 
-```{r fig.height = 3, echo = T}
+```{r fig.height = 4, echo = T}
 d3 <- dagify(t~e,
              i~e+t)
 
@@ -164,11 +164,11 @@ p1+p2
 
 ## Confounding
 
-We cannot obtain a valid estimate of the effect of $t$ on $i$ if DAG 3 is correct, unless we adjust for $e$. 
+- We cannot obtain a valid estimate of the effect of $t$ on $i$ if DAG this DAG is correct, unless we adjust for $e$. 
 
-This is a case of *confounding*. A relationship between two variables $X$ and $Y$ is confounded when a third variable $Z$ also causes $X$ and $Y$. 
+- This is a case of *confounding*. A relationship between two variables $X$ and $Y$ is confounded when a third variable $Z$ also causes $X$ and $Y$. 
 
-```{r fig.height = 3, echo = F}
+```{r fig.height = 4, echo = F}
 ggdag(d3) + theme_dag()
 ```
 
@@ -205,7 +205,7 @@ Where $k$ is the number of predictor variables we include in the model. Our only
 
 ## Our model for income
 
-Our theoretical model tells us that if we want to learn about $t \rightarrow I$, we must adjust for the effects that $E$ has on both $t$ and $I$. 
+Our theoretical model tells us that if we want to learn about $t \rightarrow i$, we must adjust for the effects that $E$ has on both $t$ and $i$. 
 
 We tried this with the model:
 
@@ -265,6 +265,13 @@ d4 <- dagify(i~t+e+a,
 
 ggdag(d4) + theme_dag()
 ```
+
+## Visualizing the paths in our DAG
+
+```{r, echo = F}
+ggdag_paths(d4, from = "t", to = "i")
+```
+
 
 ## Estimating the model
 
