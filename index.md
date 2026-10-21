@@ -268,8 +268,6 @@ Reading: ROS Ch 10
 - 10/20: Lab - multiple regression
 	- Fitting models with factors
 	- Formula syntax for interactions
-	- Interpretation of interactions
-	- Prediction for interactions
 
 - HW 7: Due 10/25 
 
@@ -277,19 +275,16 @@ Reading: ROS Ch 10
 
 Reading: ROS Ch 11
 
-- 10/26: Linear regression assumptions, diagnostics, fit
-	- Assumptions of OLS 
-	- Observed versus fitted
-	- Residual plots
-	- Replications from fitted
-	- Goodness of fit
-	- Cross validation
+- 10/26: Multiple regression 2, interactions
+	- Interactions
+		- Categorical 
+		- Continuous
 
-- 10/27: Lab - diagnostics and fit
-	- Visualization for diagnostics
-	- Simulation from model fit
-	- `BIC()`, `AIC()`
-	- `WAIC()`, `loo()`
+- 10/27: Lab - interactions and expected values
+	- Estimating and interpreting interactions
+	- Setting up fake data for prediction
+	- Simulation from model fit with `predict()`
+	- Visualizing results from models with interactions
 
 - HW 8: Due 11/1 
 
@@ -297,20 +292,15 @@ Reading: ROS Ch 11
 
 Reading: ROS Ch 12
 
-- 11/2: Nonlinear transformations
-	- Linear transformations
-		- Standardization with *z* scores
-	- Nonlinear transformations
-		- Logarithms
-		- Discretizing continuous measures
+- 11/2: Model fit, model comparison
+	- Assessing model fit
+	- Comparing models
+	- Cross validation
 
-- 11/3 Lab - implementing transformations
-	- `scale()`, `factor()` and inline transformations
-	- `log()`, `exp()`, `log1p()`, `expm1()`
-	- Axis transformations in ggplot
-	- Conditional transforms
-		- `ifelse()`
-		- `case_when()`
+- 11/3 Lab - model comparison
+	- Model comparison (AIC, BIC, WAIC)
+	- Manual cross validation
+	- Leave-one-out cross validation
 
 - HW 9: Due 11/8 
 
@@ -318,36 +308,33 @@ Reading: ROS Ch 12
 
 Reading: ROS Ch 16 - 17
 
-- 11/9: Design, power, extrapolation, missing data
-	- Statistical power
-	- Replication crisis and publication bias
-	- Post-stratification
-	- Deterministic imputation
-	- Multiple imputation
-
-- 11/10: Lab - missing data
-	- Computing statistical power 
-	- Evaluating missing data
-	- Basic multiple imputation with `mice`
-
-- HW 10: Due 11/24 (extended for ASC)
-
-
-**Week 12** 
-
-Reading: ROS Ch 18
-
-- 11/16: Lecture - Causal inference in experimental designs
+- 11/9: Lecture - Causal inference in experimental designs
 	- Potential outcomes
 	- Thinking counterfactually
 	- Experimental design and randomization
 	- Comparing means and the sample average treatment effect
 
-- 11/17: Lab - Simulation for regression and power
-	- Computing power directly
-	- Simulating from a regression model
-	- Computing power from simulations
-	- Prior prediction
+- 11/10: Lab - recodes and pivots
+	- `ifelse` and `case_when`
+	- `pivot_longer`, `pivot_wider`
+
+- HW 10: Due 11/24 (extended for ASC)
+
+**Week 12** 
+
+Reading: ROS Ch 18
+
+- 11/16: Causal inference with observational data, part 1
+	- Causal graphs
+		- Confounding and causal graphs
+		- Backdoor criterion and d-separation
+		- Good and bad controls
+		- Mediation
+
+- 11/17: Lab - drawing and analyzing causal graphs
+	- Introduction to `dagitty` and `ggdag`
+	- Drawing a causal model
+	- Identifying implications of causal models
 
 - HW 11: Due 11/24 (extended for ASC)
 
@@ -355,17 +342,16 @@ Reading: ROS Ch 18
 
 Reading: ROS Ch 19
 
-11/23: Causal inference with observational data, part 1
-	- Introducing causal graphs
-		- Confounding and causal graphs
-		- Backdoor criterion and d-separation
-		- Good and bad controls
-		- Mediation
+11/23: Causal inference with observational data, part 2
+	- Ignorability, balance, empirical support
+	- Constructing counterfactuals with matching and weighting
+		- Propensity score methods
+		- Inverse probability of treatment methods
 
-11/24: Lab - drawing and analyzing causal graphs
-	- Introduction to `dagitty` and `ggdag`
-	- Drawing a causal model
-	- Identifying implications of causal models
+11/24: Lab - matching and weighting
+	- Implementing propensity scores for linear regression
+	- Implementing inverse probability of treatment for linear regression
+	- Using weights for regression
 
 - HW 12: Due 11/24 (same hw as week 12)
 
@@ -373,16 +359,13 @@ Reading: ROS Ch 19
 
 Reading: ROS Ch 20
 
-- 11/30: Causal inference with observational data, part 2
-	- Ignorability, balance, empirical support
-	- Constructing counterfactuals with matching and weighting
-		- Propensity score methods
-		- Inverse probability of treatment methods
+- 11/30: Causal inference with observational data, part 3
+	- Defining the estimand clearly
+	- Panel models
+	- Difference in differences
 
-- 12/1: Lab - matching and weighting
-	- Implementing propensity scores for linear regression
-	- Implementing inverse probability of treatment for linear regression
-	- Using weights for regression
+- 12/1: Lab - Visualization for causal inference 
+	- Introducing `marginaleffects`
 
 - HW 13: Due 12/6 
 
@@ -390,15 +373,13 @@ Reading: ROS Ch 20
 
 Reading: ROS Ch 21
 
-- 12/7: Causal inference with observational data, part 3
-	- Defining the estimand clearly
-	- Instrumental variables
+- 12/7: Causal inference with observational data, part 4
 	- Regression discontinuity
-	- Difference in differences
+	- Instrumental variables
 
-- 12/8: Lab - Visualization for causal inference 
-	- Introducing `marginaleffects`
-	- Small multiple plots 
-	- Posterior visualization with `tidybayes`
+- 12/8: Lab - advanced quarto for academic writing
+	- Citations
+	- Cross references
+	- Captions, abstracts, and other miscellany
 
-- HW 14: Due 12/13
+- No HW on last week
