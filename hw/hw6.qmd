@@ -4,6 +4,11 @@ author: "Frank Edwards"
 format: pdf
 ---
 
+```{r include = F}
+library(tidyverse)
+```
+
+
 In this homework, we'll practice fitting a variety of linear regression models.
 
 ## Question 1

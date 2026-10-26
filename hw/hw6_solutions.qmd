@@ -1,0 +1,100 @@
+---
+title: "HW6"
+author: "Frank Edwards"
+format: pdf
+---
+
+```{r include = F}
+library(tidyverse)
+```
+
+
+In this homework, we'll practice fitting a variety of linear regression models.
+
+## Question 1
+
+For this question, use the `iris` data built into R. 
+
+1. Create a scatterplot of (`Sepal.Length`) and  (`Petal.Length`). Interpret the scatterplot. Do you think this might be a good candidate for a linear model?
+
+```{r}
+ggplot(iris,
+       aes(x = Sepal.Length, y = Petal.Length)) + 
+  geom_point()
+```
+
+Yes, this looks like a good candidate for a linear regression. There appears to be some clustering in the lower left quadrants, but the trend generally appears to be linear.
+
+2. Estimate a linear regression model with `Sepal.Length` as the outcome and `Petal.Length` as a predictor. Interpret the intercept and slope coefficients.
+
+```{r}
+m2 <- lm(Sepal.Length ~ Petal.Length,
+         data = iris)
+
+summary(m2)
+```
+
+Our regression suggests that a flower with zero petal length will, on average, have a sepal of length $\beta_0 = 4.3$. This model suggests that for every extra unit of petal length (cm I believe), a flower is expected to have a petal that is 0.4 units longer.
+
+3. Scatterplot sepal and petal length again, but this time with a facet or color aesthetic for species. Interpret.
+
+```{r}
+ggplot(iris,
+       aes(x = Sepal.Length, y = Petal.Length, color = Species)) + 
+  geom_point()
+```
+
+The color aesthetic makes the clusters very clear. Among setosa flowers, there does not appear to be an association between sepal length and petal length, flowers with longer sepals tend to have similar petal length when compared to flowers with short sepals. Among versicolor and virginica flower, the trend does appear linear, flowers with longer sepals tend to have longer petals.
+
+4. Add `Species` as a predictor to the model. Has $\beta_1$ changed between model 2 and model 4? What do the Species $\Beta$ parameters tell you?
+
+```{r}
+m4 <- lm(Sepal.Length ~ Petal.Length + Species,
+         data = iris)
+
+summary(m4)
+```
+
+Including species as a predictor adds two additional parameters to the model. Setosa has become the reference category, and both virginica and versicolor flowers are expected to have shorter sepals, after learning about a flower's petal length. In model 2, we estimated a slope for petal length $\beta_1 = 0.4$. In this revised model, we estimate a slope for petal length that is much higher, $\beta_1 = 0.9$, suggesting that after we account for species, we anticipate a stronger association between petal and sepal lengths.
+
+5. Which model do you find more convincing? Model 4 or Model 2? Why? 
+
+Model 4 is more convincing. Based on the scatterplot, there is clear evidence of differences across species; including species as a predictor almost certainly improves our ability to explain variation in sepal length.
+
+## Question 2
+
+For this question, use the `penguins` built into R
+
+1. Scatterplot the length of a penguin's flipper and body mass. Add species as a color to the plot. Interpret.
+
+```{r}
+ggplot(penguins, 
+       aes(x = body_mass, y = flipper_len, color = species)) + 
+  geom_point()
+```
+
+While there is within species clustering here, the overall trend appears to be linear across all species of penguins in this data. Penguins with a larger body mass tend to have longer flippers. 
+
+2. Estimate a linear regression with flipper length as an outcome and body mass as a predictor. Interpret your findings.
+
+```{r}
+mp2 <- lm(flipper_len ~ body_mass, data = penguins)
+```
+
+Our model suggests that a penguin with zero body mass (!!) would have flippers that are 136 mm long on average. We find that heavier penguins tend to have longer flippers, one extra gram of body mass is associated with 0.02 extra mm of flipper length. 
+
+3. Add species as a predictor to the model. Interpret the findings. 
+
+```{r}
+mp3 <- lm(flipper_len ~ body_mass + species, data = penguins)
+```
+
+With species included as a predictor, Adelie penguins become the reference category. We find that an Adelie penguin with zero body mass (just an artifact of fitting a line) would have expected flipper length of 159 mm. We observe a positive association between body mass and flipper length here, but the magnitude of the coefficient is lower than in mp2, now we estimate a slope of 0.008 mm expected increase in flipper length with body mass is 1 gram larger. Chinstrap and Gentoo penguins both have longer flippers on average when compared with Adelia penguins.
+
+4. Add sex as a predictor (with species). Interpret the findings. Discuss how estimates of the slope for body mass have changed between 2, 3, and 4.
+
+```{r}
+mp4 <- lm(flipper_len ~ body_mass + species + sex, data = penguins)
+```
+
+Now, our reference group is a female Adelie penguin with zero body mass. We find that kind of penguin to have an average flipper length of 165 mm. We find that, after knowing species and body mass, male penguins on average have flippers that are 2.5mm longer on average than female penguins. Chinstrap and Gentoos are also larger on average than are Adelie penguins. The coefficient on body mass is again smaller, now we estimate a slope of 0.007 between body mass in g and flipper length in mm. 

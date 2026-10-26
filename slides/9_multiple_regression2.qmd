@@ -1,0 +1,479 @@
+---
+title: "Multiple regression part 2: curves and interactions"
+author: "Frank Edwards"
+format: 
+  beamer:
+    theme: metropolis
+execute: 
+  echo: true
+knitr: 
+  opts_chunk:
+    warning: false
+    size: "tiny"
+    fig.align: "center"
+---
+
+```{r setup, include=FALSE}
+rm(list=ls())
+library(MASS)
+library(tidyverse)
+library(broom)
+library(patchwork)
+library(ggdag)
+library(broom)
+select<-dplyr::select
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+# set global options
+theme_set(theme_bw())
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, tidy = TRUE, size = "tiny")
+```
+
+## Data for today
+
+```{r size = "tiny"}
+dat<-read_csv("https://www.openintro.org/data/csv/acs12.csv")
+glimpse(dat)
+```
+
+## Subset the data to only include workers
+
+```{r size = "tiny"}
+dat <- dat |> 
+  filter(employment == "employed")
+```
+
+## Let's look at income for this ACS 2012 sample
+
+```{r fig.height = 4, size = "tiny"}
+ggplot(dat,
+       aes(x = income)) + 
+  geom_histogram()
+```
+
+## Multiple regression (regression with more than 1 predictor)
+
+We can generalize the linear regression 
+
+$$Y = \beta_0 + \beta_1 X + \varepsilon$$
+$$\varepsilon \sim N(0, \sigma^2)$$ \pause
+
+as 
+
+$$Y = \beta_0 + \beta_1 x_1 \cdots \beta_k x_k + \varepsilon$$
+$$\varepsilon \sim N(0, \sigma^2)$$
+
+Where $k$ is the number of predictor variables we include in the model. Our only constraint is that $k$ must be smaller than the number of observations $n$ in our data. 
+
+## Multiple regression basics
+
+1. Categorical predictors act as intercepts, or differences in level
+2. Continuous predictors act as slopes
+
+## Our model for income
+
+Our theoretical model tells us that if we want to learn about $t \rightarrow i$, we must adjust for the effects that $e$ has on both $t$ and $i$. 
+
+```{r}
+m1 <- lm(income ~ hrs_work + edu,
+         data = dat)
+```
+
+## Interpreting this model
+
+```{r size = "tiny"}
+table(dat$edu)
+tidy(m1)
+```
+
+## To understand what the model says, let's visualize y-hat
+
+```{r size = "tiny"}
+# set up prediction data with values of interest
+hrs_work<-0:60
+edu<-c("college", "hs or lower", "grad")
+pred_dat<-expand_grid(hrs_work, edu)
+# generate expected values and CI, join pred_dat
+e_y<-predict(m1, 
+             newdata = pred_dat,
+             interval = "confidence") |> 
+  bind_cols(pred_dat)
+# inspect
+head(e_y)
+```
+
+## Visualizing model expectations
+
+```{r fig.height = 4, size = "tiny"}
+ggplot(e_y,
+       aes(y = fit,
+           ymin = lwr,
+           ymax = upr,
+           x = hrs_work,
+           fill = edu,
+           color = edu)) + 
+  geom_ribbon(alpha = 0.5) + 
+  geom_line() 
+```
+
+## Regression with more than one slope and multiple intercepts
+
+Let's see if income depends on three variables: education, income, and hours worked
+
+$$E(\textrm{income}) = \beta_0 + \beta_1 \textrm{hrs} + \beta_2 \textrm{edu} + \beta_3 \textrm{age}$$
+
+## Fitting the model
+
+```{r}
+m2<-lm(income ~ hrs_work + 
+         edu + 
+         age,
+       data = dat)
+
+broom::tidy(m2)
+```
+
+## Visualizing model expectations: setup
+
+```{r size = "tiny"}
+# set up prediction data with values of interest
+hrs_work<-0:40
+age<-c(18:65)
+edu<-c("college", "hs or lower", "grad")
+pred_dat<-expand_grid(hrs_work, edu, age)
+# generate expected values and CI, join pred_dat
+e_y<-predict(m2, 
+             newdata = pred_dat,
+             interval = "confidence") |> 
+  bind_cols(pred_dat)
+# inspect
+head(e_y)
+```
+
+## Visualizing model expectations: age and expected income
+
+```{r echo = F}
+ggplot(e_y |> 
+         filter(hrs_work==40),
+       aes(y = fit,
+           ymin = lwr,
+           ymax = upr,
+           x = age,
+           fill = edu,
+           color = edu)) + 
+  geom_line() + 
+  geom_ribbon(alpha = 0.5) + 
+  labs(subtitle = "Working 40 hours per week") + 
+  coord_cartesian(ylim=c(0, 120000))
+```
+
+## Hours worked and expected income
+
+```{r echo = F}
+ggplot(e_y |> 
+         filter(age==40),
+       aes(y = fit,
+           ymin = lwr,
+           ymax = upr,
+           x = hrs_work,
+           fill = edu,
+           color = edu)) + 
+  geom_line() + 
+  geom_ribbon(alpha = 0.5) + 
+  labs(subtitle = "Age 40")+ 
+  geom_hline(yintercept = 0, lty = 2) + 
+  coord_cartesian(ylim=c(0, 120000))
+```
+
+## Adding complexity: quadratic terms
+
+We know that earnings for people less than age 18 and greater than age 70 tend to be very low (or zero). We can try to use a parabola (a quadratic equation) to model this process. 
+
+Our revised model will be 
+
+$$E(\textrm{income}) = \beta_0 + \beta_1 \textrm{hrs} + \beta_2 \textrm{edu} + \beta_3 \textrm{age} + \beta_4\textrm{age}^2$$
+
+## Quadratics take a form that looks like this
+
+```{r fig.height = 4}
+pdat <- data.frame(x = -100:100)
+p1 <- ggplot(pdat, aes(x = x, y = x^2)) + 
+  geom_line() + labs(title = "y=x^2")
+p2 <-  ggplot(pdat, aes(x = x, y = - x^2)) + 
+  geom_line() + labs(title = "y=-x^2")
+p1+p2
+```
+
+## Fitting a quadratic term
+
+We use the I() function to require R to evaluate math statements inside formula objects
+
+```{r}
+m3<-lm(income ~ hrs_work + 
+         edu +
+         age + 
+         I(age^2),
+       data = dat)
+tidy(m3)
+```
+
+## Visualizing model expectations
+
+```{r echo = F}
+# set up prediction data with values of interest
+hrs_work<-40
+age<-c(18:65)
+edu<-c("college", "hs or lower", "grad")
+pred_dat<-expand_grid(hrs_work, edu, age)
+# generate expected values and CI, join pred_dat
+e_y<-predict(m3, 
+             newdata = pred_dat,
+             interval = "confidence") |> 
+  bind_cols(pred_dat)
+
+ggplot(e_y,
+       aes(y = fit,
+           ymin = lwr,
+           ymax = upr,
+           x = age,
+           fill = edu,
+           color = edu)) + 
+  geom_line() + 
+  geom_ribbon(alpha = 0.5) + 
+  labs(subtitle = "Working 40 hours per week")
+```
+
+## What about gender and education?
+
+Perhaps we think that gender influences income. We can expand our model by including yet another predictor. 
+
+```{r}
+m4<-lm(income ~ -1 + # remove b0 to aid interpretation
+         hrs_work + 
+         edu +
+         age + 
+         gender,
+       data = dat)
+```
+
+## What does this model say?
+
+```{r}
+summary(m4)
+```
+
+## Model expected values
+
+```{r echo = F}
+# set up prediction data with values of interest
+hrs_work<-40
+age<-c(18:65)
+gender <- c("male", "female")
+edu<-c("college", "hs or lower", "grad")
+pred_dat<-expand_grid(hrs_work, edu, age, gender)
+# generate expected values and CI, join pred_dat
+e_y<-predict(m4, 
+             newdata = pred_dat,
+             interval = "confidence") |> 
+  bind_cols(pred_dat) 
+
+ggplot(e_y,
+       aes(y = fit,
+           ymin = lwr,
+           ymax = upr,
+           x = age,
+           fill = gender,
+           color = gender)) + 
+  geom_line() + 
+  geom_ribbon(alpha = 0.5) + 
+  labs(subtitle = "Working 40 hours per week") + 
+  facet_wrap(~edu)
+```
+
+## What if we think the impact of education on income depends on gender?
+
+```{r echo = F}
+gender_dag <- dagify(i~a+g+e,
+                     e~a + g, 
+                     outcome = "i", 
+                     exposure = c("g", "e"))
+ggdag(gender_dag) + theme_dag()
+```
+
+## Allowing the g->i relationship to vary by education
+
+We can fit an *interaction* to the model to allow for separate parameters for all education and gender pairs
+
+```{r}
+m5<-lm(income ~ -1 + # remove b0 to aid interpretation
+         hrs_work + 
+         age + 
+         edu * gender, # interaction
+       data = dat)
+```
+
+## Interpreting model output: so many parameters!
+
+```{r}
+broom::tidy(m5)
+```
+
+## Visualizing the interaction
+
+```{r echo = F}
+# set up prediction data with values of interest
+hrs_work<-40
+age<-c(40)
+gender <- c("male", "female")
+edu<-c("college", "hs or lower", "grad")
+pred_dat<-expand_grid(hrs_work, edu, age, gender)
+# generate expected values and CI, join pred_dat
+e_y<-predict(m5, 
+             newdata = pred_dat,
+             interval = "confidence") |> 
+  bind_cols(pred_dat) 
+
+ggplot(e_y,
+       aes(y = fit,
+           ymin = lwr,
+           ymax = upr,
+           x = edu,
+           color = gender)) + 
+  geom_pointrange(position = position_dodge(width = 0.2)) + 
+  labs(x = "education", y = "expected income")
+```
+
+## Categorical x categorical interactions
+
+Interacting two categorical variables generates intercepts for each combination of levels of the two variables. Interacting a 2 level categorical with a 3 level categorical generates $2\times3=6$ intercepts.
+
+## Categorical x continuous interactions
+
+Let's allow the relation between age and income to vary by sex.
+
+$$E(\textrm{income}) = \beta_0 + \beta_1 \textrm{hrs} + \beta_2 \textrm{edu} + \beta_3 \textrm{age} + \beta_4\textrm{gender} + \beta_5\textrm{gender x age}$$
+
+## Fitting the model: interpretation is tricky
+
+```{r}
+m6<-lm(income ~ hrs_work + edu + 
+         age * gender, # interaction
+       data = dat)
+
+broom::tidy(m6)
+```
+
+## But visualization makes it clear
+
+```{r echo = F}
+# set up fake data
+pdat <- expand_grid(hrs_work = 40, edu = "college",
+                    age=18:65, gender = c("male", "female")) 
+# generate expected values with CI
+yhat <- predict(m6, pdat, interval = "confidence")
+# attach for plotting
+pdat <- pdat |> bind_cols(yhat)
+# plot
+ggplot(pdat, aes(x = age, y = fit, ymin = lwr, 
+                 ymax = upr, color = gender, fill = gender)) + 
+  geom_line() + 
+  geom_ribbon(alpha = 0.5) 
+```
+
+## Categorical x continuous interactions
+
+Interacting a categorical and a continuous variable generates different slopes for the continuous measure for each level of the categorical variable.
+
+## Another example
+
+Let's allow for differences in the slope of age by education
+
+```{r}
+m7<-lm(income ~ hrs_work + edu * age, # interaction
+       data = dat)
+
+broom::tidy(m7)
+```
+
+## Visualize
+
+```{r echo = F}
+# set up fake data
+pdat <- expand_grid(hrs_work = 40, 
+                    age=18:65, edu = unique(dat$edu)) 
+# generate expected values with CI
+yhat <- predict(m7, pdat, interval = "confidence")
+# attach for plotting
+pdat <- pdat |> bind_cols(yhat)
+# plot
+ggplot(pdat, aes(x = age, y = fit, ymin = lwr, 
+                 ymax = upr, color = edu, fill = edu)) + 
+  geom_line() + 
+  geom_ribbon(alpha = 0.5) 
+```
+
+## Continuous x continuous interactions
+
+What if we think the effect of hours worked depends on age?
+
+$$E(\textrm{income}) = \beta_0 + \beta_1 \textrm{hrs} + \beta_2 \textrm{age} + \beta_3 \textrm{age} \times \textrm{hrs}$$
+```{r}
+m8<-lm(income ~ hrs_work * age, # interaction
+       data = dat)
+
+broom::tidy(m8)
+```
+
+## Visualization
+
+These are really tricky to interpret, you'll need to visualize it
+
+```{r echo = F}
+# set up fake data
+pdat <- expand_grid(hrs_work = 10:60, 
+                    age=c(18, 25, 35, 40, 50, 65)) 
+# generate expected values with CI
+yhat <- predict(m8, pdat, interval = "confidence")
+# attach for plotting
+pdat <- pdat |> bind_cols(yhat)
+# plot
+ggplot(pdat, aes(x = hrs_work, y = fit, ymin = lwr, ymax = upr, color = -age, group = age)) + 
+  geom_line() 
+```
+
+## Continuous x continuous interactions
+
+Create constant changes in slope as both measures change. The allow for a very flexible model fit to the data, but are difficult to interpret directly.
+
+## Combining interactions
+
+Sometimes it makes sense to *fully* interact your model, allow each measure to interact with all other measures. Let's see this with age, hrs_work, and education
+
+```{r}
+m9<-lm(income ~ hrs_work * age * edu, # interaction
+       data = dat)
+broom::tidy(m9)
+```
+
+## Visualization
+
+What looks off here?
+
+```{r echo = F}
+# set up fake data
+pdat <- expand_grid(hrs_work = 10:60, 
+                    age=c(18, 40, 65), edu = unique(dat$edu)) 
+# generate expected values with CI
+yhat <- predict(m9, pdat, interval = "confidence")
+# attach for plotting
+pdat <- pdat |> bind_cols(yhat)
+# plot
+ggplot(pdat, aes(x = hrs_work, y = fit, ymin = lwr, ymax = upr,
+                 color = edu, fill = edu)) + 
+  geom_line() + 
+  geom_ribbon(alpha = 0.2, color = NULL) + 
+  facet_wrap(~age)
+```
