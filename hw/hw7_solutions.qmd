@@ -1,0 +1,114 @@
+---
+title: "HW7"
+author: "Frank Edwards"
+format: pdf
+---
+
+```{r include = F}
+library(tidyverse)
+```
+
+
+In this homework, we'll practice fitting interaction models
+
+## Question 1
+
+For this question, use the `iris` data built into R. 
+
+1. Fit a linear regression with petal width as an outcome, where sepal width and species are predictors. Interpret your findings.
+
+```{r}
+m0 <- lm(Petal.Width ~ Sepal.Width + Species, data = iris)
+summary(m0)
+```
+
+This model suggests that flowers with longer sepals will also have longer petals; for every unit difference in sepal width, we expect a flower to have a petal that is 0.3 units longer. Versicolor and Virginica flowers generally have longer petals than Setosa flowers.
+
+2. Now include an interaction between sepal width and species. Interpret your findings.
+
+```{r}
+m1 <- lm(Petal.Width ~ Sepal.Width * Species, data = iris)
+summary(m1)
+```
+
+Here, we allow for both intercepts and slopes to vary by flower species. We estimate an intercept (zero sepal width) of 0.02 for Setosa flowers, 0.02 + 0.14 for Versicolors, and 0.02 + 0.64 for Virginicas. We estimate a varying slope for sepal width by flower species, for Setosa, we expect a flower's petals to be 0.06 longer on average when its Sepal is one unit longer. This relationship is much stronger for the other species: for Versicolor, we estimate a slope of 0.06 + 0.35, and for Virginica we estimate a slope of 0.06 + 0.39
+
+3. Visualize your model's expected values across all species and a reasonable range of sepal widths. Interpret.
+
+```{r}
+# set up fake data for plotting
+plot_dat <- expand_grid(Species = unique(iris$Species),
+                        Sepal.Width = seq(min(iris$Sepal.Width),
+                                          max(iris$Sepal.Width),
+                                          by = 0.01))
+## generate expected values and CI
+yhat <- predict(m1, newdata = plot_dat,
+                interval = "confidence")
+## attach yhat to plot_dat
+plot_dat <- plot_dat |> 
+  bind_cols(yhat)
+## plot it
+ggplot(plot_dat,
+       aes(x = Sepal.Width, y = fit, ymin = lwr, ymax = upr,
+           color = Species, fill = Species)) + 
+  geom_line() + 
+  geom_ribbon(alpha = 0.5)
+```
+
+As described above, we can see that our model estimated varying slopes and intercepts for each species. The slope for sepal width is relatively flat for Setosa flowers, but substantial for both virginica and versicolor flowers, which are expected to have longer petals than setosas at all values of sepal width.
+
+## Question 2
+
+For this question, use the `penguins` built into R
+
+1. Estimate a linear regression with flipper length as an outcome, with body mass and species as predictors. Interpret your findings.
+
+```{r}
+p0 <- lm(flipper_len ~ body_mass + species, data = penguins)
+summary(p0)
+```
+
+We find that heavier penguins tend to have longer flippers. Adelie penguins have the smalled average flippers, while Chinstrap and Gentoos have longer flippers on average. 
+
+2. Add an interaction for body mass and species. Interpret your findings.
+
+```{r}
+p1 <- lm(flipper_len ~ body_mass * species, data = penguins)
+summary(p1)
+```
+
+Now we are allowing for both intercepts and slopes to vary by species. We find that, as before Adelie penguins have the smallest average flipper size. Adelie penguins with a larger mass do tend to have longer flippers, but the relationship between body mass and flippers is larger in magnitude for Chinstrap and Gentoo penguins.
+
+3. Add sex to the model, and interact it with species (along with the body mass interaction). Develop an appropriate visual to help interpret the model.
+
+```{r}
+p2 <- lm(flipper_len ~ body_mass * species * sex, data = penguins)
+summary(p2)
+```
+
+This is a mess to try and interpret from the table, so I won't do it.
+
+Let's visualize!
+
+```{r}
+## set up the fake data for plotting
+plot_dat <- expand_grid(body_mass = seq(
+  min(penguins$body_mass, na.rm=T), 
+  max(penguins$body_mass, na.rm=T), by = 1),
+  sex = unique(penguins$sex),
+  species = unique(penguins$species))
+## generate expected values and CI
+yhat <- predict(p2, newdata = plot_dat, interval = "confidence")
+## attach
+plot_dat <- plot_dat |> 
+  bind_cols(yhat)
+## visualize
+ggplot(plot_dat,
+       aes(x = body_mass, y = fit, ymin = lwr, ymax = upr,
+           color = sex, fill = sex)) + 
+  geom_line() + 
+  geom_ribbon(alpha = 0.5) + 
+  facet_wrap(~species)
+```
+
+This model suggests that there aren't very pronounced differences in flipper length across sexes, after we learn about the body mass of the animal. We expect large Chinstrap and Gentoo penguins to have longer flippers on average than large Adelie penguins. 
