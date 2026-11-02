@@ -1,0 +1,25 @@
+---
+title: "HW8"
+author: "Frank Edwards"
+format: pdf
+---
+
+```{r include = F}
+library(tidyverse)
+```
+
+In this homework, we'll try to fit a predictive model and describe it's accuracy.
+
+For this question, use the `penguins` built into R
+
+1. Estimate a linear regression with flipper length as an outcome. Choose any predictors you like.
+
+2. Expand your model by adding interactions, polynomials, and addition predictors. Make a new model for each added parameter / feature you are including in the model.
+
+3. Compare and interpret $R^2$ for each of your models. Which performs best?
+
+4. Compare and interpret AIC for each of your models. Which performs best?
+
+5. Now, divide the penguins data into a training and test set: 80 percent of the data should be randomly sampled into the training data, the remaining 20 percent will be the test data. Fit each of your models on the training data. With each model, generate expected values and compute errors for the test data. Compare root mean squared error across models. Which performs best?
+
+6. Based on all of the evidence that you've provided, which model do you prefer and why?

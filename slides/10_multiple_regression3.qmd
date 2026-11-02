@@ -1,0 +1,574 @@
+---
+title: "Multiple regression part 3: prediction and fit"
+author: "Frank Edwards"
+format: 
+  beamer:
+    theme: metropolis
+execute: 
+  echo: true
+knitr: 
+  opts_chunk:
+    warning: false
+    size: "tiny"
+    fig.align: "center"
+---
+
+```{r setup, include=FALSE}
+rm(list=ls())
+library(MASS)
+library(tidyverse)
+library(broom)
+library(patchwork)
+library(ggdag)
+library(broom)
+select<-dplyr::select
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+# set global options
+theme_set(theme_bw())
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, tidy = TRUE, size = "tiny")
+set.seed(1)
+```
+
+## Data for today
+
+```{r size = "tiny"}
+dat<-read_csv("https://www.openintro.org/data/csv/acs12.csv")
+glimpse(dat)
+```
+
+## Subset the data to only include workers
+
+```{r size = "tiny"}
+dat <- dat |> 
+  filter(employment == "employed")
+```
+
+## Let's look at income for this ACS 2012 sample
+
+```{r fig.height = 4, size = "tiny"}
+ggplot(dat,
+       aes(x = income)) + 
+  geom_histogram()
+```
+
+## Multiple regression (regression with more than 1 predictor)
+
+We can generalize the linear regression 
+
+$$Y = \beta_0 + \beta_1 X + \varepsilon$$
+$$\varepsilon \sim N(0, \sigma^2)$$ \pause
+
+as 
+
+$$Y = \beta_0 + \beta_1 x_1 \cdots \beta_k x_k + \varepsilon$$
+$$\varepsilon \sim N(0, \sigma^2)$$
+
+Where $k$ is the number of predictor variables we include in the model. Our only constraint is that $k$ must be smaller than the number of observations $n$ in our data. 
+
+## Multiple regression basics
+
+1. Categorical predictors act as intercepts, or differences in level
+2. Continuous predictors act as slopes
+
+
+## How to assess a model
+
+**If our goal is causal inference**
+
+1. Construct causal theories (DAGs)
+2. Determine testable implications of model 
+3. Evaluate, critique, refine
+
+**If our goal is prediction**
+
+1. Establish what we'd like to predict
+2. Estimate competing models
+3. Compare with metric of accuracy / fit
+
+## Fit a model for prediction
+
+Let's start with an additive model $E(i) = \beta_0 + \beta_1 age + \beta_2 gender + \beta_3 education$
+
+```{r size = "tiny"}
+m1 <- lm(income~age + gender + edu, data = dat)
+```
+
+## The most common measure of model fit: $R^2$
+
+$$R^2 = \frac{var(\textrm{outcome}) - var(\textrm{residuals})}{var(\textrm{outcome})}$$
+
+$$R^2 = 1 - \frac{var(\textrm{residuals})}{var(\textrm{outcome})}$$
+
+## To understand what the model says, let's visualize y-hat
+
+```{r size = "tiny"}
+# set up prediction data with values of interest
+age<-18:90
+edu<-c("college", "hs or lower", "grad")
+gender <- unique(dat$gender)
+pred_dat<-expand_grid(age, edu, gender)
+# generate expected values and CI, join pred_dat
+e_y<-predict(m1, 
+             newdata = pred_dat,
+             interval = "confidence") |> 
+  bind_cols(pred_dat)
+# inspect
+head(e_y)
+```
+
+## Visualizing model expectations
+
+```{r fig.height = 4, size = "tiny"}
+ggplot(e_y,
+       aes(y = fit,
+           ymin = lwr,
+           ymax = upr,
+           x = age,
+           fill = edu,
+           color = edu)) + 
+  geom_ribbon(alpha = 0.5) + 
+  geom_line() + 
+  facet_wrap(~gender) + 
+  scale_y_log10()
+```
+
+## How well does the model fit?
+
+```{r echo = F}
+ggplot(e_y,
+       aes(y = fit,
+           ymin = lwr,
+           ymax = upr,
+           x = age,
+           fill = edu,
+           color = edu)) + 
+  geom_ribbon(alpha = 0.5) + 
+  geom_line() + 
+  geom_point(data = dat, aes(x = age, y = income, ymin = income, ymax = income), alpha = 0.2) + 
+  facet_wrap(~gender) + 
+  scale_y_log10()
+```
+
+## How well does the model fit?
+
+```{r echo = F}
+resid_plot <- dat |> 
+  mutate(yhat = predict(m1),
+         resid = income - yhat)
+
+ggplot(resid_plot,
+       aes(y = income,
+           x = age)) + 
+  geom_point(alpha = 0.3) + 
+  geom_line(aes(y = yhat)) + 
+  geom_segment(aes(yend = yhat), lty = 2, alpha = 0.1, color = "red") + 
+  facet_wrap(gender~edu) + 
+  scale_y_log10() + 
+  theme_classic()
+```
+
+## Let's check the magnitude of error for each category
+
+We'll compute the average of the squared error (residual) to ensure that negative and positive errors don't cancel each other. Which group has the largest average (squared) error?
+
+```{r}
+resid_plot |> 
+  group_by(edu, gender) |> 
+  summarize(resid2 = mean(resid^2)) |> 
+  arrange(resid2)
+```
+
+## Let's compute a simple fit statistic
+
+$$R^2 = 1 - \frac{var(\textrm{residuals})}{var(\textrm{outcome})}$$
+
+```{r}
+# compute R^2 manually
+1 - var(m1$residuals)/var(dat$income)
+```
+
+\pause
+
+This means that our model explains 22 percent of the variation in income. Not bad!
+
+## We can also get it from summary()
+
+```{r}
+summary(m1)
+```
+
+## Can we improve the fit?
+
+When our goal is *prediction*, we are often interested in improving how well the model fits. Confounding and causal inference are not primary here.
+
+\pause
+
+Let's add hours worked as a predictor
+
+```{r}
+m2 <- lm(income~ age + gender + edu + hrs_work, data = dat)
+# pull r2 from summary()
+summary(m2)$r.squared
+```
+
+\pause
+
+How should we interpret $R^2$ here? Have we improved the fit?
+
+## More flexible models will improve fit
+
+Let's allow for heterogeneity in intercepts and slopes with interactions
+
+```{r}
+m3 <- lm(income ~ age + gender * edu * hrs_work, data = dat)
+summary(m3)$r.squared
+```
+
+Have we improved the fit?
+
+## More flexible models will improve fit
+
+```{r}
+m4 <- lm(income ~ age * gender * edu * hrs_work, data = dat)
+summary(m4)$r.squared
+m5 <- lm(income ~ (age + I(age^2)) * gender * edu * hrs_work, data = dat)
+summary(m5)$r.squared
+m6 <- lm(income ~ (age + I(age^2) + I(age^3)) * gender * edu * hrs_work, data = dat)
+summary(m6)$r.squared
+```
+
+So which is best?
+
+## Overfitting
+
+In predictive modeling, we have to balance the desire to accurately predict our sample against the danger of *overfitting*. 
+
+Overfitting is when we specify a model that describes our observed data well, but explains new data poorly.
+
+## Overfitting in action
+
+```{r}
+d <- mtcars %>% 
+  sample_n(10)
+m1<-lm(mpg ~ wt, data = d)
+m2<-lm(mpg ~ wt + I(wt^2), data = d)
+m3<-lm(mpg ~ wt + I(wt^2) + I(wt^3), data = d)
+m4<-lm(mpg ~ wt + I(wt^2) + I(wt^3) + I(wt^4), data = d)
+m5<-lm(mpg ~ wt + I(wt^2) + I(wt^3) + I(wt^4) + I(wt^5), data = d)
+m6<-lm(mpg ~ wt + I(wt^2) + I(wt^3) + I(wt^4) + I(wt^5) + I(wt^6), data = d)
+```
+
+## Which model is best?
+
+```{r}
+summary(m1)$r.squared
+summary(m2)$r.squared
+summary(m3)$r.squared
+summary(m4)$r.squared
+summary(m5)$r.squared
+summary(m6)$r.squared
+```
+
+## Compare these fits
+
+```{r echo = F}
+plot_dat <- data.frame(wt=seq(min(d$wt), max(d$wt), 0.001))
+plot_dat <- plot_dat |> 
+  mutate(yhat1 = predict(m1, newdata = plot_dat),
+         yhat2 = predict(m2, newdata = plot_dat),
+         yhat3 = predict(m3, newdata = plot_dat),
+         yhat4 = predict(m4, newdata = plot_dat),
+         yhat5 = predict(m5, newdata = plot_dat),
+         yhat6 = predict(m6, newdata = plot_dat))
+ggplot(d, aes(x = wt, y = mpg)) + 
+  geom_point(size = 2) + 
+  geom_line(data = plot_dat, aes(x = wt, y = yhat1)) + 
+  coord_cartesian(ylim = c(10, 34))
+```
+
+## Compare these fits
+
+```{r echo = F}
+ggplot(d, aes(x = wt, y = mpg)) + 
+  geom_point(size = 2) + 
+  geom_line(data = plot_dat, aes(x = wt, y = yhat1)) + 
+  geom_line(data = plot_dat, aes(x = wt, y = yhat2), color = 2) + 
+  coord_cartesian(ylim = c(10, 34))
+```
+
+## Compare these fits
+
+```{r echo = F}
+ggplot(d, aes(x = wt, y = mpg)) + 
+  geom_point(size = 2) + 
+  geom_line(data = plot_dat, aes(x = wt, y = yhat1)) + 
+  geom_line(data = plot_dat, aes(x = wt, y = yhat2), color = 2) + 
+  geom_line(data = plot_dat, aes(x = wt, y = yhat3), color = 3) + 
+  coord_cartesian(ylim = c(10, 34))
+```
+
+## Compare these fits
+
+```{r echo = F}
+ggplot(d, aes(x = wt, y = mpg)) + 
+  geom_point(size = 2) + 
+  geom_line(data = plot_dat, aes(x = wt, y = yhat1)) + 
+  geom_line(data = plot_dat, aes(x = wt, y = yhat2), color = 2) + 
+  geom_line(data = plot_dat, aes(x = wt, y = yhat3), color = 3) + 
+  geom_line(data = plot_dat, aes(x = wt, y = yhat4), color = 4) + 
+  coord_cartesian(ylim = c(10, 34))
+```
+
+## Compare these fits
+
+```{r echo = F}
+ggplot(d, aes(x = wt, y = mpg)) + 
+  geom_point(size = 2) + 
+  geom_line(data = plot_dat, aes(x = wt, y = yhat1)) + 
+  geom_line(data = plot_dat, aes(x = wt, y = yhat2), color = 2) + 
+  geom_line(data = plot_dat, aes(x = wt, y = yhat3), color = 3) + 
+  geom_line(data = plot_dat, aes(x = wt, y = yhat4), color = 4) + 
+  geom_line(data = plot_dat, aes(x = wt, y = yhat5), color = 5) + 
+  coord_cartesian(ylim = c(10, 34))
+```
+
+## Compare these fits
+
+```{r echo = F}
+ggplot(d, aes(x = wt, y = mpg)) + 
+  geom_point(size = 2) + 
+  geom_line(data = plot_dat, aes(x = wt, y = yhat1)) + 
+  geom_line(data = plot_dat, aes(x = wt, y = yhat2), color = 2) + 
+  geom_line(data = plot_dat, aes(x = wt, y = yhat3), color = 3) + 
+  geom_line(data = plot_dat, aes(x = wt, y = yhat4), color = 4) + 
+  geom_line(data = plot_dat, aes(x = wt, y = yhat5), color = 5) + 
+  geom_line(data = plot_dat, aes(x = wt, y = yhat5), color = 6) + 
+  coord_cartesian(ylim = c(10, 34))
+```
+
+## Compare on out-of-sample data
+
+```{r echo = F}
+plot_dat <- data.frame(wt=seq(min(mtcars$wt), max(mtcars$wt), 0.001))
+plot_dat <- plot_dat |> 
+  mutate(yhat1 = predict(m1, newdata = plot_dat),
+         yhat2 = predict(m2, newdata = plot_dat),
+         yhat3 = predict(m3, newdata = plot_dat),
+         yhat4 = predict(m4, newdata = plot_dat),
+         yhat5 = predict(m5, newdata = plot_dat),
+         yhat6 = predict(m6, newdata = plot_dat))
+ggplot(mtcars, aes(x = wt, y = mpg)) + 
+  geom_point(size = 2) + 
+  geom_line(data = plot_dat, aes(x = wt, y = yhat1)) + 
+  geom_line(data = plot_dat, aes(x = wt, y = yhat2), color = 2) + 
+  geom_line(data = plot_dat, aes(x = wt, y = yhat3), color = 3) + 
+  geom_line(data = plot_dat, aes(x = wt, y = yhat4), color = 4) + 
+  geom_line(data = plot_dat, aes(x = wt, y = yhat5), color = 5) + 
+  geom_line(data = plot_dat, aes(x = wt, y = yhat5), color = 6) +
+  coord_cartesian(ylim = c(10, 34))
+```
+
+## Overfitting and underfitting
+
+- Adding complexity will improve goodness-of-fit measures like $R^2$ \pause
+- But goodness-of-fit doesn't mean that we've modeled the process well, just that we've fit our *sample* well \pause
+- Adding too few parameters though can mean we aren't learning enough from the data \pause
+- *Goal:* balance model complexity with predictive accuracy
+
+## Alternative fit measures
+
+$R^2$ always goes up, even when we are overfitting. *Information criteria* like the Akaike Information Criterion include a penalty for model complexity. This helps protect against overfitting
+
+```{r}
+AIC(m1, m2, m3, m4, m5, m6)
+```
+
+Lower scores means a better performing model. But as we can see here, it's no guarantee...
+
+## AIC with a more realistic set of models
+
+AIC has two components, the *log-likelihood* of the model, which tells us how well the model explains the data, and a *penalty* term for the number of parameters estimated in the regression. 
+
+```{r}
+m1 <- lm(income~age + gender + edu, data = dat)
+m2 <- lm(income~ age + gender + edu + hrs_work, data = dat)
+m3 <- lm(income ~ age + gender * edu * hrs_work, data = dat)
+m4 <- lm(income ~ age * gender * edu * hrs_work, data = dat)
+m5 <- lm(income ~ (age + I(age^2)) * gender * edu * hrs_work, data = dat)
+m6 <- lm(income ~ (age + I(age^2) + I(age^3)) * gender * edu * hrs_work, data = dat)
+```
+
+If two models have a similar fit to the data, AIC will tell us to prefer the less complex model.
+
+## AIC in action
+
+Lower AIC values indicate a better fit. 
+
+```{r}
+AIC(m1, m2, m3, m4, m5, m6) |> arrange(AIC)
+```
+
+## Compared to r squared
+
+```{r}
+summary(m3)$r.squared
+summary(m4)$r.squared
+summary(m5)$r.squared
+summary(m6)$r.squared
+```
+
+## Out of sample prediction
+
+The gold standard for assessing the fit of a predictive model is *out-of-sample accuracy*. 
+
+\pause
+
+How well does the model predict new observations?
+
+## Dividing the data into a 'training' and 'test' set
+
+Let's hold out a portion of the income data to evaluate model accuracy. 
+
+```{r}
+# sample 90% of rows for training the model
+rows <- 1:nrow(dat)
+test_rows <- sample(rows, 0.9 * nrow(dat))
+# subset to sampled rows for the training data
+dat_training <- dat[test_rows,]
+# and the remaineder for test
+dat_test <- dat[-test_rows,]
+```
+
+## Training the models
+
+Re-fit each model m1-m6 with *ONLY* the training data
+
+```{r echo = T}
+m1_t <- lm(income~age + gender + edu, data = dat_training)
+m2_t <- lm(income~ age + gender + edu + hrs_work, data = dat_training)
+m3_t <- lm(income ~ age + gender * edu * hrs_work, data = dat_training)
+m4_t <- lm(income ~ age * gender * edu * hrs_work, data = dat_training)
+m5_t <- lm(income ~ (age + I(age^2)) * gender * edu * hrs_work, data = dat_training)
+m6_t <- lm(income ~ (age + I(age^2) + I(age^3)) * gender * edu * hrs_work, data = dat_training)
+```
+
+## Now let's use our models to predict
+
+We'll now use each model to predict income for our test data
+
+```{r}
+m1_test <- predict(m1_t, newdata = dat_test)
+m2_test <- predict(m2_t, newdata = dat_test)
+m3_test <- predict(m3_t, newdata = dat_test)
+m4_test <- predict(m4_t, newdata = dat_test)
+m5_test <- predict(m5_t, newdata = dat_test)
+m6_test <- predict(m6_t, newdata = dat_test)
+```
+
+## Visualize the fits
+
+Model 1
+
+```{r echo = F}
+ggplot(dat_test,
+       aes(y = income, x = age)) + 
+  geom_point() + 
+  geom_point(aes(y = m1_test), color = 2, alpha = 0.5) 
+```
+
+## Visualize the fits
+
+Model 2
+
+```{r echo = F}
+ggplot(dat_test,
+       aes(y = income, x = age)) + 
+  geom_point() + 
+  geom_point(aes(y = m2_test), color = 3, alpha = 0.5) 
+```
+
+## Visualize the fits
+
+Model 3
+
+```{r echo = F}
+ggplot(dat_test,
+       aes(y = income, x = age)) + 
+  geom_point() + 
+  geom_point(aes(y = m3_test), color = 4, alpha = 0.5) 
+```
+
+## Visualize the fits
+
+Model 4
+
+```{r echo = F}
+ggplot(dat_test,
+       aes(y = income, x = age)) + 
+  geom_point() + 
+  geom_point(aes(y = m4_test), color = 5, alpha = 0.5) 
+```
+
+## Visualize the fits
+
+Model 5
+
+```{r echo = F}
+ggplot(dat_test,
+       aes(y = income, x = age)) + 
+  geom_point() + 
+  geom_point(aes(y = m5_test), color = 6, alpha = 0.5) 
+```
+
+## Visualize the fits
+
+Model 6
+
+```{r echo = F}
+ggplot(dat_test,
+       aes(y = income, x = age)) + 
+  geom_point() + 
+  geom_point(aes(y = m6_test), color = 7, alpha = 0.5) 
+```
+
+## So which is best? 
+
+Let's compute the mean squared error to compare. Recall that error is just $\hat{y}-y$
+
+```{r}
+resid1 <- m1_test - dat_test$income
+resid2 <- m2_test - dat_test$income
+resid3 <- m3_test - dat_test$income
+resid4 <- m4_test - dat_test$income
+resid5 <- m5_test - dat_test$income
+resid6 <- m6_test - dat_test$income
+```
+
+## So which is best?
+
+We'll compare models by computing the mean squared error (and take the square root so they aren't quite so big). This is called *root mean squared error* and is a common accuracy statistic
+
+$$RMSE = \sqrt{E((\hat{y}-y)^2)}$$
+
+## So which is best?
+
+```{r}
+sqrt(mean(resid1^2))
+sqrt(mean(resid2^2))
+sqrt(mean(resid3^2))
+sqrt(mean(resid4^2))
+sqrt(mean(resid5^2))
+sqrt(mean(resid6^2))
+```
+
+## Out of sample validation: the recipe
+
+1. Subset the data into training and test sets
+2. Fit each model you are considering on the training data
+3. Use each model to generate expected values for the test data
+4. Compute root mean squared error for each 
+5. Select the model with the least error
