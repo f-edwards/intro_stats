@@ -30,5 +30,3 @@ For this question, use the `penguins` built into R
 2. Add an interaction for body mass and species. Interpret your findings.
 
 3. Add sex to the model, and interact it with species (along with the body mass interaction). Develop an appropriate visual to help interpret the model.
-
-4. Add sex as a predictor (with species). Interpret the findings. Discuss how estimates of the slope for body mass have changed between 2, 3, and 4.
