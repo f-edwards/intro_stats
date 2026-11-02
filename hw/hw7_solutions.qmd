@@ -94,7 +94,7 @@ Let's visualize!
 ## set up the fake data for plotting
 plot_dat <- expand_grid(body_mass = seq(
   min(penguins$body_mass, na.rm=T), 
-  max(penguins$body_mass, na.rm=T), by = 1),
+  max(penguins$bodygit_mass, na.rm=T), by = 1),
   sex = unique(penguins$sex),
   species = unique(penguins$species))
 ## generate expected values and CI
