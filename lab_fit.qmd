@@ -1,0 +1,190 @@
+---
+title: "Model fit lab"
+format: pdf
+---
+
+```{r include = F}
+library(tidyverse)
+```
+
+
+This is a lab where we will fit models and compare goodness of fit across them.
+
+First I pull this cool data on incomes in the US
+
+```{r}
+dat<-read_csv("https://www.openintro.org/data/csv/acs12.csv")
+```
+
+I want to look at incomes only for employed people. I know that income can grow multiplicative so I'm gonna log transform it.
+
+```{r}
+dat <- dat |> 
+  filter(employment == "employed") |> 
+  filter(income>0) |> 
+  mutate(log_income = log(income)) 
+```
+
+Let's check out our outcome 
+
+```{r}
+ggplot(dat,
+       aes(x = log_income)) + 
+  geom_histogram()
+```
+
+Who are the zeroes?
+
+```{r}
+dat |> filter(log_income==0) |> glimpse()
+```
+
+Let's start modeling
+
+```{r}
+m4 <- lm(log_income ~ hrs_work * age * gender * edu, 
+         data = dat)
+```
+
+My model explains `r round(summary(m4)$r.squared, 2) * 100` percent of the variation in the outcome. Neat!
+
+## Try to improve the fit
+
+```{r}
+m5 <- lm(log_income ~ hrs_work * age * gender * edu + race, 
+         data = dat)
+m6 <- lm(log_income ~ hrs_work * age * gender * edu + disability, 
+         data = dat)
+```
+
+
+## AIC comparison
+
+Let's compare each fit
+
+```{r}
+AIC(m4, m5, m6)
+```
+
+Let's try interactions of each
+
+```{r}
+m7 <- lm(log_income ~ hrs_work * age * gender * edu * race, 
+         data = dat)
+
+m8 <- lm(log_income ~ hrs_work * age * gender * edu * disability, 
+         data = dat)
+
+m8 <- lm(log_income ~ hrs_work * age * gender * edu * disability * race, 
+         data = dat)
+
+```
+
+```{r}
+AIC(m6, m7, m8)
+```
+
+## out of sample validation
+
+First we subset the data into a training and test set
+
+```{r}
+dat <- dat |> 
+  mutate(row_n = 1:nrow(dat))
+
+training_rows <- sample(dat$row_n, 0.9 * nrow(dat))
+
+training_data <- dat[training_rows, ]
+test_data <- dat[-training_rows, ]
+```
+
+Next we re-estimate the models on the training data
+
+```{r}
+m6_training <- lm(log_income ~ hrs_work * age * gender * edu + disability, 
+                  data = training_data)
+
+m8_training <- lm(log_income ~ hrs_work * age * gender * edu * disability * race, 
+                  data = training_data)
+```
+
+Now we are going to generate expected log incomes for the test data. How well does the model predict cases that it didn't see in training?
+
+```{r}
+yhat_m6 <- predict(m6_training, newdata = test_data)
+yhat_m8 <- predict(m8_training, newdata = test_data)
+```
+
+Next we need to see how accurate we were. How wrong was I? 
+
+Let's compute errors
+
+```{r}
+error_m6 <- yhat_m6 - test_data$log_income
+error_m8 <- yhat_m8 - test_data$log_income
+```
+
+Now I want to compare them. 
+
+Let's compute mean squared error
+
+```{r}
+mean(error_m6^2)
+mean(error_m8^2)
+```
+
+Here, looks like model 6 is performing better, but it could just be that we drew a weird 10 percent sample. I'd like to check it again, how about 10 times?
+
+## k-fold cross validation
+
+1. Partition the data into 10 buckets
+2. Iteratively hold out one bucket and fit the models
+3. compute MSE
+4. Average across the 10 buckets
+
+```{r}
+k <- 10
+dat <- dat |> 
+  mutate(k = sample(1:10, nrow(dat), replace = T))
+
+output <- expand_grid(k = 1:k,
+                     m = c("m6", "m8"),
+                     MSE = 0)
+counter <- 0 
+for(i in 1:k){
+  counter <- counter+1
+  
+  # partition the data
+  
+  training_data <- dat |> 
+    filter(i!=k)
+  test_data <- dat |> 
+    filter(i==k)
+  
+  # refit the models
+  
+  m6_training <- lm(log_income ~ hrs_work * age * 
+                      gender * edu + disability, 
+                    data = training_data)
+  
+  m8_training <- lm(log_income ~ hrs_work * age * 
+                      gender * edu * disability * race, 
+                    data = training_data)
+  ## generate expected values
+  yhat_m6 <- predict(m6_training, newdata = test_data)
+  yhat_m8 <- predict(m8_training, newdata = test_data)
+  ## compute errors
+  error_m6 <- yhat_m6 - test_data$log_income
+  error_m8 <- yhat_m8 - test_data$log_income
+  # compute mean squared error
+  output$MSE[counter] <- mean(error_m6^2)
+  counter <- counter+1
+  output$MSE[counter] <- mean(error_m8^2)
+}
+
+output |> 
+  group_by(m) |> 
+  summarize(MSE_mean = mean(MSE))
+
+```
+
