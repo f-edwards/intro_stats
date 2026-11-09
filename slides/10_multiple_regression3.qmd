@@ -436,11 +436,11 @@ Let's hold out a portion of the income data to evaluate model accuracy.
 ```{r}
 # sample 90% of rows for training the model
 rows <- 1:nrow(dat)
-test_rows <- sample(rows, 0.9 * nrow(dat))
+training_rows <- sample(rows, 0.9 * nrow(dat))
 # subset to sampled rows for the training data
-dat_training <- dat[test_rows,]
+dat_training <- dat[training_rows,]
 # and the remaineder for test
-dat_test <- dat[-test_rows,]
+dat_test <- dat[-training_rows,]
 ```
 
 ## Training the models
