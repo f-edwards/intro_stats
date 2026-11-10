@@ -3,15 +3,50 @@ title: "Lab: conditionals and pivots"
 format: typst
 ---
 
+```{r}
+library(tidyverse)
+```
+
+
 ## Conditional statements
 
 1. Using ifelse, create a new variable for race, race_binary that takes the values "white" and "non-white"
 
 ```{r}
 dat<-read_csv("https://www.openintro.org/data/csv/acs12.csv")
+# recode race into race_binary white/non-white 
+dat <- dat |> 
+  mutate(race_binary = ifelse(race=="white", "white", "non-white"))
 ```
 
 2. Using case_when create a new variable for employment that includes an extra level for people who report being employed but have zero income
+
+```{r}
+# conditionals with two conditions
+dat |> 
+  filter(employment=="employed"
+         & income==0) |> 
+  select(employment, income, emp_recode)
+
+dat <- dat |> 
+  mutate(emp_recode = ifelse(employment=="employed"
+                             & income==0,
+                             "employed but not paid",
+                             employment))
+
+dat|> 
+  select(employment, income, emp_recode)
+
+# do the same thing with case_when
+
+dat <- dat |> 
+  mutate(emp_recode2 = 
+           case_when(employment=="employed" & income==0 ~ "employed not paid",
+                     employment!="employed" | income > 1000 ~ employed,
+                    .default = employment))
+
+```
+
 
 ## Pivoting wide to long
 
@@ -24,7 +59,29 @@ head(relig_income)
 1. Use pivot_longer to create a single column for a new variable income from the columns in positions 2 through 11
 
 ```{r}
+relig_income_long <- relig_income |> 
+  pivot_longer(cols = "<$10k" : "Don't know/refused",
+               names_to = "income",
+               values_to = "count")
+```
+
+
+```{r}
 head(billboard)
+
+billboard_long <- billboard |> 
+  pivot_longer(cols = "wk1":"wk76",
+               names_to = "week",
+               values_to= "rank",
+               names_prefix = "wk") |> 
+  mutate(week = as.numeric(week))
+
+ggplot(billboard_long,
+       aes(x = week, 
+           y = rank, 
+           group = track)) + 
+  geom_line(alpha = 0.2)
+
 ```
 
 2. Use pivot_longer to create two new columns from the wk columns, one for 'week_num' and one for ranking 
