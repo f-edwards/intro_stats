@@ -1,0 +1,40 @@
+---
+title: "Lab: conditionals and pivots"
+format: typst
+---
+
+## Conditional statements
+
+1. Using ifelse, create a new variable for race, race_binary that takes the values "white" and "non-white"
+
+```{r}
+dat<-read_csv("https://www.openintro.org/data/csv/acs12.csv")
+```
+
+2. Using case_when create a new variable for employment that includes an extra level for people who report being employed but have zero income
+
+## Pivoting wide to long
+
+Let's work with a few datasets
+
+```{r}
+head(relig_income)
+```
+
+1. Use pivot_longer to create a single column for a new variable income from the columns in positions 2 through 11
+
+```{r}
+head(billboard)
+```
+
+2. Use pivot_longer to create two new columns from the wk columns, one for 'week_num' and one for ranking 
+
+## Pivoting long to wide
+
+```{r}
+head(us_rent_income)
+```
+
+1. Using pivot_wider, create new columns for both income and rent using values from estimate
+
+2. Now create new columns for income and rent for both 'estimate' and 'moe'
