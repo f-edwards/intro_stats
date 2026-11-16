@@ -1,0 +1,557 @@
+---
+title: "Good controls, bad controls"
+author: "Frank Edwards"
+format: 
+  beamer:
+    theme: metropolis
+execute: 
+  echo: true
+knitr: 
+  opts_chunk:
+    warning: false
+    size: "tiny"
+    fig.align: "center"
+---
+
+```{r include = F}
+library(tidyverse)
+library(patchwork)
+library(dagitty)
+library(ggdag)
+library(rethinking)
+set.seed(1)
+
+knitr::opts_chunk$set(tidy = FALSE)
+theme_set(theme_dag())
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, echo = F, size = "tiny")
+```
+
+## Four basic DAG structures
+
+Subsections of DAGs are composed of four basic structures: 
+
+- The pipe $x\rightarrow y \rightarrow z$
+- The fork $x\leftarrow z \rightarrow y$
+- The collider $x \rightarrow z \leftarrow y$
+- The descendant $y\rightarrow z \leftarrow x; z\rightarrow d$
+
+# The pipe
+
+## The pipe
+
+```{r echo = T}
+pipe <- dagify(z ~ x, y ~ z, outcome = "y") 
+```
+
+```{r}
+pipe <- dagify(z ~ x, y ~ z, outcome = "y",
+               coords = data.frame(name = c("x", "z", "y"),
+                                   x = c(0, 1, 2),
+                                   y = c(0, 0, 0))) 
+```
+
+```{r echo = T, fig.height = 4}
+ggdag(pipe) 
+dagitty::impliedConditionalIndependencies(pipe)
+```
+
+## The fork
+
+```{r echo = T, fig.height = 4}
+fork <- dagify(x~z, y~z, outcome = "y")
+ggdag(fork) 
+dagitty::impliedConditionalIndependencies(fork)
+```
+
+## The collider
+
+```{r echo = T, fig.height = 4}
+collider <- dagify(z~y+x, outcome = "y")
+ggdag(collider) 
+dagitty::impliedConditionalIndependencies(collider)
+```
+
+## The descendant
+```{r echo = T, fig.height = 4}
+descendant <- dagify(z~x+y, d~z, outcome = "y")
+ggdag(descendant) 
+dagitty::impliedConditionalIndependencies(descendant)
+```
+
+## Basic features of the pipe
+
+A pipe is a case of *mediation*. The effect of $x$ on $y$ is indirect, through $z$. 
+
+```{r }
+ggdag(pipe)
+```
+
+## Mediation explained
+
+Complete mediation: the entire effect of $x$ on $z$ is accounted for by $y$
+
+```{r, fig.height = 4}
+ggdag(pipe)
+```
+
+Let's simulate this to see how it works
+
+```{r echo = T}
+# Simulate a N(0,1) variable x (n=1000)
+x <- rnorm(1000, 0, 1)
+# simulate z, as N(x,1); each value of z has a center x
+z <- rnorm(1000, x, 1)
+# simulate y as N(y,1); each value of y has center z, because x->z, x->y
+y <- rnorm(1000, z, 1)
+```
+
+## Mediation simulation
+
+```{r}
+pdat <- data.frame(x, y, z)
+p1 <- ggplot(pdat, aes(x = x, y = z)) + 
+  geom_point(alpha = 0.5) + 
+  theme_bw() + 
+  labs(subtitle = "x and z")
+p2 <- ggplot(pdat, aes(x = y, y = z)) + 
+  geom_point(alpha = 0.5) + 
+  theme_bw() + 
+  labs(subtitle = "y and z")
+p3 <- ggplot(pdat, aes(x = x, y = y)) + 
+  geom_point(alpha = 0.5) + 
+  theme_bw() + 
+  labs(subtitle = "x and y")
+p1+p2+p3
+```
+
+## Let's evaluate two models
+
+```{r, echo = T}
+# Estimate model without conditioning on y
+m_1 <- lm(y~x, data = pdat)
+# Estimate model conditioning on y
+m_2 <- lm(y~x+z, data = pdat)
+```
+
+## Models with and without the control
+
+```{r echo = F, fig.height = 2}
+ggdag(pipe)
+```
+
+```{r echo = T, size = "tiny"}
+m_1
+m_2
+```
+
+## What this means in DAG terms: d-connection
+
+The variables $x$ and $z$ are *d-connected* (direction) 
+
+```{r}
+pipe_full <- dagify(z ~ x, y ~ z, outcome = "y", exposure = "x",
+               coords = data.frame(name = c("x", "z", "y"),
+                                   x = c(0, 1, 2),
+                                   y = c(0, 0, 0)))
+ggdag_dconnected(pipe_full, layout = "linear")
+```
+
+## What this means in DAG terms: d-separation
+
+If we condition on $y$, the path $x \rightarrow y \rightarrow z$ is blocked, and $x$ and $z$ become *d-separated*
+
+```{r}
+ggdag_dseparated(pipe_full, layout = "linear", controlling_for = "z")
+```
+
+## What this means, conditional independence
+
+```{r fig.height = 2, echo = F}
+ggdag(pipe, layout = "linear")
+```
+
+$$x \not\perp z$$
+
+$$x \perp z |y$$
+
+## Mediation and post-treatment bias
+
+Assume we are evaluating the effects of a CBT intervention $t$ on externalizing behaviors $b$. A colleague suggest we should control for depression $d$ in our analysis. 
+Assume this DAG represents the process
+
+```{r echo = F}
+e1_dag <- dagify(b1~b0 + d, d~t, outcome = "b1", exposure = "t")
+ggdag(e1_dag, layout = "linear")
+```
+
+## Simulation
+
+```{r echo = F, fig.height = 2}
+ggdag(e1_dag, layout = "linear")
+```
+
+```{r echo = T, size = "tiny"}
+# baseline externalizing behaviors
+b0 <- rnorm(1000, 0, 1)
+# treatment assignment
+t <- rbinom(1000, 1, 0.5)
+# depression (affected by t)
+d <- rnorm(1000, -t, 1)
+# b1 affected by d and b0
+b1 <- rnorm(1000, b0+d, 1)
+e1_dat <- data.frame(b0, t, d, b1)
+head(e1_dat)
+```
+
+## What happens when we don't condition on a mediator 
+
+```{r echo = T, size = "tiny"}
+m_e1_2 <- lm(b1 ~ b0 + t, data = e1_dat)
+summary(m_e1_2)
+```
+
+## What happens when we condition on a mediator?
+
+```{r echo = T, size = "tiny"}
+m_e1 <- lm(b1 ~ b0 + d + t, data = e1_dat)
+summary(m_e1)
+```
+
+\pause
+
+We can also think of depression (d) as a post-treatment intermediate outcome of (t)
+
+## A more realistic example
+
+```{r}
+e1_dag2 <- dagify(b1 ~ b0 + d1, 
+                  d1~t + d0, 
+                  outcome = "b1", 
+                  exposure = "t")
+ggdag(e1_dag2)
+```
+
+## Simulating
+
+```{r echo = F, fig.height = 3}
+ggdag(e1_dag2)
+```
+
+```{r echo = T}
+n_sims <- 1000
+# baseline externalizing behaviors
+b0 <- rnorm(n_sims, 0, 1)
+# baseline depression
+d0 <- rnorm(n_sims)
+# treatment assignment
+t <- rbinom(n_sims, 1, 0.5)
+# depression t1 (affected by t)
+d1 <- rnorm(n_sims, d0 - t, 1)
+# b1 affected by d1 and b0
+b1 <- rnorm(n_sims, b0+d1, 1)
+edat <- data.frame(b0, d0, t, d1, b1)
+```
+
+## Fitting the models
+
+```{r results = "hide", echo = T}
+# fit model with pre-treatment depression
+m_e1_2_1 <- lm(b1~b0+d0+t, data = edat)
+# with both
+m_e1_2_2 <- lm(b1~b0+d0+d1+t, data = edat)
+# and without any
+m_e1_2_3 <- lm(b1~b0+t, data = edat)
+```
+
+## Compare results: b0 + t
+
+```{r echo = F, fig.height = 3, size = "tiny"}
+ggdag(e1_dag2)
+broom::tidy(m_e1_2_3)
+```
+
+## Compare results: b0 + d0 + t
+
+```{r echo = F, fig.height = 3, size = "tiny"}
+ggdag(e1_dag2)
+broom::tidy(m_e1_2_1)
+```
+
+## Compare results: b0 + d0 + d1 + t
+
+```{r echo = F, fig.height = 3, size = "tiny"}
+ggdag(e1_dag2)
+broom::tidy(m_e1_2_2)
+```
+
+## What's happening (DAG version)
+
+```{r}
+p1 <- ggdag_dseparated(e1_dag2, controlling_for = c("b0"))
+p2 <- ggdag_dseparated(e1_dag2, controlling_for = c("b0", "d0"))
+p3 <- ggdag_dseparated(e1_dag2, controlling_for = c("b0", "d0", "d1"))
+p1/p2/p3 
+```
+
+# The fork
+
+## Forks
+
+A fork is the classic lemonade sales and homicide rates confounder: a common cause.
+
+```{r fig.height = 4}
+ggdag(fork)
+```
+
+## Waffle house and divorce rates, US States
+
+```{r echo = F}
+data("WaffleDivorce")
+WaffleDivorce <- WaffleDivorce |> 
+  mutate(WaffleHouses_pc = WaffleHouses/Population)
+ggplot(WaffleDivorce,
+       aes(x = WaffleHouses_pc, y = Divorce, label = Loc)) + 
+  geom_point(alpha = 0.00) + 
+  geom_text() + 
+  geom_smooth(method = "lm")+ 
+  theme_bw() + 
+  labs(y = "Divorce rate", x = "Waffle houses per million population")
+```
+
+## An example fork
+
+Waffle Houses (W) and Divorce rate (D), median age at marriage (A), and US South (S)
+
+```{r fig.height = 4}
+waffle_dag <- dagify(D~A, W~S, A~S, outcome = "D", exposure = "W")
+ggdag(waffle_dag)
+```
+
+## D-separation in a fork
+
+```{r echo = T, fig.height = 4}
+ggdag_adjustment_set(waffle_dag)
+```
+
+## In action
+
+```{r echo = T, size = "tiny"}
+# Unconditional D ~ W
+mw1 <- lm(Divorce ~ WaffleHouses_pc, 
+           data = WaffleDivorce)
+# D ~ W + A
+mw2 <- lm(Divorce ~ WaffleHouses_pc + 
+             MedianAgeMarriage, 
+           data = WaffleDivorce)
+# D ~ W + S
+mw3 <- lm(Divorce ~ WaffleHouses_pc + 
+             factor(South), 
+           data = WaffleDivorce)
+# D ~ W + A + S
+mw4 <- lm(Divorce ~ WaffleHouses_pc + 
+             MedianAgeMarriage + factor(South), 
+           data = WaffleDivorce)
+```
+
+## Results: Unconditional D ~ W
+
+```{r size = "tiny", fig.height = 3}
+ggdag(waffle_dag)
+broom::tidy(mw1)
+```
+
+## Results: D ~ W + A
+
+```{r size = "tiny", fig.height = 3}
+ggdag(waffle_dag)
+broom::tidy(mw2)
+```
+
+## Results: D ~ W + S
+
+```{r size = "tiny", fig.height = 3}
+ggdag(waffle_dag)
+broom::tidy(mw3)
+```
+
+## Results: D ~ W + S + A
+
+```{r size = "tiny", fig.height = 3}
+ggdag(waffle_dag)
+broom::tidy(mw4)
+```
+
+# Colliders
+
+## The structure of a collider
+
+A *collider* is a node that has two arrows pointing into it. A collider *blocks* the flow of information between $x$ and $y$, unless we condition on it. The impact of colliders is similar to *selection bias*.
+
+```{r fig.height = 4}
+ggdag(collider)
+```
+
+## A toy example
+
+Movie stars become famous for being conventionally attractive and/or being a good actor. Conventional attractiveness and acting talent are not associated with each other *unless* we condition on fame.
+
+```{r, fig.height = 4}
+dag_fame <- dagify(f~a+t, outcome = "f")
+ggdag(dag_fame)
+```
+
+## Simulate our example
+
+```{r echo = T}
+# simulate attractiveness
+a <- rnorm(n_sims, 0, 1)
+# simulate talent
+t <- rnorm(n_sims, 0, 1)
+# simulate fame as a function of a and t
+f <- rnorm(n_sims, a+t, 1)
+fame_sim <- data.frame(a, t, f)
+```
+
+## Visualize: Talent and attractiveness
+
+```{r}
+fame_sim |> 
+  ggplot(aes(x = t, y = a)) + 
+  geom_point(alpha = 0.5) + 
+  theme_bw() 
+```
+
+## Visualize: Talent and attractiveness, with fame
+
+```{r}
+fame_sim |> 
+  ggplot(aes(x = t, y = a, color = f>2)) + 
+  geom_point(alpha = 0.5) + 
+  theme_bw() 
+```
+
+## Colliders and d separation
+
+```{r}
+ggdag_dseparated(dag_fame, from = "t", to = "a")
+```
+
+## Colliders and d separation
+
+```{r}
+ggdag_dseparated(dag_fame, from = "t", to = "a", controlling_for = "f")
+```
+
+# The descendant
+
+## The descendant
+
+```{r}
+descendant <- dagify(z~x+y, d~z, outcome = "d", exposure = "x")
+ggdag(descendant)
+```
+
+## Basic features
+
+- $d$ is a downstream consequence of $z$
+- variables like $d$ are often used as *proxies* for $z$
+- the consequences of adjustment depend on relations between ancestor nodes
+
+## Identifying the effect of x on d
+
+```{r}
+ggdag_adjustment_set(descendant)
+```
+
+## A bad control
+
+```{r}
+ggdag_adjust(descendant, var = "z")
+```
+
+## Under a different structure
+
+```{r}
+descendant <- dagify(z~x, d~z, y~z, outcome = "d", exposure = "x")
+ggdag(descendant)
+```
+
+## A control that is also bad but for another reason
+
+```{r}
+ggdag_adjust(descendant, var = "z")
+```
+
+## Measurement by proxy, a simulation
+
+Let's assume this dag. We want to measure the effect of $x$ on $d$. 
+
+```{r fig.height = 3}
+descendant <- dagify(z~x+y, d~z, outcome = "d", exposure = "x")
+ggdag(descendant)
+```
+
+```{r echo = T}
+# simulate descendant
+n_sims <- 1000
+x <- rnorm(n_sims, 0, 1)
+y <- rnorm(n_sims, 0, 1)
+z <- rnorm(n_sims, x+y, 1)
+d <- rnorm(n_sims, z, 1)
+simdat <- data.frame(x, y, z, d)
+```
+
+## Let's look at the paths
+
+To estimate the effect $x \rightarrow d$, we should *not* condition on $z$
+
+```{r fig.height = 4}
+ggdag_paths(descendant)
+```
+
+## Estimation
+
+```{r echo = T, results = "hide"}
+# correct model, no conditioning
+m_d0 <- lm(d~x, data = simdat)
+# adjusting for z, reviewer 2 told you to
+m_d1 <- lm(d~x + z, data = simdat)
+# adjusting for z and y, reviewer 3 told you to
+m_d2 <- lm(d~x + z + y, data = simdat)
+```
+
+## Model results
+
+```{r fig.height = 3, size = "tiny"}
+ggdag_adjustment_set(descendant)
+broom::tidy(m_d0)
+```
+
+## Model results
+
+```{r fig.height = 3, size = "tiny"}
+ggdag_adjust(descendant, var="z")
+broom::tidy(m_d1)
+```
+
+## Model results
+
+```{r fig.height = 3, size = "tiny"}
+ggdag_adjust(descendant, var=c("z", "y"))
+broom::tidy(m_d2)
+```
+
+## The workflow
+
+1. Specify your DAG.
+2. List all of the paths connecting a cause of interest $x$ to an outcome $y$.
+3. Classify all paths as open or closed. A path is open unless it contains a collider.
+4. Identify all backdoor paths.
+5. If needed, choose variables to condition on to close backdoor paths.
+
+
