@@ -1,0 +1,154 @@
+---
+title: "Homework 9"
+format: pdf
+---
+
+In this exercise, we analyze the causal effects of a criminal record on the job prospects of white and black job applicants. This exercise is based on: 
+
+Pager, Devah. (2003). "[The Mark of a Criminal Record](https://doi.org/10.1086/374403)." *American Journal of Sociology* 108(5):937-975. You are also welcome to watch Professor Pager discuss the design and result [here](https://youtu.be/nUZqvsF_Wt0).
+
+To isolate the causal effect of a criminal record for black and white applicants, Pager ran an audit experiment. In this type of experiment, researchers present two similar people that differ only according to one trait thought to be the source of discrimination. This approach was used in the resume experiment described in Chapter 2 of *QSS*, where researchers randomly assigned stereotypically African-American-sounding names and stereotypically white-sounding names to otherwise identical resumes to measure discrimination in the labor market.
+
+To examine the role of a criminal record, Pager hired a pair of white men and a pair of black men and instructed them to apply for existing entry-level jobs in the city of Milwaukee. The men in each pair were matched on a number of dimensions, including physical appearance and self-presentation. As much as possible, the only difference between the two was that Pager randomly varied which individual in the pair would indicate to potential employers that he had a criminal record. Further, each week, the pair alternated which applicant would present himself as an ex-felon. To determine how incarceration and race influence employment chances, she compared callback rates among applicants with and without a criminal background and calculated how those callback rates varied by race.
+
+In the data you will use `criminalrecord.csv` nearly all these cases are present, but 4 cases have been redacted. As a result, your findings may differ slightly from those in the paper. The names and descriptions of variables are shown below. You may not need to use all of these variables for this activity. We’ve kept these unnecessary variables in the dataset because it is common to receive a dataset with much more information than you need.
+
+
+------------------------------------------------------------------------------------------
+Name                        Description
+--------------------------- --------------------------------------------------------------
+`jobid`                     Job ID number  
+
+`callback`                  1 if tester received a callback, 0 if the tester did not receive a callback. 
+
+`black`                     1 if the tester is black, 0 if the tester is white.
+
+`crimrec`                   1 if the tester has a criminal record, 0 if the tester does not.
+
+`interact`                  1 if tester interacted with employer during the job application, 0 if tester does not interact with employer.
+`city`                      1 is job is located in the city center, 0 if job is located in the suburbs.
+
+`distance`                  Job’s average distance to downtown.
+
+`custserv`                  1 if job is in the costumer service sector, 0 if it is not.
+
+`manualskill`               1 if job requires manual skills, 0 if it does not.
+
+------------------------------------------------------------------------------------------
+
+## Question 1  
+
+Compute, display, and interpret mean callback rates for subjects by race and by criminal record. 
+
+
+```{r}
+library(tidyverse)
+dat<-read_csv("./data/criminalrecord.csv")
+
+
+dat |> 
+  group_by(black, crimrec) |> 
+  summarize(callback = mean(callback))
+```
+
+We observe a callback rate of 0.34 for white testers with no criminal record, 0.17 for white testers with a criminal record, 0.14 for Black testers with no criminal record, and 0.05 for Black testers with a criminal record.
+
+## Question 2  
+
+First, let's assume criminal records affect callbacks. Estimate a linear regression for the effect of criminal records on callback rates. Write your model as a mathematical equation. Interpret the parameter estimates. Evaluate whether these estimates are statistically significant at the 0.05 level, and interpret the meaning of this significance test.
+
+```{r}
+model0 <- lm(callback~crimrec,
+             data = dat)
+
+summary(model0)
+```
+
+Our model takes the form $E(callback_i) = \beta_0 + \beta_1 crimrec_i$. We find that testers with a criminal record have callback rates that are 0.13 lower than testers without a criminal record. This result is statistically significant, meaning that we can rule out that the sampling distribution for $\beta_1$ may have been centered at 0. 
+
+## Question 3
+
+Second, let's assume race affects callbacks (exclude crimrec for now). Estimate a linear regression for the effect of race on callback rates. Describe and evaluate the model as in question 2.
+
+```{r}
+model1 <- lm(callback~black,
+             data = dat)
+
+summary(model1)
+```
+
+We modify our regression equation to be: $E(callback_i) = \beta_0 + \beta_1 race_i$
+
+Here, we find that Black testers have callback rates that are 0.16 lower than white testers. This estimate is statistically significant, suggesting that it is very unlikely that the sampling distribution of $\beta_1$ is centered at zero.
+
+## Question 4
+
+Finally, let's assume that callback and crimrec affect jointly affect callbacks. Estimate a linear regression for callback rates that includes an interaction term for race and criminal record. 
+
+We call this a 'treatment heterogeneity' approach. What do you think that means? Try to explain theoretically what our model is saying about the impact of criminal records on callback rates under this specification.
+
+Write the model mathematically. Interpret the parameter estimates and assess statistical significance. 
+
+```{r}
+model2 <- lm(callback ~ 
+               black * crimrec,
+             data = dat)
+
+summary(model2)
+```
+
+Here, we modify the regression equation again: $E(callback_i) = \beta_0 + \beta_1 race_i + \beta_2 crimrec_i + \beta_3 race_i \times crimrec_i$. This model suggests that the impacts of a criminal record on callbacks depend on the race of tester (or equivalently, that the impacts of race depend on the presence of a criminal record). 
+
+We find that Black testers with criminal records have the lowest expected callback rates ($\beta_0$ + $\beta_1$ + $\beta_2$ + $\beta_3$). The parameter estimates for $\beta_1$ and $\beta_2$ are statistically significant; but the parameter estimate for $\beta_3$ is not. It is very difficult to estimate interaction effects in experiments without large sample sizes accurately, especially when events are rare (callbacks for Black men with criminal records were 0.05 in the empirical mean), so we shouldn't interpret this as meaning that there is not an interaction.
+
+A quick alternative fit check is informative
+
+```{r}
+AIC(model1, model2)
+```
+
+Looking at AIC, we can see a pretty substantial improvement in fit by including the interaction parameter. This is a good reminder not to use statistical significance as a criterion for including a parameter in your models.
+
+## Question 5
+
+Use predict() to generate expected callback rates for all possible combinations of the variables 'black' and 'crimrec' using the model estimated for question 4. Interpret. 
+
+```{r}
+fake_data<-data.frame(black = c(1, 1, 0, 0),
+                      crimrec = c(0, 1, 0, 1))
+
+fake_data <- fake_data |> 
+  mutate(yhat = predict(model2, newdata = fake_data))
+
+ggplot(fake_data,
+       aes(x = factor(black), color = factor(crimrec), y = yhat)) + 
+  geom_point() + 
+  labs(y = "Predicted callback rate",
+       x = "Race", 
+       color = "Criminal record")
+```
+
+As shown above, our model expects the lowest callback rates for Black testers with a criminal record. The model expects the highest callback rates for white testers with no criminal record. Interestingly, we find lower expected callback rates for Black testers with no criminal record than for white testers who had a criminal record, suggesting that racial discrimination is quite extreme.
+
+
+
+## BONUS (HARD): 
+Use the se.fit = T argument in predict(). Compute a 95 percent confidence interval for your expected values. Describe how certain you think we ought to be about differences across groups. Note differences (if any)  in conclusion you might draw when compared with your discussion in question 4. 
+
+```{r}
+fake_data<-data.frame(black = c(1, 1, 0, 0),
+                      crimrec = c(0, 1, 0, 1))
+
+yhat<-predict(model2, newdata = fake_data,
+              interval = "confidence")
+
+fake_data <- bind_cols(fake_data, yhat)
+
+ggplot(fake_data,
+       aes(x = factor(black), color = factor(crimrec),
+           y = fit, ymin = lwr, ymax = upr)) + 
+  geom_point(position = position_dodge(width = 0.5)) + # to horizontally shift so they don't overlap 
+  geom_linerange(position = position_dodge(width = 0.5))
+```
+
+This reveals why the interaction was not significant. We can't clearly distinguish between Black callback rates with and without a criminal record, because they are both close to zero and there's limited room for estimates to occupy, as probability is constrained to $[0,1]$.
