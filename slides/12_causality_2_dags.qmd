@@ -155,9 +155,9 @@ The variables $x$ and $z$ are *d-connected* (direction)
 
 ```{r}
 pipe_full <- dagify(z ~ x, y ~ z, outcome = "y", exposure = "x",
-               coords = data.frame(name = c("x", "z", "y"),
-                                   x = c(0, 1, 2),
-                                   y = c(0, 0, 0)))
+                    coords = data.frame(name = c("x", "z", "y"),
+                                        x = c(0, 1, 2),
+                                        y = c(0, 0, 0)))
 ggdag_dconnected(pipe_full, layout = "linear")
 ```
 
@@ -175,9 +175,9 @@ ggdag_dseparated(pipe_full, layout = "linear", controlling_for = "z")
 ggdag(pipe, layout = "linear")
 ```
 
-$$x \not\perp z$$
+$$x \not\perp y$$
 
-$$x \perp z |y$$
+$$x \perp y |z$$
 
 ## Mediation and post-treatment bias
 
@@ -343,19 +343,19 @@ ggdag_adjustment_set(waffle_dag)
 ```{r echo = T, size = "tiny"}
 # Unconditional D ~ W
 mw1 <- lm(Divorce ~ WaffleHouses_pc, 
-           data = WaffleDivorce)
+          data = WaffleDivorce)
 # D ~ W + A
 mw2 <- lm(Divorce ~ WaffleHouses_pc + 
-             MedianAgeMarriage, 
-           data = WaffleDivorce)
+            MedianAgeMarriage, 
+          data = WaffleDivorce)
 # D ~ W + S
 mw3 <- lm(Divorce ~ WaffleHouses_pc + 
-             factor(South), 
-           data = WaffleDivorce)
+            factor(South), 
+          data = WaffleDivorce)
 # D ~ W + A + S
 mw4 <- lm(Divorce ~ WaffleHouses_pc + 
-             MedianAgeMarriage + factor(South), 
-           data = WaffleDivorce)
+            MedianAgeMarriage + factor(South), 
+          data = WaffleDivorce)
 ```
 
 ## Results: Unconditional D ~ W
@@ -432,6 +432,13 @@ fame_sim |>
 fame_sim |> 
   ggplot(aes(x = t, y = a, color = f>2)) + 
   geom_point(alpha = 0.5) + 
+  theme_bw() 
+
+fame_sim |> 
+  filter(f>2) |> 
+  ggplot(aes(x = t, y = a)) + 
+  geom_point(alpha = 0.5) + 
+  geom_smooth(method = "lm") + 
   theme_bw() 
 ```
 

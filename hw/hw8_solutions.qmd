@@ -1,0 +1,91 @@
+---
+title: "HW8"
+author: "Frank Edwards"
+format: pdf
+---
+
+```{r include = F}
+library(tidyverse)
+```
+
+In this homework, we'll try to fit a predictive model and describe it's accuracy.
+
+For this question, use the `penguins` built into R
+
+1. Estimate a linear regression with flipper length as an outcome. Choose any predictors you like.
+
+```{r}
+# using the z score of body mass and flipper len so units are more interpretable
+m0 <- lm(scale(flipper_len) ~ scale(body_mass) + sex + species,
+         data = penguins)
+```
+
+This model shows that heavier penguins tend to have longer flippers. An Adelie female penguin with average mass is expected to have flippers 0.6 standard deviations below the mean. Male penguins have 0.17 SD longer flippers than females on average, heavier penguins have longer flippers on average, and Chinstraps and Gentoos have longer flippers than Adelies on average.
+
+2. Expand your model by adding interactions, polynomials, and addition predictors. Make a new model for each added parameter / feature you are including in the model.
+
+```{r}
+m1 <- lm(scale(flipper_len) ~ scale(body_mass) + sex * species,
+         data = penguins)
+m2 <- lm(scale(flipper_len) ~ scale(body_mass) + I(scale(body_mass)^2) + sex * species,
+         data = penguins)
+m3 <- lm(scale(flipper_len) ~ (scale(body_mass) + I(scale(body_mass)^2)) * sex * species,
+         data = penguins)
+```
+
+In m1 I add a sex by species interaction, allowing for each species/sex combination to have it's own intercept. In m2 I add a quadratic term for body mass (in addition to the above interaction). In m3 I interact body mass (and the quadratic term) with both sex and species.
+
+3. Compare and interpret $R^2$ for each of your models. Which performs best?
+
+```{r}
+summary(m0)$r.squared
+summary(m1)$r.squared
+summary(m2)$r.squared
+summary(m3)$r.squared
+```
+
+$R^2$ for `m0` is already quite high at 0.86. Adding complexity of course increased $R^2$ as it always will, but only made small differences in $R^2$, which increased from 0.856 in the first model to 0.864 in the most complex.
+
+4. Compare and interpret AIC for each of your models. Which performs best?
+
+```{r}
+AIC(m0, m1, m2, m3)
+```
+
+AIC scores rank m1 as providing the best trade off between complexity and fit. The most complex model, m3, scores more poorly than does the initial model m0. m1 and m2 appear to be similar after adjusting for complexity. So the sex by species interaction does appear to be a worthwhile addition, but further complexity isn't meaningfully improving fit beyond that provided by m1. 
+
+5. Now, divide the penguins data into a training and test set: 80 percent of the data should be randomly sampled into the training data, the remaining 20 percent will be the test data. Fit each of your models on the training data. With each model, generate expected values and compute errors for the test data. Compare root mean squared error across models. Which performs best?
+
+```{r}
+# select 80 percent as training data
+test_rows <- sample(1:nrow(penguins), 0.8 * nrow(penguins))
+# subset the data
+penguins_training <- penguins[test_rows,]
+penguins_test <- penguins[-test_rows,]
+# refit the models, a shotcut we can use is update(), which will refit with new data
+m0_training <- update(m0, data = penguins_training)
+m1_training <- update(m1, data = penguins_training)
+m2_training <- update(m2, data = penguins_training)
+m3_training <- update(m3, data = penguins_training)
+# then use predict for the test data
+m0_preds <- predict(m0_training, newdata = penguins_test)
+m1_preds <- predict(m1_training, newdata = penguins_test)
+m2_preds <- predict(m2_training, newdata = penguins_test)
+m3_preds <- predict(m3_training, newdata = penguins_test)
+# compute errors (residuals)
+m0_error <- m0_preds - penguins_test$flipper_len
+m1_error <- m1_preds - penguins_test$flipper_len
+m2_error <- m2_preds - penguins_test$flipper_len
+m3_error <- m3_preds - penguins_test$flipper_len
+# and now compute root mean square error to compare (one missing value, remove it)
+sqrt(mean(m0_error^2, na.rm=T))
+sqrt(mean(m1_error^2, na.rm=T))
+sqrt(mean(m2_error^2, na.rm=T))
+sqrt(mean(m3_error^2, na.rm=T))
+```
+
+We observe similar performance across all models, which is interesting! I'd tend to assume we overfit the data with m3, but in any case, it isn't predicting much better than any of the other models. 
+
+6. Based on all of the evidence that you've provided, which model do you prefer and why?
+
+I'll stick with M1, it is relatively simple and makes good theoretical sense; we expect that sex differences may differ across species. While M3 has a slight edge in my out-of-sample validation analysis, is is a small difference. The added complexity of m3 (18 parameters) compared to m1 (7) parameters, is substantial, so I'd want to see big gains in predictive accuracy to use that model.
