@@ -1,0 +1,25 @@
+---
+title: "HW10"
+author: "Frank Edwards"
+format: pdf
+---
+
+In this exercise, you will conduct a series of analyses on the impacts of a job training program on income.
+
+```{r include = F}
+library(tidyverse)
+library(MatchIt)
+data(lalonde)
+```
+
+The data are in the MatchIt package. Run `?lalonde` in your console to see the variable descriptions. `re78` is the outcome, income in 1978, `treat` is assignment to the treatment group. I highly recommend reading chapter 20 of ROS before beginning the homework.
+
+1. Evaluate the outcome variable `re78` with both univariate visuals and bivariate visuals for covariates like `age`, `educ`, `race`, and `married`. Describe your findings.
+
+2. Evaluate balance in covariates (age, education, race, married) across levels of `treat`. Describe your findings.
+
+3. Estimate a linear regression for `re78` with all predictors you suspect to be confounders of the relationship between treatment assignment and re78.
+
+4. Create a propensity score model for treatment selection using `matchit()` and `match_data()`. Evaluate covariate balance after matching and weighting.
+
+5. Estimate a linear regression using the matched data. Compare results with those obtained in question 3. Describe your findings.

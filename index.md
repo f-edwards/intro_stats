@@ -160,8 +160,6 @@ Reading: ROS Ch 2
 		- Vector operations
 		- Introducing `tidyverse`
 
-- HW 1: Due 9/13 (Extension available for Rosh Hashanah)
-
 **Week 3**
 
 Reading: ROS Ch 3
@@ -179,7 +177,7 @@ Reading: ROS Ch 3
 	- Markdown 101
 	- Writing math with LaTeX
 
-- HW 2: Due 9/20 
+- HW 1: Due 9/20 
 
 **Week 4**
 
@@ -199,7 +197,7 @@ Reading: ROS Ch 4-5
 	- Simulating random variables
 	- Simulating a data generating process
 
-- HW 3: Due 9/27 
+- HW 2: Due 9/27 
 
 **Week 5**
 
@@ -216,7 +214,7 @@ Reading: ROS Ch 6-7
 	- `group_by` and `summarize()`
 	- visuals for more than one variable
 
-- HW 4: Due 10/4
+- HW 3: Due 10/4
 
 **Week 6**
 
@@ -234,7 +232,7 @@ Reading: ROS Ch 8
 	- Intrepreting `summary()` output for linear models
 	- density functions: `pnorm()` and `dnorm()`
 
-- HW 5: Due 10/11
+- HW 4: Due 10/11
 
 **Week 7** 
 
@@ -253,7 +251,7 @@ Reading: ROS Ch 9
 	- Visuals for regression 
 	- `expand.grid()` and prediction
 
-- HW 6: Due 10/18 
+- HW 5: Due 10/18 
 
 **Week 8** 
 
@@ -269,7 +267,7 @@ Reading: ROS Ch 10
 	- Fitting models with factors
 	- Formula syntax for interactions
 
-- HW 7: Due 10/25 
+- HW 6: Due 10/25 
 
 **Week 9** 
 
@@ -286,7 +284,7 @@ Reading: ROS Ch 11
 	- Simulation from model fit with `predict()`
 	- Visualizing results from models with interactions
 
-- HW 8: Due 11/1 
+- HW 7: Due 11/1 
 
 **Week 10** 
 
@@ -302,7 +300,7 @@ Reading: ROS Ch 12
 	- Manual cross validation
 	- Leave-one-out cross validation
 
-- HW 9: Due 11/8 
+- HW 8: Due 11/8 
 
 **Week 11** 
 
@@ -317,8 +315,6 @@ Reading: ROS Ch 16 - 17
 - 11/10: Lab - recodes and pivots
 	- `ifelse` and `case_when`
 	- `pivot_longer`, `pivot_wider`
-
-- HW 10: Due 11/24 (extended for ASC)
 
 **Week 12** 
 
@@ -336,24 +332,23 @@ Reading: ROS Ch 18
 	- Drawing a causal model
 	- Identifying implications of causal models
 
-- HW 11: Due 11/24 (extended for ASC)
+- HW 9: Due 11/24 
 
 **Week 13** 
 
 Reading: ROS Ch 19
 
-11/23: Causal inference with observational data, part 2
+- 11/23: Causal inference with observational data, part 2
 	- Ignorability, balance, empirical support
 	- Constructing counterfactuals with matching and weighting
 		- Propensity score methods
 		- Inverse probability of treatment methods
 
-11/24: Lab - matching and weighting
+- 11/24: Lab - matching and weighting
 	- Implementing propensity scores for linear regression
 	- Implementing inverse probability of treatment for linear regression
 	- Using weights for regression
 
-- HW 12: Due 11/24 (same hw as week 12)
 
 **Week 14**
 
@@ -366,8 +361,6 @@ Reading: ROS Ch 20
 
 - 12/1: Lab - Visualization for causal inference 
 	- Introducing `marginaleffects`
-
-- HW 13: Due 12/6 
 
 **Week 15**
 
@@ -382,4 +375,4 @@ Reading: ROS Ch 21
 	- Cross references
 	- Captions, abstracts, and other miscellany
 
-- No HW on last week
+- Final HW (choose one of 10, 11, or 12) due 12/13)

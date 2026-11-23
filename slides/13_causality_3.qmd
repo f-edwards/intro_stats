@@ -1,0 +1,437 @@
+---
+title: "Causality, observational studies"
+author: "Frank Edwards"
+format: 
+  beamer:
+    theme: metropolis
+execute: 
+  echo: true
+knitr: 
+  opts_chunk:
+    warning: false
+    size: "tiny"
+    fig.align: "center"
+---
+
+```{r setup, include=FALSE}
+rm(list=ls())
+library(tidyverse)
+library(qss)
+library(gridExtra)
+library(ggdag)
+library(patchwork)
+set.seed(1)
+
+options(xtable.comment = FALSE)
+theme_set(theme_bw())
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, tidy = F, size = "small")
+```
+
+## A simple scenario
+
+Imagine the following:
+
+- Some people get sick. 
+- When sick people take a medication, they feel better. 
+- People who are not sick do not take the medication.
+
+## A simulation
+
+```{r size = "tiny", echo = T}
+## simulate 500 people with a 50 percent chance of being sick
+sickness <- sample(0:1, size = 500, replace = T)
+## simulate medication propensity. 
+## Some people are more likely to take medicine when sick
+medication_propensity <- runif(500, min = 0, max = 1)
+## pain is continuous. those with sickness have higher pain. 
+pain <- rnorm(500, sickness*2, 1)
+## If sick, some will take medication
+medication <- rbinom(500,
+                     1,
+                     prob = medication_propensity * sickness) 
+## medication reduces pain among the sick
+pain <- ifelse(medication==1, pain-1, pain)
+# put it all in a data frame
+sick_sim <- data.frame(sickness, 
+                       medication,
+                       pain)
+```
+
+## What our data look like
+
+```{r size = "tiny", fig.height = 4}
+ggplot(sick_sim,
+       aes(x = pain,
+           fill = factor(medication))) + 
+  geom_density(alpha = 0.5) +
+  facet_wrap(~sickness, nrow = 2)
+```
+
+## Consider a study on the effect of this medication on pain
+
+What do you think we will see?
+
+```{r size = "tiny"}
+m0 <- lm(pain ~ medication,
+   data = sick_sim)
+```
+
+## Parameter estimates
+
+```{r size = "tiny"}
+summary(m0)
+```
+
+\pause
+
+Recall that we know the effect on pain is $-1$ 
+
+## Bias 
+
+- When units choose to take the treatment because of a feature associated with the outcome (sickness here), our estimates of the causal effect of the treatment will be *biased*. 
+
+- This form of bias can be called *omitted variable bias* or *selection bias*. 
+
+- DAGs are very helpful to spot these issues.
+
+## Bias (graphically)
+
+```{r size = "tiny", fig.height = 4, echo = T}
+dag1 <- dagify(p ~ s + m,
+       m ~ s,
+       m~u,
+       outcome = "p",
+       exposure = "m")
+ggdag(dag1) + theme_dag()
+```
+
+## Identifying the correct adjustment
+
+```{r fig.height = 4, size = "tiny"}
+ggdag_adjustment_set(dag1)
+```
+
+## Estimating the correctly adjusted model
+
+We should be able to estimate the causal effect by conditioning on sickness
+
+```{r echo = T}
+m1 <- lm(pain ~ medication + sickness,
+         data = sick_sim)
+```
+
+## Evaluate the output
+
+```{r size = "tiny"}
+# regression parameters
+summary(m1)
+```
+
+## Regression just calculates means by group
+
+```{r size = "tiny"}
+# which are just conditional means
+sick_sim |> 
+  group_by(sickness, medication) |> 
+  summarize(pain_mn = mean(pain))
+```
+
+## Assumptions: Ignorability of treatment assignment
+
+- Treatment assignment $z_i$ is *ignorable* if selection into a treatment state does not depend on an individual's counterfactual outcomes $y_i|z=1, y_i|z=0$. 
+
+\pause
+
+- We can ignore treatment assignment as a confounder only if the groups are balanced *on average* in their potential outcomes.
+
+\pause
+
+- Can we assume that the decision to take medication is ignorable in our simulated example? Why or why not?
+
+## Ignorability in observational studies
+
+Outside of randomized experiments, ignorability generally does not hold.
+
+$y_i|z=1, y_i|z=0 \not \perp z_i$
+
+\pause
+
+But what if we can account for selection into treatment with another variable $x$?
+
+\pause
+
+$y_i|z=1, y_i|z=0 \perp z_i|x_i$
+
+Assignment is *as-if* random, once we learn about $x$. 
+
+# Imbalance
+
+## Another hypothetical study
+
+Assume we want to understand whether adolescents who participate in an after school program are more or less likely to exhibit symptoms of depression. 
+
+Adolescents who have experienced trauma are more likely to be depressed, and less likely to participate.
+
+## Simulation
+
+```{r size = "tiny"}
+n_sims <- 10000
+# simulate childhood trauma
+trauma <- rbinom(n_sims, 1, 0.2)
+# simulate depression as function of trauma, depression 2x higher under trauma
+depression <- rnorm(n_sims, trauma*2, 1)
+# participation in program, children with trauma less likely
+program <- rbinom(n_sims, 1, prob = ifelse(trauma==1, 0.1, 0.5))
+# the program reduces depression by -0.5
+depression <- ifelse(program==1, depression -0.5, depression)
+# put it all together
+afterschool <- data.frame(trauma, depression, program)
+```
+
+## Understanding the simulation
+
+```{r size = "tiny", fig.height = 4}
+ggplot(afterschool,
+       aes(x = depression,
+           fill = factor(trauma))) + 
+  geom_density(alpha = 0.5)
+```
+
+## Understanding the simulation
+
+```{r size = "tiny", fig.height = 4}
+ggplot(afterschool,
+       aes(x = depression,
+           fill = factor(trauma),
+           lty = factor(program))) + 
+  geom_density(alpha = 0.5) 
+```
+
+## Empirical overlap
+
+Do we have *balance* in trauma exposure across groups?
+
+```{r echo = F, fig.height = 4}
+ggplot(afterschool,
+       aes(x = depression, fill = factor(trauma))) + 
+  geom_density(alpha = 0.5)
+```
+
+## What can happen when we have imbalance
+
+```{r size = "tiny"}
+m1 <- lm(depression ~ program,
+                      data = afterschool)
+summary(m1)
+```
+
+Recall that we set the causal effect to be -0.5
+
+## What's going on here?
+
+Our estimate for the causal effect relies on a *counterfactual comparison*. Remember, we assume:
+
+$$\textrm{Effect} = E(d|p=1) - E(d|p=0)$$
+
+So why is our regression wrong?
+
+## Remember that regression just calculates means
+
+```{r size = "tiny"}
+m1
+# what do we get with b0+b1?
+afterschool |> 
+  group_by(program) |> 
+  summarize(depression_mn = mean(depression))
+```
+
+\pause
+
+The average depression level in the no program group is a poor counterfactual for the average depression level in the program group.
+
+## Counterfactuals and balance
+
+Our question is: What would the depression of an individual who participated in the program have been if they hadn't participated?
+
+\pause
+
+q: What do we need to assume for this question to be answered by our linear regression?
+
+\pause
+
+a: That depression in the no program group $d|p=0$ is the counterfactual distribution for the program group $d|p=1$
+
+## Consider the DAG
+
+```{r size = "tiny", fig.height = 4}
+dag2 <- dagify(d~p+t,
+               p~t,
+               outcome = "d", exposure = "p")
+ggdag_adjustment_set(dag2) + theme_dag()
+```
+
+## Conditioning on t
+
+```{r}
+m2 <- lm(depression ~ program + trauma,
+         data = afterschool)
+```
+
+When we know $t$ is a common cause of $d$ and $p$, we should condition on it.
+
+## A slightly different scenario
+
+Now, our simulation says that no children with trauma enrolled in the program.
+
+```{r echo = F, fig.height = 4}
+n_sims <- 10000
+# simulate childhood trauma
+trauma <- rbinom(n_sims, 1, 0.2)
+# simulate depression as function of trauma, depression 2x higher under trauma
+depression <- rnorm(n_sims, trauma*4, 1)
+# participation in program, children with trauma less likely
+program <- rbinom(n_sims, 1, prob = ifelse(trauma==1, 0, 0.5))
+# the program reduces depression by 10 percent
+depression <- ifelse(program==1, depression -0.5, depression)
+# put it all together
+afterschool2 <- data.frame(trauma, depression, program)
+
+ggplot(afterschool2,
+       aes(x = depression, fill = factor(trauma), lty = factor(program))) + 
+  geom_density(alpha = 0.5)
+```
+
+## Empirical support
+
+$$E(d) = \beta_0 + \beta_1 t + \beta_2 p$$
+
+```{r size = "tiny"}
+lm(depression ~  trauma + program,
+   data = afterschool2)
+```
+
+What do we have to assume for $\beta_2$ to be equal to the causal effect?
+
+\pause
+
+We have to *extrapolate* beyond our data. We do not observe any program participants with trauma, so we don't know for certain how they would have responded.
+
+## Matching as a solution
+
+What if we explicitly paired individuals who were similar from the program and no program group? Then, we could just compute the difference in means as the treatment effect.
+
+\pause
+
+For each participant in the program, let's find a similar individual who did not participate in the program
+
+
+## Matching: basic approach
+
+We know trauma effects depression and program enrollment. To compute an average treatment effect, we could *match* individuals who are similar on trauma, but differ in program enrollment, then compute average mean depression scores.
+
+## Matching to create a synthetic 'control' group
+
+We'd like to create an artificial counterfactual group for our treatment group by identifying units that are *similar* to our treated group, except for exposure to treatment.
+
+```{r}
+# treatment group 
+trt <- afterschool2 |> filter(program==1)
+# only no trauma enrolled in program, create no trauma control by sampling with replacement
+ctrl <- afterschool2 |> filter(trauma==0, program==0) |> sample_n(nrow(trt), replace = T)
+# SATE = E(d|p=1) - E(d|p=0)
+mean(trt$depression) - mean(ctrl$depression)
+```
+
+## Simulation 
+
+Let's make trauma continuous this time
+
+```{r echo = F, fig.height = 4}
+n_sims <- 10000
+# simulate childhood trauma
+trauma <- rnorm(n_sims, 0, 1)
+# simulate depression as function of trauma, depression 2x higher under trauma
+depression <- rnorm(n_sims, trauma*4, 1)
+# participation in program, children with trauma less likely
+program <- rbinom(n_sims, 1, prob = ifelse(trauma<0, 0.05, 0.5))
+# the program reduces depression by 10 percent
+depression <- ifelse(program==1, depression -0.5, depression)
+# put it all together
+afterschool3 <- data.frame(trauma, depression, program)
+
+ggplot(afterschool3,
+       aes(x = depression, y = trauma, color = factor(program))) + 
+  geom_point(alpha = 0.25)
+```
+
+## Propensity score matching
+
+1. We build a model for *selection into treatment*.
+
+```{r size = "tiny"}
+# Using the MatchIt package
+# install.packages("MatchIt")
+library(MatchIt)
+# this will estimate a logistic regression for selection into program
+m_selection <- matchit(program ~ trauma, data = afterschool3)
+```
+
+## Propensity score matching
+
+2. We compute a *propensity score* for selection into treatment for each observation 
+
+```{r size = "tiny", fig.height = 4}
+m.data <- match_data(m_selection)
+
+head(m.data)
+```
+
+## Compare weighted against original: propensity weighting has achieved balance
+
+```{r echo = F}
+p1 <- ggplot(afterschool3,
+             aes(x = trauma, color = factor(program))) + 
+  geom_density() + 
+  labs(subtitle = "original") 
+
+p2 <- ggplot(m.data,
+             aes(x = trauma, color = factor(program))) + 
+  geom_density() + 
+  labs(subtitle = "weighted")
+
+p1+p2+plot_layout(guides = "collect")
+```
+
+## Now we can compute a simple regression to estimate the SATE
+
+```{r}
+# compute with propensity score model
+m_propscore <- lm(depression~program, 
+                  data = m.data, 
+                  weights = weights) # weighting each observation 
+# and with original data for comparison
+m_original1 <- lm(depression~program,
+                 data = afterschool3)
+# with trauma control
+m_original2 <- lm(depression~program+trauma,
+                 data = afterschool3)
+```
+
+## Compare results
+
+```{r size = "tiny"}
+m_propscore
+```
+
+```{r size = "tiny"}
+m_original1
+```
+
+```{r size = "tiny"}
+m_original2
+```
